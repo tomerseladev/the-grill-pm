@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="The Grill (PM Edition)">
+  <rect width="1280" height="320" fill="#0F1117"/>
+  <g font-family="Space Grotesk, Inter, Segoe UI, Arial, sans-serif" font-weight="600">
+    <text x="80" y="120" font-size="64" fill="#F5F7FA">The Grill</text>
+    <text x="80" y="190" font-size="64" fill="#F5F7FA">(PM Edition)</text>
+  </g>
+  <text x="80" y="244" font-family="Space Grotesk, Inter, Segoe UI, Arial, sans-serif" font-size="20" fill="#9AA3B2">Get grilled before the real interview.</text>
+  <rect x="840" y="60" width="130" height="200" rx="16" fill="#A78BFA"/>
+  <rect x="990" y="60" width="130" height="200" rx="16" fill="#2DD4BF"/>
+  <rect x="1140" y="60" width="50" height="200" rx="16" fill="#FB923C"/>
+  <rect x="1008" y="92" width="94" height="14" rx="7" fill="#0F1117"/>
+  <rect x="1008" y="134" width="94" height="14" rx="7" fill="#0F1117"/>
+  <rect x="1008" y="176" width="94" height="14" rx="7" fill="#0F1117"/>
+  <rect x="1008" y="218" width="94" height="14" rx="7" fill="#0F1117"/>
+</svg>
