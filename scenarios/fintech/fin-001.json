@@ -1,0 +1,47 @@
+{
+  "id": "fin-001",
+  "version": 1,
+  "domain": "fintech",
+  "sub_domain": "payments",
+  "difficulty": "medium",
+  "time_budget_minutes": 25,
+  "title": "Cross-border payments for Israeli freelancers",
+  "prompt": "Kesher Pay is a payments company with licensed accounts for individuals and small businesses in Israel. We keep hearing from freelancers in Israel who are paid by clients abroad: they lose time and money getting that income into their Israeli accounts. Delays, hidden fees and confusing paperwork come up again and again. You are the product manager responsible for a new product for these freelancers. Design it. Ask me whatever questions you need first, then walk me through your approach.",
+  "company_context": "Kesher Pay is a fictional licensed payments company in Israel. It offers shekel accounts, cards and local transfers, and holds the licences to operate foreign-currency accounts. It has about 400,000 individual customers and no dedicated product for people earning abroad.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who the freelancers are", "fact": "The freelancers fall into three groups: software developers and designers who invoice foreign companies (largest value), translators and writers paid through marketplaces, and online sellers paid by platforms. Developers and designers typically invoice 3 to 10 times a year per client.", "fictional_data": true},
+    {"topic": "users", "question_hint": "who feels the most pain", "fact": "Developers and designers with 2 to 5 foreign clients feel it most. They receive 4,000 to 15,000 dollars a month in total, often in several currencies, and say they lose several hours each month on payment chasing and paperwork.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what the company wants", "fact": "Kesher Pay wants to win freelancers as primary-account customers, because they keep high balances and bring referrals. The target is 15,000 active freelancers within 18 months.", "fictional_data": true},
+    {"topic": "market", "question_hint": "market size and trend", "fact": "Internal estimate: about 120,000 Israeli freelancers regularly invoice foreign clients, growing steadily. Developers and designers are about a third of them but account for more than half of the payment volume.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "regulation and limits", "fact": "Kesher Pay can hold dollar and euro balances and issue receiving details, but it needs the user's tax status verified before foreign income is credited. Currency conversion must show the full cost up front by regulation. It cannot give tax advice, only generate documents.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "what exists today", "fact": "Freelancers today use a shekel account and a bank wire. Wires take 2 to 5 business days, hide a spread on the exchange rate, and arrive with no reference to the invoice, so the freelancer reconciles by hand.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "numbers that matter", "fact": "Among 60 freelancers interviewed, the average total cost of a wire was 3 to 5 percent including spread, 70 percent had at least one payment 'lost' for over a week in the last year, and most said that tracking which invoice was paid took the most time.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "alternatives", "fact": "Freelancers use banks (slow, costly), global multi-currency wallets (fast, but cannot receive some local transfers and do not issue Israeli tax documents) and marketplace payouts (convenient, but tied to one platform).", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "Two squads can work on this for two quarters. A first version has to launch in 5 months, with foreign-currency receiving accounts already available from the existing licence.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Treating 'freelancers' as one segment instead of choosing between developers, translators and sellers", "probe": "You said freelancers. Which kind, and what makes them the right first customer for us?"},
+    {"trap": "Leading with a lower-fee headline while ignoring the pain of waiting and reconciling invoices", "probe": "Fees are one complaint. What did people say was the most time-consuming part, and does your idea address that?"},
+    {"trap": "Ignoring regulation, such as tax-status verification and fee disclosure", "probe": "What has to be true before you can credit a foreign payment to a freelancer, and how does that affect the first-day experience?"},
+    {"trap": "Defining success as number of sign-ups, not active use or primary-account status", "probe": "A freelancer signs up and never receives a payment. Did the product work?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as making Kesher Pay the primary account for freelancers earning abroad, asks about the target segments, regulation and the 5-month launch, and learns that tax-status verification is required.",
+    "user_segment": "Chooses developers and designers with 2 to 5 foreign clients: high value, repeat invoicing, multiple currencies, over half the payment volume. Leaves translators and marketplace sellers for later because marketplaces already solve their payouts.",
+    "pain_points": "Ranks: slow and untracked payments, hidden exchange-rate spread, and manual invoice reconciliation. Names reconciliation and payment tracking as the top pain, because freelancers say it costs the most time, and fees are second.",
+    "solutions": "Proposes (1) personal receiving details in dollars and euros that include an invoice reference, (2) automatic matching of incoming payments to invoices with a ready tax document, (3) a transparent conversion that shows the full cost before the user accepts. Builds receiving details with invoice matching first.",
+    "tradeoffs": "Chooses invoice matching over the cheapest conversion rate: it competes where global wallets are weak. Accepts slower onboarding because of tax-status verification and mitigates it with a pre-filled flow.",
+    "metrics": "North star: monthly active freelancers receiving at least one payment and keeping a balance. Guardrails: time from payment to credit, verification drop-off, support contacts per payment, and cost-to-serve.",
+    "structure": "States a plan up front: goal, segment, pains, solutions, trade-offs, metrics, risks. Signposts each part, keeps to time, and closes with a one-sentence recommendation.",
+    "pushback": "When challenged on global wallets that are cheaper, shows where the product wins (local documents, reconciliation), concedes the fee gap and proposes how to narrow it, and holds the main recommendation."
+  },
+  "pushback_bank": [
+    "Global multi-currency wallets are already cheaper and faster. Why would a developer choose us?",
+    "Tax-status verification adds friction on day one. How do you keep people from dropping off?",
+    "You focus on developers and designers. Isn't that a small segment for an 18-month target of 15,000 users?",
+    "What stops a freelancer from using your account only to receive one payment and then moving the money out?",
+    "Five months is short. What do you launch first, and what do you promise to customers in the meantime?",
+    "How would you know the invoice matching works well enough that freelancers trust it?"
+  ],
+  "reviewed_by_human": false
+}

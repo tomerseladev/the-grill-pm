@@ -1,0 +1,48 @@
+{
+  "id": "cyber-001",
+  "version": 1,
+  "domain": "cybersecurity",
+  "sub_domain": "security-operations",
+  "difficulty": "medium",
+  "time_budget_minutes": 25,
+  "title": "Alert overload at a managed security provider",
+  "prompt": "Northgate Shield is a managed security provider that watches the networks of about three hundred mid-size customers from one operations center. Analysts say they are drowning in alerts: the queue never empties, response times are slipping, and two experienced analysts have just resigned. Leadership wants analysts to triage faster without missing real incidents. You are the product manager for the analyst platform. Design a product or feature to help. Take a moment to ask me questions first, then walk me through your approach.",
+  "company_context": "Northgate Shield is a fictional managed security provider with a 24/7 security operations center. It sells monitoring and response as a monthly subscription, priced per customer. Its analysts work in an in-house case platform that collects alerts from many customer security tools.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who works in the queue", "fact": "Tier 1 analysts do first-pass triage. There are 40 of them across three shifts, mostly with under two years of experience. Tier 2 has 9 senior analysts who take escalations and run investigations.", "fictional_data": true},
+    {"topic": "users", "question_hint": "who feels the pain most", "fact": "Tier 1 on the night shift feel it most: one analyst handles about 25 alerts an hour at peak, and both recent resignations came from Tier 1. Tier 2 analysts mostly complain that escalations arrive without context.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what leadership wants", "fact": "Leadership wants to cut median time to triage from 22 minutes to under 10 within the year, while keeping missed real incidents at zero in the monthly audit. Growth depends on adding customers without hiring at the same rate.", "fictional_data": true},
+    {"topic": "market", "question_hint": "customer and market situation", "fact": "Mid-size companies buy managed detection because they cannot hire their own analysts. Customers compare providers on response-time promises written into contracts, and two customers have asked for a faster response guarantee.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "limits on what can be built", "fact": "Analysts must keep final authority over closing an alert; auto-closing without a human is not allowed by customer contracts. Customer data cannot leave the customer's region. A change that adds more than a few seconds to opening an alert is not acceptable.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "how triage works today", "fact": "Alerts arrive as a flat list sorted by time. The analyst opens each one, copies indicators into three separate lookup tools, and writes notes by hand. Similar alerts from the same customer are not grouped.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what the data shows", "fact": "About 9,000 alerts arrive per day. Roughly 92 percent are closed as benign. Around 35 percent of them are repeats of the same pattern on the same customer within a day. The team tracks median time to triage and a monthly audit of missed incidents.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "what competitors do", "fact": "Two competing providers advertise automated triage. Customers say competitors' automation closes alerts too aggressively and one competitor missed a ransomware incident last year.", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "A team of 1 designer, 5 engineers and a data scientist is available for two quarters. A first version must be in front of the night shift within 4 months.", "fictional_data": true},
+    {"topic": "users", "question_hint": "what analysts want", "fact": "In interviews, Tier 1 analysts ask for grouped alerts and for the lookups to appear in one place. They do not ask for automation that decides for them, because they fear blame for a miss.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Jumping to an AI auto-triage solution before choosing a user or understanding the constraints", "probe": "Before we talk about the solution, who exactly is using this at 3 a.m., and what does their next ten minutes look like today?"},
+    {"trap": "Treating all analysts as one group and missing that Tier 1 and Tier 2 have different problems", "probe": "You said 'analysts'. Which analysts, and would the same feature help the other group?"},
+    {"trap": "Proposing to auto-close alerts, ignoring the missed-incident risk and the contract constraint", "probe": "What happens the first time your system closes a real incident? Who carries that?"},
+    {"trap": "Using only a speed metric such as alerts closed per hour, with no quality guardrail", "probe": "If analysts close twice as many alerts, how would you know they closed the right ones?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as faster triage with zero missed real incidents, asks about contract and customer constraints, and learns that humans must keep final authority and that the first release is due in 4 months.",
+    "user_segment": "Chooses night-shift Tier 1 analysts: they hold the highest volume and the most attrition, and their time per alert is the direct lever on the business goal. Deliberately leaves Tier 2 and customers' own staff for later.",
+    "pain_points": "Ranks three pains: no grouping of repeated alerts, manual copying into three lookup tools, and handwritten notes that arrive at Tier 2 without context. Names repeat alerts as the top pain because they are 35 percent of volume.",
+    "solutions": "Proposes (1) grouping repeated alerts on the same customer into one case, (2) a single enrichment panel that pulls all lookups on open, (3) an assisted note draft that Tier 1 confirms. Builds grouping first because it cuts volume without removing human judgment.",
+    "tradeoffs": "Chooses assist over auto-close: gives up some speed gains to protect the zero-miss goal and contract terms. Notes grouping can hide a different alert inside a group and mitigates with a visible 'what changed' flag.",
+    "metrics": "North star: median time to triage, from 22 minutes toward under 10. Guardrails: monthly missed-incident audit stays at zero, analyst override rate on grouped cases, Tier 1 attrition and escalation quality as rated by Tier 2.",
+    "structure": "States a plan up front: goal, user, pains, solutions, trade-offs, metrics, risks. Signposts each part, stays within time, and closes with a one-sentence recommendation.",
+    "pushback": "When challenged on speed versus safety, concedes the real risk, keeps the human in the loop, offers a shadow-mode rollout on the night shift, and explains what evidence would make them reconsider."
+  },
+  "pushback_bank": [
+    "Your grouping feature could hide a real attack inside a bundle of benign repeats. How do you prevent that?",
+    "Two customers want a faster response guarantee. Does your plan help us promise it, and what would you promise?",
+    "A competitor already advertises automated triage. Why not match it and close alerts automatically?",
+    "You have four months and one night shift to test on. What would you cut from your plan?",
+    "How would you know Tier 1 analysts actually trust the grouped view rather than reopening every alert anyway?",
+    "Tier 2 says their escalations lack context. Why is that not your top problem?"
+  ],
+  "reviewed_by_human": false
+}

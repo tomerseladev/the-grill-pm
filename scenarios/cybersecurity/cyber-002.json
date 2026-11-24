@@ -1,0 +1,47 @@
+{
+  "id": "cyber-002",
+  "version": 1,
+  "domain": "cybersecurity",
+  "sub_domain": "human-risk",
+  "difficulty": "easy",
+  "time_budget_minutes": 25,
+  "title": "Getting employees to report phishing",
+  "prompt": "Bluewater Secure sells email security to mid-size companies. Its customers' security teams tell us the same thing: employees receive suspicious emails every week, but very few report them. When a real phishing email slips through, the team often hears about it only after someone has clicked. You are the product manager for the employee-facing side of the product. Design something that gets non-technical employees to report suspicious emails. Ask me any questions you like first, then walk me through your approach.",
+  "company_context": "Bluewater Secure is a fictional email security vendor. Its gateway blocks most threats, and it also provides a small 'Report' button add-in that security teams can switch on. Customers are companies of 200 to 2,000 employees, most of them with a security team of one to three people.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who the employees are", "fact": "Most employees work in operations, sales and finance. They use email all day, have no security training beyond a yearly video, and see security as the security team's job.", "fictional_data": true},
+    {"topic": "users", "question_hint": "who is most at risk", "fact": "Finance and accounts-payable staff receive the most targeted invoice and payment-change emails, and one successful attack on them costs far more than an attack on an average employee.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what the company wants", "fact": "Bluewater wants to raise the share of suspicious emails that get reported, because customers who see more reports renew at a higher rate. The target is to double the reporting rate within a year.", "fictional_data": true},
+    {"topic": "market", "question_hint": "the buying situation", "fact": "Security teams buy the product, but employee behaviour decides if it works. Customer security teams say that awareness training budgets are being cut, so any solution must not need a big training programme.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "limits on the solution", "fact": "The product lives inside the customer's email client, so it cannot add more than one extra click. It cannot read email content outside what the gateway already scans. Customers' legal teams do not allow tracking employees' individual performance on a public leaderboard.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "what exists today", "fact": "A 'Report' button exists in the toolbar. Only 1 in 5 customers enable it, and in those that do, only a small share of employees ever click it. After a click, the employee sees nothing back.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what the numbers say", "fact": "In pilot customers, employees report about 4 percent of the suspicious emails the gateway later confirms as malicious. In interviews, the top reasons for not reporting are 'I wasn't sure it was phishing', 'it never feels like anyone reads it', and 'I didn't want to waste IT's time'.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "alternatives customers use", "fact": "Customers also use annual phishing simulation tools and a shared 'phishing@' mailbox. Simulations measure click rate, not reporting, and employees often say they feel tested rather than helped.", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "One designer and three engineers are available for one quarter. The first version must work inside the existing email add-in with no new app to install.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Designing a training or gamification programme without learning why employees do not report", "probe": "What did you learn about why people don't report today, and which of those reasons does your idea remove?"},
+    {"trap": "Treating all employees as one audience instead of choosing the group where reporting matters most", "probe": "Which employees would you build this for first, and why them and not everyone?"},
+    {"trap": "Ignoring the missing feedback loop: the employee clicks and sees nothing back", "probe": "What does the employee see ten seconds after they report, and one day after?"},
+    {"trap": "Measuring success by number of reports alone, with no quality or false-alarm guardrail", "probe": "If reports triple but most are harmless newsletters, is that success?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as raising the share of real threats that get reported, asks why employees do not report today, and confirms the add-in constraint and the one-quarter timeline.",
+    "user_segment": "Starts with finance and accounts-payable staff: highest attack value, a clear target group, and a manageable size. Leaves general staff for the second release and explains why.",
+    "pain_points": "Ranks the barriers: uncertainty about whether an email is really phishing, no sign that anyone reads a report, and fear of wasting IT's time. Picks 'no feedback after reporting' as the top pain because it is cheapest to fix and compounds over time.",
+    "solutions": "Proposes (1) an instant, plain-language reply after a report ('Thanks, we checked: this was real / harmless'), (2) a one-click 'not sure' option so uncertainty is not a barrier, (3) a short monthly note to each reporter on what their reports caught. Builds the instant reply first.",
+    "tradeoffs": "Chooses feedback over gamification and training because training budgets are shrinking and leaderboards are not allowed. Accepts that instant replies may cost security-team time and mitigates with automatic replies for emails the gateway has already classified.",
+    "metrics": "North star: share of confirmed malicious emails that are reported by employees. Guardrails: false-report rate, time for the security team to triage a report, and the share of reporters who report again within 30 days.",
+    "structure": "States a plan up front: goal, user, barriers, solutions, trade-offs, metrics. Signposts each part, keeps to time, and closes with a one-sentence recommendation.",
+    "pushback": "When asked why not gamify, answers with the constraints and evidence, concedes where gamification could help later, and holds the main recommendation."
+  },
+  "pushback_bank": [
+    "Your instant reply means the security team must classify every report. How does that scale for a team of two?",
+    "Finance is a small group. Why not build for everyone and get more reports?",
+    "What if a flood of low-quality reports makes the security team stop reading them?",
+    "Employees already ignore the existing button. Why would a better reply change their behaviour?",
+    "A competitor offers simulations that raise awareness. Why is your approach better than that?",
+    "How would you prove in one quarter that this works?"
+  ],
+  "reviewed_by_human": false
+}
