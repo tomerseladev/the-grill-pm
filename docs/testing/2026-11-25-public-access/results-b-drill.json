@@ -1,0 +1,37 @@
+{
+  "label": "b-drill",
+  "outcome": "drill completed; history did not survive a reload",
+  "visitor": "same as results-b.json (invited Viewer)",
+  "settings": {
+    "mode": "Drill",
+    "skill": "Success metrics",
+    "interviewer": "Friendly",
+    "domain": "Cybersecurity",
+    "voice": "Text only",
+    "planning_time_shown": "not applicable to drills"
+  },
+  "opening_at": "by 2026-11-25T20:31:16+02:00",
+  "opening_question": "How would you know this worked? Give me one main metric, and one thing you would watch so it does not backfire.",
+  "opening_note": "two opening bubbles: a scenario briefing, then the question above",
+  "answer_sent": "My main metric is weekly active reporters, and I would watch the false report rate so the security team is not flooded.",
+  "interviewer_reply": "Let me make sure I follow. In this scenario, who are the reporters, and how does weekly active reporters tell us that more employee accounts are protected by MFA and that companies are keeping it on?",
+  "reply_note": "shown with an 'Interviewer · pushback' label about 15 s after sending",
+  "consent_prompt": "none seen at load, at start, at reply or at grading (screenshots were taken at each step)",
+  "score": "1.5 / 5",
+  "report_meta": "Customers who never switch on MFA · Friendly · drill: Success metrics · median of 3 grading passes",
+  "score_note": "the grader says the answer's metrics come from a different scenario: the brief's answer was written for one about reporting, and this account drew an MFA scenario",
+  "history_before_reload": "listed in 'Your progress': Customers who never switch on MFA · drill: Success metrics, 1.5",
+  "history_after_reload": "not listed. 'Your progress' was hidden and 'What you get' shown, after the first reload (checked at 16 s and at 26 s) and after a second reload (20 s)",
+  "likely_cause": "The platform docs say that Viewers can never write to the artifact's database, their own private data included. In the app's code, when a save is refused it keeps the session in the browser only, but on the next load the database answers normally with nothing in it, so the app shows an empty history and never looks at the browser copy. The status label says \"saves: account\" because it only checks that the database and the user id exist. The refused save itself was not captured (network recording started after the drill); the read on reload was captured and returned 200.",
+  "save_request_captured": false,
+  "database_read_on_reload": "POST to the artifact's database endpoint returned 200",
+  "page_errors_shown": [],
+  "console_errors": [],
+  "console_note": "console and network recording started after the drill; a reload recorded no console errors (the app frame may not be covered)",
+  "screenshots": [
+    "screens/b-reply.png",
+    "screens/b-report.png",
+    "screens/b-history-before-reload.png",
+    "screens/b-history-after-reload.png"
+  ]
+}

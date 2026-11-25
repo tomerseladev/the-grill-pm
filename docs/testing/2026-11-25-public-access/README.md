@@ -7,26 +7,26 @@ Artifact: <https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3>
 ## Short answer
 
 - **Signed-out visitor:** does not get the app. claude.ai shows "Sign in to view this page" instead.
-- **Visitor signed in to an outside Claude account:** not tested. A bot check blocked signing in to the test browser.
+- **Visitor signed in to a second Claude account, invited as Viewer:** gets the interviewer and grader (`sample`) and can run a full drill. No Claude voice and no mic. **Their history does not survive a reload**, even though the page says "saves: account".
 - **The artifact was private** when its sharing setting was read (after Test A), so no test here covers a public link.
-- So the main question is **still open**: we do not know whether an outside, signed-in visitor gets the interviewer (`sample`) or saved history (`db`).
+- **Still open:** what a visitor with only a public link gets, and whether a Contributor (who may write) keeps their history.
 
 ## Features by visitor
 
 | Visitor | `sample` | `tts` | `dictation` | `db` | `user` | Browser voice |
 |---|---|---|---|---|---|---|
 | Signed out | not tested (1) | not tested (1) | not tested (1) | not tested (1) | not tested (1) | not tested (1) |
-| Outside, signed in | not tested (2) | not tested (2) | not tested (2) | not tested (2) | not tested (2) | not tested (2) |
+| Outside, signed in (invited Viewer) | yes | no | no | yes, but saving does not last (2) | yes | yes |
 
 1. The app did not load, so it never reported its features. In practice a signed-out visitor gets none of them.
-2. Test B did not run. The platform docs say outside visitors get no `tts` and no `dictation`; this test neither confirms nor contradicts that.
+2. The page reports the database as available ("saves: account"), but the drill was gone after a reload. See Test B. The `sample`, `tts`, `dictation`, `db`, `user` and browser voice cells are worked out from the status text and the app's code; the caps JSON itself was not read.
 
 ## What each visitor can do
 
 | Visitor | Start a session? | Hear a voice? | Talk? | See their history? |
 |---|---|---|---|---|
 | Signed out | no, sign-in page | no | no | no |
-| Outside, signed in | not tested | not tested | not tested | not tested |
+| Outside, signed in (invited Viewer) | yes | browser voice only (not heard in this test: the drill ran in Text only) | no mic | no: the drill disappeared after a reload |
 
 ## Test A: signed-out visitor
 
@@ -45,10 +45,23 @@ The sharing setting was read after Test A, the same evening: the artifact servic
 - Screenshot: [screens/a-signed-out.png](screens/a-signed-out.png)
 - Data: [results-a.json](results-a.json)
 
-## Test B: outside visitor
+## Test B: outside visitor (invited Viewer)
 
-Not run: no outside account signed in in the profile. The first time, the folder `~/.grill-test/outside-profile` did not exist. Later it was created and a Playwright Chromium window was opened so a person could sign in by hand with a second account, but Cloudflare's "Verify you are human" check kept coming back (reported by the person) and the sign-in page was not reached. The check was not worked around. The drill was skipped for the same reason. There are no Test B screenshots.
+Run in the developer's ordinary Chrome, where the developer had signed in to a second account that was invited to the artifact as **Viewer**. This is an invited viewer, not a public-link visitor, and it is not the Playwright profile the brief describes.
 
-- Data: [results-b.json](results-b.json)
+- Status text: `Ready · voice: browser · mic: off · saves: account`
+- No permission prompt was seen at any step.
+- A Success metrics drill ran: the interviewer asked, replied to the answer, and the grader scored it **1.5 / 5**. (The brief's answer was written for a different scenario, which the grader pointed out.)
+- Report line: `Customers who never switch on MFA · Friendly · drill: Success metrics · median of 3 grading passes`
+- After **New session** the drill was listed under "Your progress". After reloading the page it was **gone**, and stayed gone after a second reload.
 
-Next step: a person runs Test B by hand in an ordinary browser, signed in to the second account, and reports what they see.
+**Likely cause:** The platform docs say that Viewers can never write to the artifact's database, their own private data included. In the app's code, when a save is refused it keeps the session in the browser only, but on the next load the database answers normally with nothing in it, so the app shows an empty history and never looks at the browser copy. The status label says "saves: account" because it only checks that the database and the user id exist. The refused save itself was not captured (network recording started after the drill); the read on reload was captured and returned 200.
+
+So the app tells a Viewer their sessions are saved when they are not. Contributors may write, so a Contributor, or a visitor whose role allows writing, may keep history; that was not tested.
+
+- Screenshots: [b-loaded](screens/b-loaded.png), [b-reply](screens/b-reply.png), [b-report](screens/b-report.png), [history before reload](screens/b-history-before-reload.png), [history after reload](screens/b-history-after-reload.png)
+- Data: [results-b.json](results-b.json), [results-b-drill.json](results-b-drill.json)
+
+**Earlier attempts.** Playwright could not be used: no outside account signed in in the profile. The first time, the folder `~/.grill-test/outside-profile` did not exist. Later it was created and a Playwright Chromium window was opened so a person could sign in by hand with a second account, but Cloudflare's "Verify you are human" check kept coming back (reported by the person) and the sign-in page was not reached. The check was not worked around. 
+
+Next steps: check what a public link gives, check a Contributor, and fix the app so Viewers are not told their history is saved to the account.

@@ -1,11 +1,31 @@
 {
   "label": "b",
-  "outcome": "not run: sign-in blocked by a bot check",
-  "note": "Test B not run: no outside account signed in in the profile",
-  "attempts": [
-    "First attempt: the profile folder ~/.grill-test/outside-profile did not exist. No browser was launched.",
-    "Second attempt: the folder was created and a Playwright Chromium window was opened on claude.ai/login so a person could sign in by hand with a second account. The Cloudflare check 'Verify you are human' kept coming back, so the sign-in page was not reached. Reported by the person; the script did not read that window, and the check was not worked around."
-  ],
-  "caps": null,
-  "drill": "skipped: Test B did not load the artifact"
+  "outcome": "loaded (invited Viewer, ordinary Chrome)",
+  "method": "Claude in Chrome extension in the developer's own Chrome, already signed in by the developer to a second account. Not Playwright: the brief's profile could not be signed in (bot check).",
+  "visitor": "second account, invited by email with the Viewer role; the app bar said 'You can't edit this artifact.' Whether it is outside the organization is the developer's statement and was not checked.",
+  "sharing": "listed as private when read; email invites to outside people available",
+  "requested_url": "https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3",
+  "final_url": "https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3",
+  "tested_at": "2026-11-25T20:29:21+02:00",
+  "rendered": true,
+  "status_text": "Ready · voice: browser · mic: off · saves: account",
+  "caps": {
+    "sample": true,
+    "tts": false,
+    "dictation": false,
+    "db": true,
+    "user": true,
+    "browserVoice": true
+  },
+  "caps_note": "derived from the status text and the app's code; document.body.dataset.caps was not read (the app runs in a cross-origin frame)",
+  "start_button_enabled": true,
+  "no_ai_notice_visible": false,
+  "consent_prompt": "none seen at load",
+  "screenshot": "screens/b-loaded.png",
+  "console_errors": [],
+  "console_note": "no errors logged on a later reload (one capture); the extension only reports messages from the page's own domain, so the app frame may not be covered",
+  "earlier_attempts": [
+    "Playwright profile ~/.grill-test/outside-profile did not exist. No browser was launched.",
+    "Folder created and a Playwright Chromium window opened on claude.ai/login for a person to sign in by hand; Cloudflare's 'Verify you are human' check kept coming back (reported by the person). Not worked around."
+  ]
 }
