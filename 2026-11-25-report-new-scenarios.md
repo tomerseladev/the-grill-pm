@@ -52,7 +52,7 @@ No errors. Four things to know:
   warning: in the working copy of 'scenarios/fintech/fin-004.json', LF will be replaced by CRLF the next time Git touches it
   ```
 
-- **Skill zip not rebuilt:** the latest release, v0.1.0, is still tagged at `371eec7`, before these files. Making a new release was not part of this task.
+- **Skill release:** v0.1.0 was tagged at `371eec7`, before these files, so the skill zip was rebuilt and published afterwards as [v0.2.0](https://github.com/tomerseladev/the-grill-pm/releases/tag/v0.2.0), tagged at `8fb3615`. It contains all 8 scenarios. The zip was checked against the commit, but not tried in a Claude session.
 
 ## 6. Commits
 
