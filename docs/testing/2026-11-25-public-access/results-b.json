@@ -1,8 +1,11 @@
 {
   "label": "b",
-  "outcome": "not run",
+  "outcome": "not run: sign-in blocked by a bot check",
   "note": "Test B not run: no outside account signed in in the profile",
-  "reason": "The profile folder ~/.grill-test/outside-profile does not exist on the test machine (checked in the Windows home folder, where .grill-test is also missing, and in the Ubuntu WSL home folder). No browser was launched, because an empty profile could only show the signed-out page that Test A already covers, and launching one would create the missing folder.",
+  "attempts": [
+    "First attempt: the profile folder ~/.grill-test/outside-profile did not exist. No browser was launched.",
+    "Second attempt: the folder was created and a Playwright Chromium window was opened on claude.ai/login so a person could sign in by hand with a second account. The Cloudflare check 'Verify you are human' kept coming back, so the sign-in page was not reached. Reported by the person; the script did not read that window, and the check was not worked around."
+  ],
   "caps": null,
   "drill": "skipped: Test B did not load the artifact"
 }

@@ -7,7 +7,8 @@ Artifact: <https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3>
 ## Short answer
 
 - **Signed-out visitor:** does not get the app. claude.ai shows "Sign in to view this page" instead.
-- **Visitor signed in to an outside Claude account:** not tested. The browser profile with the outside account was not on the test machine.
+- **Visitor signed in to an outside Claude account:** not tested. A bot check blocked signing in to the test browser.
+- **The artifact was private** when its sharing setting was read (after Test A), so no test here covers a public link.
 - So the main question is **still open**: we do not know whether an outside, signed-in visitor gets the interviewer (`sample`) or saved history (`db`).
 
 ## Features by visitor
@@ -39,19 +40,15 @@ The test ran three times in a fresh, empty browser context (Playwright Chromium,
 
 In all three runs, claude.ai's own answer for the artifact's content was `401` before any bot check page appeared, and that answer did not carry Cloudflare's bot-check marker (the marker was recorded in runs 2 and 3 only). The bot checks were not clicked or worked around. Runs 1 and 2 were overwritten by run 3; the script was also changed between runs to record more detail.
 
-What this does not settle: whether claude.ai asks every signed-out visitor to sign in, or only does so because of how this artifact is shared. The sharing setting was not checked.
+The sharing setting was read after Test A, the same evening: the artifact service listed the artifact as **private**, with email invites to people outside the organization available. It was not read before Test A, but a private artifact would explain the sign-in page. So Test A most likely shows what a signed-out visitor gets for a private artifact. It does **not** show what a public link gives. The service also notes that a public link can be unavailable for some features a page uses; the Share menu gives the reason.
 
 - Screenshot: [screens/a-signed-out.png](screens/a-signed-out.png)
 - Data: [results-a.json](results-a.json)
 
 ## Test B: outside visitor
 
-Not run: no outside account signed in in the profile. The folder `~/.grill-test/outside-profile` does not exist on the test machine. The drill was skipped for the same reason. There are no Test B screenshots.
+Not run: no outside account signed in in the profile. The first time, the folder `~/.grill-test/outside-profile` did not exist. Later it was created and a Playwright Chromium window was opened so a person could sign in by hand with a second account, but Cloudflare's "Verify you are human" check kept coming back (reported by the person) and the sign-in page was not reached. The check was not worked around. The drill was skipped for the same reason. There are no Test B screenshots.
 
 - Data: [results-b.json](results-b.json)
 
-To run the load part of Test B once the profile exists (the drill and the consent prompt are not in the script yet):
-
-```
-python run_test.py --label b --profile ~/.grill-test/outside-profile --shot screens/b-loaded.png --out results-b.json
-```
+Next step: a person runs Test B by hand in an ordinary browser, signed in to the second account, and reports what they see.

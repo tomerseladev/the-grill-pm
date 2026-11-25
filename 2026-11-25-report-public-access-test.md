@@ -3,9 +3,9 @@
 ## 1. Summary
 
 - A **signed-out** visitor does not get the app. claude.ai shows "Sign in to view this page" in its place (Test A).
-- The **outside, signed-in** visitor was **not tested**: the browser profile `~/.grill-test/outside-profile` does not exist on the test machine (Test B).
+- The **outside, signed-in** visitor was **not tested**: a bot check blocked signing in to the test browser (Test B).
 - So the main question is **still open**: we do not know whether an outside visitor gets `sample` (interviewer and grader) or `db` (saved history).
-- Not checked: the artifact's sharing setting. Test A cannot tell "every signed-out visitor must sign in" apart from "this artifact is not shared with everyone".
+- The artifact was listed as **private** when its sharing setting was read (after Test A), so nothing here covers a public link.
 
 ## 2. Results table
 
@@ -39,6 +39,8 @@ The test ran three times; the saved files are from run 3.
 | 2 (20:13) | Same as run 1. Rerun to record which answers came from the bot layer. |
 | 3 (20:15) | Stayed on the artifact URL, "Sign in to view this page", no bot check page. Rerun after fixing a URL-shortening bug in the script. |
 
+The sharing setting was read after Test A, the same evening: the artifact service listed the artifact as **private**, with email invites to people outside the organization available. It was not read before Test A, but a private artifact would explain the sign-in page. So Test A most likely shows what a signed-out visitor gets for a private artifact. It does **not** show what a public link gives. The service also notes that a public link can be unavailable for some features a page uses; the Share menu gives the reason.
+
 The bot check was never clicked or worked around by the script. While the runs were going, the developer noticed the check in the Playwright window and asked about it.
 
 Files: `docs/testing/2026-11-25-public-access/results-a.json`, `docs/testing/2026-11-25-public-access/screens/a-signed-out.png`
@@ -47,8 +49,8 @@ Files: `docs/testing/2026-11-25-public-access/results-a.json`, `docs/testing/202
 
 Test B not run: no outside account signed in in the profile.
 
-- `~/.grill-test` is missing from the Windows home folder, and `~/.grill-test/outside-profile` is missing from the Ubuntu WSL home folder.
-- No browser was launched for Test B. An empty profile could only repeat Test A, and launching one would have created the missing folder.
+- **First attempt:** `~/.grill-test` was missing from the Windows home folder, and `~/.grill-test/outside-profile` from the Ubuntu WSL home folder. No browser was launched.
+- **Second attempt:** the folder was created and a Playwright Chromium window was opened on `claude.ai/login` so a person could sign in by hand. The second account had been invited to the artifact by email. Cloudflare's "Verify you are human" check kept coming back (reported by the person) and the sign-in page was not reached. The check was not worked around.
 - Consent prompt wording, interviewer reply, drill score, history after reload: none, not reached.
 
 File: `docs/testing/2026-11-25-public-access/results-b.json`
@@ -92,7 +94,7 @@ Run 2 showed the same kinds of messages (without the `webrtc` one); its full lis
 
 | Step | Why |
 |---|---|
-| Step 3, opening claude.ai and the artifact in the outside profile | The profile folder does not exist. Recorded as "not run" without launching a browser, which differs slightly from the brief. |
+| Step 3, opening the artifact in the outside profile | First the profile folder did not exist; then a bot check blocked the sign-in. |
 | Step 4, the drill (no `results-b-drill.json`, no drill commit) | Test B did not load the artifact. |
 | `b-loaded.png`, `b-consent.png`, `b-report.png` | Same reason. |
 
@@ -102,7 +104,9 @@ Other differences from the brief:
 - The local `origin` is `tomersela79/the-grill-pm`. GitHub reports it as the same repo as `tomerseladev/the-grill-pm` (same id, moved), so no second clone was made and `origin` was left as is.
 - This report is at the repo root, as the brief says, although commit `b72de25` moved reports to `docs/reports`.
 
-**To finish the test:** create `~/.grill-test/outside-profile` with a Playwright Chromium sign-in to the outside account, confirm the artifact is shared with anyone who has the link, then rerun from Step 3. The script does not yet cover the consent prompt or the drill. A bot check may also appear; it would need a person.
+**To finish the test:** a person runs Test B by hand in an ordinary browser, signed in to the second account, and reports what they see. To cover a public visitor, the artifact must first be shared with anyone who has the link; an email invite only covers an invited visitor.
+
+Also note: the app can save history in the browser as well as to the account, so a drill that is still listed after a reload does not prove it was saved to the account. Checking for it in a second browser does.
 
 ## 7. Commits
 
@@ -112,4 +116,5 @@ Other differences from the brief:
 | `a1782a8` | test: signed-out visitor results |
 | `c6250c2` | test: outside visitor load results |
 | `ff19bb0` | docs: public access findings |
-| (this file) | docs: public access test report |
+| `1f9b6df` | docs: public access test report |
+| (this update) | docs: record blocked sign-in and private sharing |
