@@ -57,6 +57,12 @@ READ_STATE = """() => {
 }"""
 
 
+def clean_url(url):
+    """Drop query strings, and the long one-off tokens in bot-check URLs."""
+    url = url.split("?")[0].split("#")[0]
+    return re.sub(r"(challenge-platform/h/\w+/\w+/).*", r"\1...", url)
+
+
 def redact(text):
     return EMAIL.sub("[email removed]", text) if text else text
 
@@ -108,7 +114,7 @@ def main():
         "browser": "Playwright Chromium, " + ("headless" if args.headless else "headed"),
         "profile": "persistent" if args.profile else "fresh empty context",
     }
-    console_errors, page_errors, failed = [], [], []
+    console_errors, page_errors, failed, navigations = [], [], [], []
 
     with sync_playwright() as p:
         if args.profile:
@@ -130,17 +136,29 @@ def main():
         page.on(
             "console",
             lambda m: console_errors.append(
-                {"text": redact(m.text), "source": (m.location or {}).get("url", "").split("?")[0]}
+                {"text": redact(m.text), "source": clean_url((m.location or {}).get("url", ""))}
             )
             if m.type == "error"
             else None,
         )
         page.on("pageerror", lambda e: page_errors.append(redact(str(e))))
+
+        def on_response(r):
+            if r.status < 400:
+                return
+            entry = {
+                "status": r.status,
+                "url": clean_url(r.url),
+                # Cloudflare sets this header on its own challenge responses.
+                "cf_mitigated": r.headers.get("cf-mitigated"),
+                "content_type": r.headers.get("content-type"),
+            }
+            failed.append((entry, r))
+
+        page.on("response", on_response)
         page.on(
-            "response",
-            lambda r: failed.append({"status": r.status, "url": r.url.split("?")[0]})
-            if r.status >= 400
-            else None,
+            "framenavigated",
+            lambda f: navigations.append(clean_url(f.url)) if f == page.main_frame else None,
         )
 
         try:
@@ -174,9 +192,10 @@ def main():
             or bool(BOT_CHECK.search(page.title() or ""))
             or bool(BOT_CHECK.search(text))
         )
-        result["sign_in_page_seen"] = not frame and bool(
-            SIGN_IN_URL.search(result["final_url"]) or SIGN_IN_TEXT.search(text)
+        result["sent_to_sign_in_url"] = not frame and bool(
+            SIGN_IN_URL.search(result["final_url"])
         )
+        result["sign_in_page_seen"] = not frame and bool(SIGN_IN_TEXT.search(text))
         if not frame:
             result["visible_text"] = redact(text[:1500])
             result["frame_hosts"] = sorted(
@@ -185,17 +204,26 @@ def main():
         result["outcome"] = (
             "rendered"
             if frame
+            else "sent to sign-in; a bot check hid the sign-in page"
+            if result["bot_check_seen"] and result["sent_to_sign_in_url"]
             else "inconclusive: bot check"
             if result["bot_check_seen"]
             else "sign-in page"
-            if result["sign_in_page_seen"]
+            if result["sent_to_sign_in_url"] or result["sign_in_page_seen"]
             else "did not render"
         )
         page.screenshot(path=str(shot))
         result["screenshot"] = args.shot
         result["console_errors"] = console_errors
         result["page_errors"] = page_errors
-        result["http_errors"] = failed
+        result["main_frame_navigations"] = navigations
+        for entry, r in failed:
+            if "json" in (entry["content_type"] or "") and "//claude.ai/" in entry["url"]:
+                try:
+                    entry["body"] = redact(r.text()[:400])
+                except Error:
+                    pass
+        result["http_errors"] = [entry for entry, _ in failed]
         ctx.close()
         if browser:
             browser.close()

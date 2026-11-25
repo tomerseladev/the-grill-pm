@@ -1,0 +1,80 @@
+{
+  "label": "a",
+  "requested_url": "https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3",
+  "tested_at": "2026-11-25T20:15:17+02:00",
+  "browser": "Playwright Chromium, headed",
+  "profile": "fresh empty context",
+  "browser_version": "159.0.8154.6",
+  "http_status": 200,
+  "http_cf_mitigated": null,
+  "rendered": false,
+  "final_url": "https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3",
+  "page_title": "Sign in – Claude",
+  "bot_check_seen": false,
+  "sent_to_sign_in_url": false,
+  "sign_in_page_seen": true,
+  "visible_text": "Sign in to view this page\nSign in",
+  "frame_hosts": [
+    "claude.ai"
+  ],
+  "outcome": "sign-in page",
+  "screenshot": "screens/a-signed-out.png",
+  "console_errors": [
+    {
+      "text": "Failed to load resource: the server responded with a status of 403 ()",
+      "source": "https://claude.ai/api/account"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 401 ()",
+      "source": "https://claude.ai/api/frame/5232c360-29ed-4764-9896-7acae003093a"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 403 ()",
+      "source": "https://claude.ai/api/frame/telemetry"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 403 ()",
+      "source": "https://claude.ai/api/frame/5232c360-29ed-4764-9896-7acae003093a"
+    },
+    {
+      "text": "Failed to load resource: the server responded with a status of 403 ()",
+      "source": "https://claude.ai/api/frame/telemetry"
+    }
+  ],
+  "page_errors": [],
+  "main_frame_navigations": [
+    "https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3"
+  ],
+  "http_errors": [
+    {
+      "status": 403,
+      "url": "https://claude.ai/api/account",
+      "cf_mitigated": null,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "status": 401,
+      "url": "https://claude.ai/api/frame/5232c360-29ed-4764-9896-7acae003093a",
+      "cf_mitigated": null,
+      "content_type": "text/plain; charset=utf-8"
+    },
+    {
+      "status": 403,
+      "url": "https://claude.ai/api/frame/telemetry",
+      "cf_mitigated": "challenge",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    {
+      "status": 403,
+      "url": "https://claude.ai/api/frame/5232c360-29ed-4764-9896-7acae003093a",
+      "cf_mitigated": "challenge",
+      "content_type": "text/html; charset=UTF-8"
+    },
+    {
+      "status": 403,
+      "url": "https://claude.ai/api/frame/telemetry",
+      "cf_mitigated": "challenge",
+      "content_type": "text/html; charset=UTF-8"
+    }
+  ]
+}
