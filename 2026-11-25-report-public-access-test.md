@@ -3,24 +3,25 @@
 ## 1. Summary
 
 - A **signed-out** visitor does not get the app. claude.ai shows "Sign in to view this page" in its place (Test A).
-- The **outside, signed-in** visitor was **not tested**: a bot check blocked signing in to the test browser (Test B).
-- So the main question is **still open**: we do not know whether an outside visitor gets `sample` (interviewer and grader) or `db` (saved history).
-- The artifact was listed as **private** when its sharing setting was read (after Test A), so nothing here covers a public link.
+- A **second account invited as Viewer** gets the interviewer and grader (`sample`) and can complete a drill, with no Claude voice and no mic. **Its history does not survive a reload**, although the page says "saves: account" (Test B, run in ordinary Chrome).
+- Likely cause: Viewers may not write to the database; the app does not notice, and shows empty history on the next load.
+- **Still open:** what a public-link visitor gets, and whether a Contributor keeps history.
+- The artifact was listed as **private** when its sharing setting was read (after Test A), so nothing here covers a public link. Test B's account was invited by email.
 
 ## 2. Results table
 
 | Visitor | `sample` | `tts` | `dictation` | `db` | `user` | Browser voice |
 |---|---|---|---|---|---|---|
 | Signed out | not tested (1) | not tested (1) | not tested (1) | not tested (1) | not tested (1) | not tested (1) |
-| Outside, signed in | not tested (2) | not tested (2) | not tested (2) | not tested (2) | not tested (2) | not tested (2) |
+| Outside, signed in (invited Viewer) | yes | no | no | yes, but saving does not last (2) | yes | yes |
 
 1. The app did not load, so it never reported its features. In practice a signed-out visitor gets none of them.
-2. Test B did not run.
+2. The page reports the database as available, but the drill was gone after a reload. These cells are worked out from the status text and the app's code; the caps JSON was not read.
 
 | Visitor | Start a session? | Hear a voice? | Talk? | See their history? |
 |---|---|---|---|---|
 | Signed out | no, sign-in page | no | no | no |
-| Outside, signed in | not tested | not tested | not tested | not tested |
+| Outside, signed in (invited Viewer) | yes | browser voice only (not heard: the drill ran in Text only) | no mic | no: the drill disappeared after a reload |
 
 ## 3. Test A details
 
@@ -47,17 +48,33 @@ Files: `docs/testing/2026-11-25-public-access/results-a.json`, `docs/testing/202
 
 ## 4. Test B details
 
-Test B not run: no outside account signed in in the profile.
+**Result (20:29 to 20:33, developer's ordinary Chrome, second account, Viewer):**
+
+- **Method:** Claude in Chrome extension in a new tab. The developer had signed in and the account had been invited by email. Not Playwright, because the profile could not be signed in (below).
+- **URL / rendered:** the artifact loaded at its URL. The app bar said "Viewer" and "You can't edit this artifact."
+- **Status text:** `Ready · voice: browser · mic: off · saves: account`
+- **Caps (derived):** `sample` true, `tts` false, `dictation` false, `db` true, `user` true, `browserVoice` true. The caps JSON was not read.
+- **Start button:** enabled. **`#noAI` notice:** not shown.
+- **Consent prompt:** none seen at load, at start, at reply or at grading.
+- **Opening question:** `How would you know this worked? Give me one main metric, and one thing you would watch so it does not backfire.`
+- **Interviewer's reply:** `Let me make sure I follow. In this scenario, who are the reporters, and how does weekly active reporters tell us that more employee accounts are protected by MFA and that companies are keeping it on?`
+- **Score:** `1.5 / 5`. **Report line:** `Customers who never switch on MFA · Friendly · drill: Success metrics · median of 3 grading passes`
+- **Score note:** the brief's answer was written for another scenario, and the grader said so.
+- **History after reload:** no. Listed under "Your progress" after New session; gone after reloading, and after a second reload (checked at 16, 26 and 20 seconds).
+- **Likely cause:** The platform docs say that Viewers can never write to the artifact's database, their own private data included. In the app's code, when a save is refused it keeps the session in the browser only, but on the next load the database answers normally with nothing in it, so the app shows an empty history and never looks at the browser copy. The status label says "saves: account" because it only checks that the database and the user id exist. The refused save itself was not captured (network recording started after the drill); the read on reload was captured and returned 200.
+
+**Why the Playwright profile was not used:**
 
 - **First attempt:** `~/.grill-test` was missing from the Windows home folder, and `~/.grill-test/outside-profile` from the Ubuntu WSL home folder. No browser was launched.
 - **Second attempt:** the folder was created and a Playwright Chromium window was opened on `claude.ai/login` so a person could sign in by hand. The second account had been invited to the artifact by email. Cloudflare's "Verify you are human" check kept coming back (reported by the person) and the sign-in page was not reached. The check was not worked around.
-- Consent prompt wording, interviewer reply, drill score, history after reload: none, not reached.
 
-File: `docs/testing/2026-11-25-public-access/results-b.json`
+Files: `docs/testing/2026-11-25-public-access/results-b.json`, `results-b-drill.json`, and the `b-*.png` screenshots in `screens/` (account avatar masked).
 
 ## 5. Errors
 
-The artifact's own frame never loaded, so there are no errors from it. These are from the claude.ai page around it. Page (uncaught) errors: none in any run.
+**Test B:** no error was shown on the page. Console recording started after the drill; a reload recorded no console errors, but the extension may not cover the app's frame. The database read on that reload returned 200. The drill's own save request was not captured.
+
+**Test A:** the artifact's own frame never loaded, so there are no errors from it. These are from the claude.ai page around it. Page (uncaught) errors: none in any run.
 
 **Run 3 (saved), all console errors:**
 
@@ -94,9 +111,9 @@ Run 2 showed the same kinds of messages (without the `webrtc` one); its full lis
 
 | Step | Why |
 |---|---|
-| Step 3, opening the artifact in the outside profile | First the profile folder did not exist; then a bot check blocked the sign-in. |
-| Step 4, the drill (no `results-b-drill.json`, no drill commit) | Test B did not load the artifact. |
-| `b-loaded.png`, `b-consent.png`, `b-report.png` | Same reason. |
+| Step 3 and 4 in the Playwright profile | First the profile folder did not exist; then a bot check blocked the sign-in. Done in ordinary Chrome instead. |
+| `b-consent.png` | No consent prompt was seen. |
+| Reading the caps JSON and console errors from the app frame | The extension cannot read the cross-origin frame; caps were worked out from the status text. |
 
 Other differences from the brief:
 
@@ -104,9 +121,7 @@ Other differences from the brief:
 - The local `origin` is `tomersela79/the-grill-pm`. GitHub reports it as the same repo as `tomerseladev/the-grill-pm` (same id, moved), so no second clone was made and `origin` was left as is.
 - This report is at the repo root, as the brief says, although commit `b72de25` moved reports to `docs/reports`.
 
-**To finish the test:** a person runs Test B by hand in an ordinary browser, signed in to the second account, and reports what they see. To cover a public visitor, the artifact must first be shared with anyone who has the link; an email invite only covers an invited visitor.
-
-Also note: the app can save history in the browser as well as to the account, so a drill that is still listed after a reload does not prove it was saved to the account. Checking for it in a second browser does.
+**To finish the test:** share the artifact with anyone who has the link and repeat Test B as a public visitor, and repeat it with a Contributor. Fix the app so Viewers are not told their history is saved to the account.
 
 ## 7. Commits
 
@@ -117,4 +132,6 @@ Also note: the app can save history in the browser as well as to the account, so
 | `c6250c2` | test: outside visitor load results |
 | `ff19bb0` | docs: public access findings |
 | `1f9b6df` | docs: public access test report |
-| (this update) | docs: record blocked sign-in and private sharing |
+| `cfa347d` | docs: record blocked sign-in and private sharing |
+| (follows `cfa347d`) | test: outside viewer load and drill results in Chrome |
+| (this update) | docs: outside viewer findings and report |
