@@ -9,7 +9,8 @@ Artifact: <https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3>
 - **Signed-out visitor:** does not get the app. claude.ai shows "Sign in to view this page" instead.
 - **Visitor signed in to a second Claude account, invited as Viewer:** gets the interviewer and grader (`sample`) and can run a full drill. No Claude voice and no mic. **Their history does not survive a reload**, even though the page says "saves: account".
 - **The artifact was private** when its sharing setting was read (after Test A), so no test here covers a public link.
-- **Still open:** what a visitor with only a public link gets, and whether a Contributor (who may write) keeps their history.
+- **From the docs, not tested here:** The platform docs say every signed-in visitor from outside the organization, by public link or by email invitation, can read the database but never write to it. The one exception is an outside Editor. So by the docs, outside visitors cannot save history to their account at all. Inside the organization, a Contributor or above can.
+- **Still open:** whether the artifact can be shared by public link at all, and what a public-link visitor sees in practice.
 
 ## Features by visitor
 
@@ -57,11 +58,11 @@ Run in the developer's ordinary Chrome, where the developer had signed in to a s
 
 **Likely cause:** The platform docs say that Viewers can never write to the artifact's database, their own private data included. In the app's code, when a save is refused it keeps the session in the browser only, but on the next load the database answers normally with nothing in it, so the app shows an empty history and never looks at the browser copy. The status label says "saves: account" because it only checks that the database and the user id exist. The refused save itself was not captured (network recording started after the drill); the read on reload was captured and returned 200.
 
-So the app tells a Viewer their sessions are saved when they are not. Contributors may write, so a Contributor, or a visitor whose role allows writing, may keep history; that was not tested.
+So the app tells a Viewer their sessions are saved when they are not. The platform docs say every signed-in visitor from outside the organization, by public link or by email invitation, can read the database but never write to it. The one exception is an outside Editor. So by the docs, outside visitors cannot save history to their account at all. Inside the organization, a Contributor or above can. (An earlier version of this page suggested a Contributor might keep history; for an outside account that is wrong.)
 
 - Screenshots: [b-loaded](screens/b-loaded.png), [b-reply](screens/b-reply.png), [b-report](screens/b-report.png), [history before reload](screens/b-history-before-reload.png), [history after reload](screens/b-history-after-reload.png)
 - Data: [results-b.json](results-b.json), [results-b-drill.json](results-b-drill.json)
 
 **Earlier attempts.** Playwright could not be used: no outside account signed in in the profile. The first time, the folder `~/.grill-test/outside-profile` did not exist. Later it was created and a Playwright Chromium window was opened so a person could sign in by hand with a second account, but Cloudflare's "Verify you are human" check kept coming back (reported by the person) and the sign-in page was not reached. The check was not worked around. 
 
-Next steps: check what a public link gives, check a Contributor, and fix the app so Viewers are not told their history is saved to the account.
+Next steps: check what a public link gives, and fix the app so visitors who cannot write keep their history in the browser and are told so.

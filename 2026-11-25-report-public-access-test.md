@@ -5,7 +5,8 @@
 - A **signed-out** visitor does not get the app. claude.ai shows "Sign in to view this page" in its place (Test A).
 - A **second account invited as Viewer** gets the interviewer and grader (`sample`) and can complete a drill, with no Claude voice and no mic. **Its history does not survive a reload**, although the page says "saves: account" (Test B, run in ordinary Chrome).
 - Likely cause: Viewers may not write to the database; the app does not notice, and shows empty history on the next load.
-- **Still open:** what a public-link visitor gets, and whether a Contributor keeps history.
+- **From the docs, not tested here:** The platform docs say every signed-in visitor from outside the organization, by public link or by email invitation, can read the database but never write to it. The one exception is an outside Editor. So by the docs, outside visitors cannot save history to their account at all. Inside the organization, a Contributor or above can.
+- **Still open:** whether the artifact can be shared by public link, and what a public-link visitor sees in practice.
 - The artifact was listed as **private** when its sharing setting was read (after Test A), so nothing here covers a public link. Test B's account was invited by email.
 
 ## 2. Results table
@@ -121,7 +122,7 @@ Other differences from the brief:
 - The local `origin` is `tomersela79/the-grill-pm`. GitHub reports it as the same repo as `tomerseladev/the-grill-pm` (same id, moved), so no second clone was made and `origin` was left as is.
 - This report is at the repo root, as the brief says, although commit `b72de25` moved reports to `docs/reports`.
 
-**To finish the test:** share the artifact with anyone who has the link and repeat Test B as a public visitor, and repeat it with a Contributor. Fix the app so Viewers are not told their history is saved to the account.
+**To finish the test:** share the artifact with anyone who has the link and repeat Test B as a public visitor. Fix the app so visitors who cannot write keep their history in the browser and are told so.
 
 ## 7. Commits
 
