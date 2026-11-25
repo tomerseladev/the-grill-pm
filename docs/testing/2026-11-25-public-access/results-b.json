@@ -1,0 +1,8 @@
+{
+  "label": "b",
+  "outcome": "not run",
+  "note": "Test B not run: no outside account signed in in the profile",
+  "reason": "The profile folder ~/.grill-test/outside-profile does not exist on the test machine (checked in the Windows home folder, where .grill-test is also missing, and in the Ubuntu WSL home folder). No browser was launched, because an empty profile could only show the signed-out page that Test A already covers, and launching one would create the missing folder.",
+  "caps": null,
+  "drill": "skipped: Test B did not load the artifact"
+}
