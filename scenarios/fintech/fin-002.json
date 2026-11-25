@@ -1,0 +1,48 @@
+{
+  "id": "fin-002",
+  "version": 1,
+  "domain": "fintech",
+  "sub_domain": "lending",
+  "difficulty": "medium",
+  "time_budget_minutes": 25,
+  "title": "Small businesses abandon the loan application",
+  "prompt": "Ninefold Lending offers short working-capital loans to small businesses through an online application. Marketing brings plenty of business owners to the form, but most of them never finish it. The ones who do finish often wait days for a decision, and some take a loan from a competitor in the meantime. The head of lending wants more small businesses to get funded through the online channel this year. You are the product manager for the application and decision flow. Design a product or feature to help. Ask me any questions first, then walk me through your approach.",
+  "company_context": "Ninefold Lending is a fictional online lender. It offers working-capital loans of up to about 300,000 shekels, repaid over 6 to 18 months. It earns money from interest and a one-time setup fee, and it funds loans from its own balance sheet and a bank credit line.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who applies", "fact": "Applicants are owners of businesses with 1 to 20 employees: about half are shops and restaurants, a third are service firms such as contractors and clinics, and the rest are online sellers. Most apply from a phone, often in the evening.", "fictional_data": true},
+    {"topic": "users", "question_hint": "who drops off most", "fact": "Shop and restaurant owners drop off most. Online sellers finish the form more often because they can connect their sales platform instead of uploading documents.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what success means", "fact": "The goal is to grow the number of funded loans from the online channel by 40 percent this year without raising the default rate above its current level of about 4 percent.", "fictional_data": true},
+    {"topic": "market", "question_hint": "market and timing", "fact": "Small businesses usually need money within days, for stock, payroll gaps or a broken machine. Banks are slower but cheaper. Owners say speed of decision matters more to them than a slightly lower interest rate.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "legal and risk limits", "fact": "The lender must verify the owner's identity and the business's existence, and must see at least six months of bank statements or sales data before approving. Credit decisions above 150,000 shekels need a human underwriter. Rejected applicants must get a reason.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "how the flow works today", "fact": "The form has 7 steps and asks for 6 months of bank statements as PDF uploads. There is no way to save and return later. After submitting, the applicant gets an email saying a decision will come within 3 business days.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what the funnel shows", "fact": "About 12,000 owners start the form each month. 18 percent submit it. The biggest drop is at the bank-statement upload step, where 45 percent of those who reach it leave. Of submitted applications, 55 percent are approved and 70 percent of approved applicants accept the loan.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "what competitors do", "fact": "One competitor promises a decision within an hour for loans under 100,000 shekels by reading bank data directly through open banking. Its prices are higher. Banks offer lower rates but take two to three weeks.", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "One designer, four engineers and one credit analyst are available for two quarters. Open-banking access is legally available, but connecting to the main banks takes about two months of integration work.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what happens during the wait", "fact": "Of approved applicants who do not accept, about half say they already took money elsewhere while waiting for the decision.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Shortening the form by removing checks that the law and the risk team require", "probe": "Which of those steps can you actually remove, given we must verify six months of history before lending?"},
+    {"trap": "Treating 'small businesses' as one group instead of choosing between shop owners, service firms and online sellers", "probe": "You said small businesses. Which owners, and why start with them?"},
+    {"trap": "Measuring only form completion and ignoring defaults and accepted loans", "probe": "If twice as many people submit, how do you know we are funding good loans and not just more applications?"},
+    {"trap": "Focusing only on the form and ignoring the three-day wait after submitting", "probe": "Say everyone finishes the form. What happens to them in the next three days?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as more funded online loans, not more submissions, with the default rate held at about 4 percent. Asks about required checks, the decision process and where the funnel leaks, and learns that the upload step and the three-day wait are the two big leaks.",
+    "user_segment": "Chooses shop and restaurant owners applying from a phone: they are the largest group and drop off most. Notes online sellers already convert better and leaves them for later.",
+    "pain_points": "Ranks three pains: gathering and uploading six months of PDF statements on a phone, no way to save and come back, and a three-day silence after submitting during which they take money elsewhere. Names the upload step as the top pain because 45 percent leave there.",
+    "solutions": "Offers distinct options: (1) connect a bank account through open banking instead of uploading statements, (2) save-and-resume with a reminder, (3) an instant pre-decision with a clear range for smaller loans, with final approval after checks. Builds the bank connection first because it fixes the biggest leak and makes faster decisions possible.",
+    "tradeoffs": "Accepts two months of integration work before the main win ships and keeps uploads as a fallback for owners who will not connect. Notes that a faster pre-decision could raise defaults and limits it to smaller loans with the human-underwriter rule kept above 150,000 shekels.",
+    "metrics": "North star: funded loans per month from the online channel. Supporting: completion of the statement step, time from submit to decision, acceptance rate of approved offers. Guardrail: default rate stays at or below about 4 percent, tracked by monthly cohort.",
+    "structure": "Sets out the plan up front: goal, user, pains, solutions, trade-offs, metrics. Moves through it in order and ends with a one-sentence recommendation and what to test first.",
+    "pushback": "When pushed on speed versus risk, concedes that faster decisions can attract riskier borrowers, keeps the existing checks, proposes a limited pilot on smaller loans, and says which default numbers would make them pull back."
+  },
+  "pushback_bank": [
+    "Open banking takes two months to build. Why not just shorten the form and ship next month?",
+    "A faster decision attracts people who were rejected elsewhere. How do you stop defaults from going up?",
+    "Our competitor decides in an hour. Should we promise the same thing?",
+    "Many shop owners don't trust giving a lender access to their bank account. What then?",
+    "If you add save-and-resume, people might start more forms and never come back. Is that progress?",
+    "Why focus on shop owners when online sellers already convert better and are easier to serve?"
+  ],
+  "reviewed_by_human": false
+}

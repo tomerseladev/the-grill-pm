@@ -1,0 +1,47 @@
+{
+  "id": "fin-003",
+  "version": 1,
+  "domain": "fintech",
+  "sub_domain": "consumer-banking",
+  "difficulty": "easy",
+  "time_budget_minutes": 25,
+  "title": "Helping first-salary customers save",
+  "prompt": "Pocketfern is a mobile-only bank. Many of its newest customers are young adults who just got their first salary. Most of them spend nearly everything each month, and many dip into overdraft before the next payday. The bank wants these customers to build a savings habit, because customers who save stay with the bank much longer. You are the product manager for the savings experience in the app. Design a product or feature that helps these customers start saving and keep going. Ask me any questions you need first, then take me through your approach.",
+  "company_context": "Pocketfern is a fictional mobile-only bank with about 600,000 customers. It earns money from card fees paid by merchants, overdraft interest and the gap between what it pays on savings and what it earns on deposits. The app already has a basic savings account with a fixed interest rate.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who the customers are", "fact": "About 150,000 customers are aged 21 to 27 and joined in the last two years. Most earn a monthly salary; around a quarter have irregular income from shifts or gig work.", "fictional_data": true},
+    {"topic": "users", "question_hint": "what they say", "fact": "In interviews, young customers say they want to save but that whatever is left at the end of the month is close to nothing. Several say they feel bad opening the app near the end of the month.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what the bank wants", "fact": "The bank wants to raise the share of young customers who save something every month from 12 percent to 25 percent within a year. Customers who save stay twice as long on average.", "fictional_data": true},
+    {"topic": "market", "question_hint": "market situation", "fact": "Young adults switch banks easily, often for a sign-up bonus. Saving apps that round up purchases are popular abroad but are not common locally.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "limits", "fact": "The bank may not move money out of a customer's account without their clear consent for each rule they set up. It cannot give personal investment advice. Any change to interest rates must go through the finance team.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "what exists today", "fact": "Customers can open a savings account and move money into it by hand. There are no goals, no automatic transfers and no reminders. Only 30 percent of young customers have opened a savings account, and most of those are empty.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what the data shows", "fact": "Among young customers, 40 percent go into overdraft at least once a month, usually in the five days before payday. Their balance is highest on the day after payday and falls fast in the first week.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "what competitors offer", "fact": "One competitor offers a savings account with a higher interest rate for the first three months. Another lets customers split their salary into pockets automatically on payday.", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "A designer, three engineers and a data analyst are available for one quarter. The app releases every two weeks.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Suggesting a higher interest rate as the main fix when the problem is that nothing is left to save", "probe": "If someone has nothing left at the end of the month, does a better rate change anything for them?"},
+    {"trap": "Ignoring the overdraft pattern and pushing money into savings that the customer then needs before payday", "probe": "What happens if we move money to savings and then they go into overdraft four days later?"},
+    {"trap": "Measuring only savings accounts opened instead of money saved and kept", "probe": "If accounts opened doubles but they stay empty, did we succeed?"},
+    {"trap": "Treating young customers as one group and missing those with irregular income", "probe": "How does your idea work for someone paid by the shift, with no fixed payday?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as more young customers saving something every month and keeping it, not just opening accounts. Asks about consent rules, income patterns and the overdraft data, and learns that money is highest right after payday.",
+    "user_segment": "Chooses young customers on a monthly salary: most of the group, with a clear payday to build around. Names irregular earners as a second segment that needs a different design later.",
+    "pain_points": "Ranks three pains: saving at month end when nothing is left, fear of being short before payday, and no visible goal to save for. Names timing as the top pain because balances peak right after payday.",
+    "solutions": "Offers distinct options: (1) save-on-payday, a small automatic transfer the customer sets up once, (2) a safety buffer that pauses or returns savings if the balance runs low before payday, (3) simple goals with progress. Builds save-on-payday with the buffer first because it moves saving to when money exists without causing overdrafts.",
+    "tradeoffs": "Keeps transfers small and opt-in to respect consent and to avoid overdrafts, giving up faster balance growth. Notes that the bank earns overdraft interest and accepts that loss for longer customer lifetimes.",
+    "metrics": "North star: share of young customers who save something every month. Supporting: average amount kept after 90 days and the share who keep the rule on after three months. Guardrails: overdraft rate in this group does not rise, and rule cancellations and complaints stay low.",
+    "structure": "Lays out the plan at the start: goal, user, pains, solutions, trade-offs, metrics. Follows it in order and finishes with a clear recommendation.",
+    "pushback": "When challenged on the lost overdraft income or on low amounts, concedes the trade-off, explains why retention matters more, suggests a test with a control group, and says what results would change their mind."
+  },
+  "pushback_bank": [
+    "Overdraft interest is real income for us. Why build something that reduces it?",
+    "Saving 50 shekels a month is tiny. Will that really change whether customers stay?",
+    "A competitor pays a higher rate for three months. Why not just match it?",
+    "People will set up an automatic transfer and cancel it the first time money is tight. How do you prevent that?",
+    "Your plan ignores a quarter of the group with irregular income. Is that acceptable?",
+    "How would you know saving makes people stay, and not that people who stay happen to save?"
+  ],
+  "reviewed_by_human": false
+}

@@ -1,0 +1,47 @@
+{
+  "id": "cyber-003",
+  "version": 1,
+  "domain": "cybersecurity",
+  "sub_domain": "identity-and-access",
+  "difficulty": "medium",
+  "time_budget_minutes": 25,
+  "title": "Customers who never switch on MFA",
+  "prompt": "Gatewren sells a sign-in and identity service to mid-size companies. Its customers' IT admins can turn on multi-factor authentication for their employees, but most companies never finish rolling it out. Several customers had accounts taken over through stolen passwords, and one of them blamed Gatewren publicly. Leadership wants far more of our customers' employees protected by MFA. You are the product manager for the admin console. Design a product or feature that gets more companies to roll out MFA fully. Ask me questions first, then walk me through your approach.",
+  "company_context": "Gatewren is a fictional identity provider. Companies pay per employee per month for single sign-on to their work apps. MFA is included in every plan at no extra cost. The admin console is where each customer's IT team manages users, apps and security settings.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who sets it up", "fact": "Most customers have 200 to 2,000 employees and one to three IT admins, who also handle laptops, printers and help-desk tickets. Few of them are security specialists.", "fictional_data": true},
+    {"topic": "users", "question_hint": "why admins stop", "fact": "Admins say rollouts stall because employees flood the help desk with lock-outs and lost-phone tickets in the first week, and managers ask them to switch MFA off for their teams.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what leadership wants", "fact": "The goal is to raise the share of employee accounts protected by MFA across all customers from 34 percent to 70 percent within a year, and to reduce account-takeover incidents.", "fictional_data": true},
+    {"topic": "market", "question_hint": "market situation", "fact": "Cyber insurers increasingly require MFA for all employees before they renew a policy. Customers ask Gatewren for proof of MFA coverage at renewal time.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "limits", "fact": "Gatewren cannot force MFA on a customer; the customer's admin decides. Some employees, such as warehouse or shop staff, share devices or have no work phone.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "how it works today", "fact": "MFA is a single on-off switch per company, buried in the security settings. Turning it on applies to everyone at once. There is no way to roll it out by group, no report of who has enrolled, and the only methods are a phone app or text message.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what the data shows", "fact": "About 60 percent of customers have tried turning MFA on at least once. 40 percent of those switched it off again within two weeks. Help-desk tickets at customers rise about fivefold in the week MFA is turned on.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "what competitors do", "fact": "A larger competitor offers staged rollouts by group, security keys and a coverage report that admins can send to their insurer.", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "One designer and five engineers are available for two quarters. The next big wave of customer insurance renewals is in about five months.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Proposing to force MFA on every customer, ignoring that the customer's admin decides", "probe": "We can't switch it on for them. So what makes an admin choose to turn it on and leave it on?"},
+    {"trap": "Designing for employees and forgetting that the admin is the one who rolls it out and absorbs the tickets", "probe": "Who gets the angry calls the morning after MFA goes live?"},
+    {"trap": "Ignoring employees without a work phone", "probe": "How does a shop worker with no work phone sign in under your plan?"},
+    {"trap": "Measuring only how many companies switch MFA on, not how many stay on and how many accounts are covered", "probe": "If a company switches it on and turns it off a week later, did we win?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as more employee accounts covered by MFA and kept on, leading to fewer takeovers. Asks who decides, why rollouts stall and what drives customers, and learns that rollbacks follow help-desk floods and that insurers now demand coverage.",
+    "user_segment": "Chooses the small IT team at a mid-size customer who has tried MFA and rolled it back: the biggest gap and the clearest reason. Names employees as secondary users and leaves security-specialist customers for later.",
+    "pain_points": "Ranks three pains: an all-at-once switch that floods the help desk, no view of who has enrolled, and employees without phones having no method. Names the all-at-once rollout as the top pain because it causes the rollbacks.",
+    "solutions": "Offers distinct options: (1) staged rollout by group with a grace period and enrolment reminders, (2) a coverage report the admin can send to their insurer, (3) more methods, such as security keys or a shared-device option. Builds staged rollout with the coverage report first because it removes the help-desk flood and gives the admin a reason to finish.",
+    "tradeoffs": "Accepts slower coverage at first, because groups enrol one by one, in exchange for fewer rollbacks. Leaves new methods for the second release and notes the risk that grace periods leave accounts exposed for longer.",
+    "metrics": "North star: share of employee accounts covered by MFA across customers. Supporting: share of rollouts completed within 30 days, rollback rate, report downloads at renewal. Guardrails: help-desk tickets per enrolled employee, and account-takeover incidents.",
+    "structure": "Sets out the plan at the start, separates the admin and the employee early, follows goal, user, pains, solutions, trade-offs and metrics, and ends with a recommendation tied to the renewal date.",
+    "pushback": "When challenged to just force MFA or to copy the competitor, explains why admin choice matters, accepts what is fair in the comparison, proposes a pilot with customers who rolled back, and says what result would change the plan."
+  },
+  "pushback_bank": [
+    "Why not just make MFA on by default for new customers and be done with it?",
+    "Staged rollouts mean some accounts stay unprotected for weeks. Isn't that worse?",
+    "The competitor already has all of this. Why would a customer stay with us while we catch up?",
+    "Text-message codes can be stolen. Should we even allow them?",
+    "Admins are busy. What makes you think they'll open a coverage report at all?",
+    "Insurance renewals are in five months. What would you ship before then, and what would you drop?"
+  ],
+  "reviewed_by_human": false
+}

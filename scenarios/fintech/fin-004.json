@@ -1,0 +1,48 @@
+{
+  "id": "fin-004",
+  "version": 1,
+  "domain": "fintech",
+  "sub_domain": "cards-and-disputes",
+  "difficulty": "hard",
+  "time_budget_minutes": 25,
+  "title": "Card disputes that take weeks",
+  "prompt": "Cardwyn issues debit and credit cards to retail customers. When a customer sees a charge they don't recognize or a purchase that went wrong, they call the support line to dispute it. Disputes take weeks to resolve, support costs keep rising, and dispute-related complaints are the top reason customers leave. Some disputes also turn out to be customers who simply forgot a purchase. You are the product manager for disputes. Design a product or feature that improves the dispute experience. Ask me your questions first, and then walk me through your approach.",
+  "company_context": "Cardwyn is a fictional card issuer with about 1.2 million active cards. It earns money from interchange fees and credit-card interest. Disputes are handled by a back-office team that works with the card networks' dispute rules and deadlines.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who disputes", "fact": "About 30,000 disputes are opened each month. Around 60 percent are about charges the customer does not recognize, 25 percent are about goods not received or not as described, and 15 percent are duplicate or wrong-amount charges.", "fictional_data": true},
+    {"topic": "users", "question_hint": "the other side of the work", "fact": "A back-office team of 45 dispute agents handles the cases. They spend much of their time chasing customers for missing details and receipts.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what leadership wants", "fact": "Leadership wants to cut the cost per dispute by a third and lower dispute-related complaints, without raising losses from wrongly refunded charges.", "fictional_data": true},
+    {"topic": "market", "question_hint": "market and rules", "fact": "Card network rules give the issuer a fixed window to file each dispute with the merchant's bank, and each filed dispute has a fee. Losing a filed dispute means the issuer absorbs the cost unless it charges the customer back.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "limits", "fact": "Before filing a fraud dispute, the card must be blocked and replaced. The customer must confirm the dispute in writing or in the app. Agents must make the final decision on any refund above 2,000 shekels.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "how it works today", "fact": "Customers can only dispute by phone. Agents type the details into the back-office system. The app shows transactions with a cryptic merchant name, often the legal name of the merchant's company, not the shop name the customer knows.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what the data shows", "fact": "About 30 percent of 'unrecognized charge' disputes are closed after the customer realizes the purchase was theirs, usually once they see the shop's real name. The average dispute takes 24 days to close. Each phone dispute costs about 90 shekels in agent time.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "what competitors do", "fact": "Two digital banks show the shop's logo and real name on every transaction and let customers dispute in the app in a few taps. Customers mention this when they leave.", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "A team of 1 designer, 6 engineers and 1 operations analyst is available for two quarters. Back-office system changes need the operations team's sign-off.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "where cases stall", "fact": "Half of the 24 days is spent waiting for customers to send receipts or answer questions by email.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Building an in-app dispute button that makes disputing easier but ignores the 30 percent of disputes that are forgotten purchases", "probe": "If disputing gets easier, what happens to the number of disputes that turn out to be the customer's own purchase?"},
+    {"trap": "Ignoring the agents and the network deadlines, and only designing the customer screen", "probe": "Once the customer taps 'dispute', what does the agent need to file it before the deadline?"},
+    {"trap": "Measuring only customer satisfaction while ignoring losses from wrongly refunded charges", "probe": "How would you know we are not just refunding more money that we then lose?"},
+    {"trap": "Treating every dispute type the same", "probe": "Is an unrecognized charge the same problem as a parcel that never arrived?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as lower cost per dispute and fewer complaints, without higher losses. Asks about dispute types, network rules and where time is spent, and learns that 30 percent of unrecognized-charge disputes are forgotten purchases and that half the time is spent waiting on customers.",
+    "user_segment": "Chooses customers with an unrecognized charge: the largest dispute type and the one with the clearest waste. Names agents as the secondary user whose work must fit the design.",
+    "pain_points": "Ranks three pains: not recognizing the merchant name, having to call support to dispute, and slow back-and-forth for receipts. Names the unclear merchant name as the top pain because it creates disputes that should never exist.",
+    "solutions": "Offers distinct options: (1) clear merchant names, logos and purchase details on each transaction, shown again when the customer starts a dispute, (2) an in-app dispute flow that collects the right details and receipts by dispute type up front, (3) case status updates in the app. Builds clearer merchant information first because it prevents disputes and lowers cost before any new flow ships.",
+    "tradeoffs": "Accepts that an easier in-app flow may raise dispute volume, and puts the merchant-recognition step first to offset it. Keeps agent review for refunds above 2,000 shekels and for unusual patterns, giving up some speed for loss control.",
+    "metrics": "North star: cost per resolved dispute. Supporting: share of disputes withdrawn at the merchant-recognition step, days to close, share of cases with complete details at filing. Guardrails: losses from refunded disputes as a share of volume, and missed network deadlines stay at zero.",
+    "structure": "States the plan up front, separates dispute types early, follows goal, user, pains, solutions, trade-offs and metrics in order, and ends with a recommendation and a first test.",
+    "pushback": "When challenged that easier disputes will increase volume or fraud, concedes the risk, shows how the recognition step and agent review limit it, proposes a pilot with a control group, and names the loss number that would stop the rollout."
+  },
+  "pushback_bank": [
+    "If you make disputing a few taps, won't people dispute everything, including purchases they just regret?",
+    "Merchant names come from the card networks. Why do you think we can fix them ourselves?",
+    "The operations team says changing the back-office system will take a year. What do you do now?",
+    "Some customers dispute charges to get money back dishonestly. How does your plan handle that?",
+    "Our biggest cost is agents chasing receipts. Why not start there instead of the customer screen?",
+    "How would you prove the drop in disputes came from your change and not from fewer purchases that month?"
+  ],
+  "reviewed_by_human": false
+}

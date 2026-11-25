@@ -1,0 +1,48 @@
+{
+  "id": "cyber-004",
+  "version": 1,
+  "domain": "cybersecurity",
+  "sub_domain": "vulnerability-management",
+  "difficulty": "hard",
+  "time_budget_minutes": 25,
+  "title": "A patching backlog nobody can finish",
+  "prompt": "Mendrake Security sells a scanner that finds vulnerabilities on its customers' servers and laptops. Customers say the scanner works too well: each scan lists thousands of findings, the IT team cannot fix them all, and the list only grows. Two customers were breached through a flaw the scanner had already reported months earlier. Leadership wants customers to fix the vulnerabilities that matter, not just see them. You are the product manager for the findings dashboard. Design a product or feature to help. Ask your questions first, then walk me through your approach.",
+  "company_context": "Mendrake Security is a fictional vendor. It sells a vulnerability scanner priced per scanned device per year, mostly to companies with 300 to 5,000 devices. Customers see results in a web dashboard and can export them.",
+  "hidden_facts": [
+    {"topic": "users", "question_hint": "who uses the dashboard", "fact": "In most customers, one security person reviews the findings and sends fix requests to IT teams who own the servers and laptops. The IT teams do the actual patching and rarely log in to the dashboard.", "fictional_data": true},
+    {"topic": "users", "question_hint": "what they complain about", "fact": "Security leads say they spend days each month sorting findings in spreadsheets to decide what to send to IT. IT teams complain that requests arrive as long exports with no clear order.", "fictional_data": true},
+    {"topic": "business_goal", "question_hint": "what leadership wants", "fact": "Leadership wants to cut the average time customers take to fix critical, exploitable vulnerabilities from about 90 days to under 30, because renewals depend on customers seeing real risk reduction.", "fictional_data": true},
+    {"topic": "market", "question_hint": "market situation", "fact": "Buyers are moving from 'how much can you find' to 'how much risk did we remove'. Renewal conversations now include questions about time to fix.", "fictional_data": true},
+    {"topic": "constraints", "question_hint": "limits", "fact": "Mendrake cannot install patches itself; customers' IT teams must do it within their own change windows. Some servers cannot be patched quickly because they run old business software.", "fictional_data": true},
+    {"topic": "current_product", "question_hint": "how it works today", "fact": "The dashboard lists findings sorted by a severity score from 1 to 10. There is no information on whether a flaw is being exploited in the wild, how important the device is, or who owns it. Findings can be exported as a spreadsheet.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "what the data shows", "fact": "A typical customer has about 14,000 open findings. About 4,000 are rated 9 or 10 for severity, but only around 3 percent of all findings are flaws known to be actively exploited. Customers fix about 600 findings a month while about 900 new ones appear.", "fictional_data": true},
+    {"topic": "competition", "question_hint": "what competitors do", "fact": "Newer competitors rank findings by whether attackers are exploiting them and by how exposed the device is, and connect to IT ticketing tools so each fix becomes a ticket for the right team.", "fictional_data": true},
+    {"topic": "timeline_resources", "question_hint": "time and team", "fact": "A designer, six engineers and a security researcher are available for two quarters. Public data on actively exploited flaws is available for free; data on device importance must come from the customer.", "fictional_data": true},
+    {"topic": "data_metrics", "question_hint": "about the breaches", "fact": "Both breaches came through internet-facing servers with a flaw rated 7, which was being actively exploited. The flaws sat in the middle of the list below thousands of higher-rated findings.", "fictional_data": true}
+  ],
+  "traps": [
+    {"trap": "Keeping the severity score as the main sort, even though the breaches came through lower-rated, exploited flaws", "probe": "Both breaches were rated 7. Would your design have put them at the top?"},
+    {"trap": "Designing only for the security lead and ignoring the IT teams who actually patch", "probe": "Who actually installs the patch, and what do they see from us today?"},
+    {"trap": "Measuring the number of findings closed rather than how fast the dangerous ones are fixed", "probe": "If customers close more findings, but mostly easy, low-risk ones, did we reduce risk?"},
+    {"trap": "Promising to fix the backlog without accounting for servers that cannot be patched quickly", "probe": "What do you show for a server that can't be patched for six months?"}
+  ],
+  "strong_answer_outline": {
+    "clarify_goal": "Restates the goal as faster fixing of critical, exploitable flaws, not fewer findings. Asks who sees and acts on findings, what the breaches had in common and what data exists, and learns that only about 3 percent of findings are actively exploited and that the breaches came through rated-7 flaws on internet-facing servers.",
+    "user_segment": "Chooses the security lead at a mid-size customer, who decides what to send to IT. Names IT teams as the second user who must receive clear, ordered work, and leaves executives and auditors for later.",
+    "pain_points": "Ranks three pains: no way to tell which findings are dangerous, manual sorting in spreadsheets, and fix requests that reach IT as long lists without owners. Names the missing danger ranking as the top pain because it hid both breaches.",
+    "solutions": "Offers distinct options: (1) a 'fix first' view ranked by active exploitation and internet exposure, (2) device-importance tags the customer sets once, (3) sending each fix to the right IT team's ticket queue with a due date. Builds the 'fix first' view first because it uses free public data, needs no customer setup and targets the breach pattern.",
+    "tradeoffs": "Accepts that the ranking is less complete without customer data on device importance, and adds tagging in the second release. Notes the risk of hiding non-exploited flaws that become exploited later, and keeps the full list one click away with alerts when a flaw's status changes.",
+    "metrics": "North star: median days to fix actively exploited flaws on exposed devices, aiming from about 90 toward under 30. Supporting: share of 'fix first' items closed within 30 days, time security leads spend sorting. Guardrails: exploited flaws left open past 30 days, and incidents traced to known findings.",
+    "structure": "States the plan up front, makes the 'exploited versus severity' point early, follows goal, user, pains, solutions, trade-offs and metrics, and ends with a recommendation and a pilot plan.",
+    "pushback": "When challenged that customers trust the severity score or want everything fixed, explains the breach evidence, concedes what ranking cannot know, offers a side-by-side view during a pilot, and says what result would make them change course."
+  },
+  "pushback_bank": [
+    "Security teams trust the severity score. Why would they accept your ranking instead?",
+    "If we tell customers to fix only 3 percent, and a breach comes through the other 97, who gets blamed?",
+    "Competitors already connect to ticketing tools. Why isn't that your first release?",
+    "Customers won't spend time tagging which devices are important. Then what?",
+    "Some servers can't be patched for months. Does your dashboard just show them as failures forever?",
+    "How would you prove to a customer at renewal that we reduced their risk?"
+  ],
+  "reviewed_by_human": false
+}
