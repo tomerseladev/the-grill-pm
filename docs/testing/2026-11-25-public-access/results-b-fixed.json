@@ -1,0 +1,44 @@
+{
+  "label": "b-fixed-drill",
+  "outcome": "drill completed; history survived a reload",
+  "app_version": "artifact Version 42 (version id 1795632244-66ef), published 2026-11-25 with the history fix",
+  "fix": "When a save to the account is refused, or gets no answer within 10 s, the app keeps the session in this browser under a key for the signed-in account, and on load it reads both the account and the browser copy. The status says \"saves: account\" only when the platform says the visitor may write or a save to the account has worked; otherwise \"saves: this browser\".",
+  "visitor": "same as results-b.json (second account invited as Viewer, developer's ordinary Chrome, Claude in Chrome extension)",
+  "settings": {
+    "mode": "Drill",
+    "skill": "Success metrics",
+    "interviewer": "Friendly",
+    "domain": "Cybersecurity",
+    "voice": "Text only"
+  },
+  "status_at_load": "Ready · voice: browser · mic: off · saves: this browser",
+  "history_at_start": "none: 'Your progress' was not shown",
+  "drill_started_at": "about 2026-11-26T09:37:31+02:00",
+  "scenario": "Getting employees to report phishing (Cybersecurity · human risk · easy)",
+  "answer_sent": "My main metric is weekly active reporters, and I would watch the false report rate so the security team is not flooded.",
+  "answer_note": "sent after the scenario briefing but before the opening question appeared; the question was posted after the answer",
+  "opening_question": "How would you know this worked? Give me one main metric, and one thing you would watch so it does not backfire.",
+  "interviewer_reply": "Weekly active reporters counts people, not threats. If that number doubles but the share of real malicious emails that get reported barely moves, would you call it a success? What would you measure instead, or alongside it?",
+  "reply_note": "shown with an 'Interviewer · pushback' label",
+  "timer_note": "the timer read 04:30 before the question appeared and 04:51 after it, so it may restart when the question is posted (not checked)",
+  "consent_prompt": "none seen",
+  "score": "2.5 / 5",
+  "report_meta": "Getting employees to report phishing · Friendly · drill: Success metrics · median of 3 grading passes",
+  "report_at": "by 2026-11-26T09:38:41+02:00",
+  "grader_fix_first": "The primary metric counts people rather than the share of confirmed malicious emails reported, so it is not tied to the goal, and it has no precise definition and no success target.",
+  "status_after_report": "Ready · voice: browser · mic: off · saves: this browser",
+  "history_before_reload": "listed in 'Your progress': Getting employees to report phishing · drill: Success metrics, 2.5 (2026-11-26T09:38:57+02:00)",
+  "history_after_reload": "still listed, same line and score, about 8 s after the reload (2026-11-26T09:39:12+02:00); the setup had reset to its defaults",
+  "earlier_lost_drill": "the 1.5 drill from 2026-11-25, lost before the fix, did not come back",
+  "not_checked": [
+    "the save request to the account and its refusal (network not recorded)",
+    "the browser copy itself (the app runs in a cross-origin frame the extension cannot read)",
+    "another browser, device or private window, where this history will not be"
+  ],
+  "page_errors_shown": [],
+  "screenshots": [
+    "screens/b-fixed-report.png",
+    "screens/b-fixed-history-before-reload.png",
+    "screens/b-fixed-history-after-reload.png"
+  ]
+}
