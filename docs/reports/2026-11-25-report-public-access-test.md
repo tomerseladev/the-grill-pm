@@ -137,7 +137,7 @@ Other differences from the brief:
 
 - Test A ran three times instead of once (see section 3).
 - The local `origin` is `tomersela79/the-grill-pm`. GitHub reports it as the same repo as `tomerseladev/the-grill-pm` (same id, moved), so no second clone was made and `origin` was left as is.
-- This report is at the repo root, as the brief says, although commit `b72de25` moved reports to `docs/reports`.
+- The brief asked for this report at the repo root. It was first written there, then moved to `docs/reports`, where the repo keeps its reports (commit `b72de25`).
 
 **To finish the test:** share the artifact with anyone who has the link and repeat Test B as a public visitor. The history fix is done and retested (section 4).
 
@@ -154,4 +154,5 @@ Other differences from the brief:
 | `958cb2b` | test: outside viewer load and drill results in Chrome |
 | `7252d9a` | docs: outside viewer findings and report |
 | `a5563f6` | docs: correct who can save history to the account |
-| (this update) | test: live drill after the history fix |
+| `58587cb` | test: live drill after the history fix |
+| (this update) | docs: move public access report to docs/reports |
