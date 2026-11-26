@@ -6,7 +6,7 @@
 
 ## Try it
 
-- **Web app:** coming soon.
+- **Web app:** [open The Grill](https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3). It needs a Claude account and runs on your own Claude usage.
 - **As a Claude skill:** see [Getting started](#getting-started-as-a-claude-skill).
 
 ## How a session works
@@ -17,13 +17,15 @@ Default session: 25 minutes, timer starts when the scenario appears.
 |---|---|---|---|
 | 1 | Scenario | (included) | Scenario shown and read aloud |
 | 2 | Clarify | 5 min | Candidate asks clarifying questions; interviewer answers only from hidden facts |
-| 3 | Think | 3 min | Silent planning with a notepad |
+| 3 | Think | 3 min (5 or 8 in practice) | Silent planning with a notepad |
 | 4 | Pitch | 8 min | Candidate walks through their answer; interviewer may interrupt once |
 | 5 | Pushback | 6 min | Pressure follow-ups according to persona |
 | 6 | Wrap | 3 min | Candidate's final summary |
 | 7 | Report | after the timer | Separate grading pass, then feedback |
 
 Personas: Friendly, Skeptical and Silent. More in [`docs/session-flow.md`](docs/session-flow.md).
+
+Modes: **Practice** (soft time limits and a stage guide), **Assisted** (suggested answers, marked as assisted in the report), **Exam** (stages end on time) and **Drill** (five minutes on one skill, with an example of a 5 afterwards).
 
 ## What makes it different
 
@@ -68,7 +70,7 @@ Eight criteria, equal weight, scored 1-5. Full anchors and scoring rules: [`rubr
 | `docs/` | Session flow and design reference |
 | `scripts/` | `validate.py` and `build_skill.py` (Python 3, standard library only) |
 | `calibration/` | Planned calibration method and results |
-| `artifact/` | Future home of the web app source |
+| `artifact/` | Web app source: HTML template and build script |
 | `assets/` | Banner and images |
 
 ## Calibration
