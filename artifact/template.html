@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Grill (PM Edition)</title>
+<link rel="artifact-thumbnail" href="thumb.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* VOICE: calm surface, real pressure. Direct, a little dry.
+   IDEA: an interview room at night: one lit desk, one voice across the table.
+   PICTURE: the VoiceBars face, seven violet grate bars that speak and react.
+   COLOUR and TYPE: design system "The Grill (PM Edition)": slate 60 / panel 30 / mint+violet 10, ember for heat; Space Grotesk, Inter, JetBrains Mono.
+   LAYOUT: setup = face as hero + one calm column of choices; session = brief and clock left, face and conversation right; report = score sheet. */
+:root{color-scheme:dark;
+--s0:#0f1117;--s1:#1c202b;--s2:#262b38;--bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.14);
+--ink:#f5f7fa;--mute:#9aa3b2;--on:#0f1117;--mint:#2dd4bf;--mint-s:rgba(45,212,191,.14);
+--violet:#a78bfa;--violet-s:rgba(167,139,250,.14);--ember:#fb923c;--ember-s:rgba(251,146,60,.14);--danger:#f87171;--danger-s:rgba(248,113,113,.14);
+--r-sm:6px;--r-md:10px;--r-lg:16px;--focus:0 0 0 3px rgba(45,212,191,.45);
+--fd:"Space Grotesk","Inter",system-ui,sans-serif;--fs:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--fm:"JetBrains Mono",ui-monospace,Menlo,monospace;
+--ease:cubic-bezier(.2,0,0,1)}
+*{box-sizing:border-box;min-width:0}
+html,body{background:var(--s0)}
+body{margin:0;color:var(--ink);font:15px/1.6 var(--fs);overflow-x:clip}
+button,textarea,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:none;box-shadow:var(--focus)}
+.wrap{max-width:1240px;margin:0 auto;padding:clamp(16px,3vw,32px) max(4vw,16px)}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:clamp(16px,3vw,32px)}
+.brand{font:600 17px/1.2 var(--fd);letter-spacing:-.01em}
+.brand small{color:var(--mute);font:400 13px var(--fs);margin-left:8px}
+.hact{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.btn.sm{padding:8px 12px;min-height:36px;font-size:13px;text-decoration:none;display:inline-flex;align-items:center}
+.pill{font:500 12px/16px var(--fs);padding:4px 10px;border-radius:999px;background:var(--s1);border:1px solid var(--bd);color:var(--mute)}
+.card{background:var(--s1);border:1px solid var(--bd);border-radius:var(--r-lg);padding:24px}
+h1{font:600 clamp(32px,5vw,48px)/1.05 var(--fd);letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
+h2{font:600 22px/28px var(--fd);letter-spacing:-.01em;margin:0 0 12px}
+.lead{color:var(--mute);font-size:17px;line-height:26px;max-width:60ch;margin:0}
+.label{font:500 13px/18px var(--fs);color:var(--mute);margin:0 0 5px;display:block}
+.btn{font:500 14px/18px var(--fs);border-radius:var(--r-md);padding:13px 18px;min-height:44px;border:1px solid transparent;transition:background .12s var(--ease),transform .12s var(--ease),filter .12s}
+.btn:active{transform:scale(.98)}
+.primary{background:var(--mint);color:var(--on)}.primary:hover{filter:brightness(1.08)}
+.secondary{background:var(--s1);border-color:var(--bd2)}.secondary:hover{background:var(--s2)}
+.ghost{background:transparent;color:var(--mute)}.ghost:hover{color:var(--ink);background:var(--s1)}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;background:var(--s0);border:1px solid var(--bd);border-radius:var(--r-md)}
+.seg button{min-height:36px;padding:6px 14px;border:0;border-radius:8px;background:transparent;color:var(--mute);font:500 14px var(--fs);transition:background .12s var(--ease),color .12s}
+.seg button:hover{color:var(--ink);background:var(--s2)}
+.seg button[aria-pressed=true]{background:var(--mint-s);color:var(--mint)}
+.thinkopt{display:flex;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap}.thinkopt>span{font-size:13px;color:var(--mute)}
+.seg.sm button{min-height:28px;padding:3px 10px;font-size:13px}
+.sel{margin-top:8px;min-height:40px;max-width:100%;padding:8px 36px 8px 12px;background:var(--s0) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%239AA3B2' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 12px center;border:1px solid var(--bd);border-radius:var(--r-md);color:var(--ink);font:500 14px var(--fs);appearance:none;-webkit-appearance:none;cursor:pointer}
+.sel:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+.five{border-top:1px solid var(--bd);padding:12px 0}.five:first-of-type{border-top:0;padding-top:0}
+.five .fh{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.five .fh b{flex:1;min-width:140px;font:600 15px var(--fd)}.five .fh .sc{font:500 13px var(--fm);color:var(--mute)}
+.five .ex{margin:10px 0 0;padding:12px 14px;border-left:3px solid var(--violet);background:var(--s2);border-radius:0 var(--r-md) var(--r-md) 0;font-size:14px;line-height:22px}
+.five .ex.load{color:var(--mute)}
+.help{margin:5px 0 0;font-size:13px;line-height:18px;color:var(--mute)}
+.field{display:grid;grid-template-columns:84px minmax(0,1fr);gap:4px 16px;align-items:start;padding:8px 0;border-top:1px solid var(--bd)}
+.help.inl{margin:0}.vrow .sub{width:78px;font-size:13px;color:var(--mute)}#voiceHint:empty,.help:empty{display:none}
+.field>.label{margin:9px 0 0;line-height:18px}
+.vrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.startrow{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--bd)}
+.startrow .help{margin:0}
+.aside{display:flex;flex-direction:column;gap:16px}
+.flow{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.flow li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding-left:12px;border-left:2px solid var(--s2)}
+.flow b{font:500 14px var(--fs)}.flow span{font:400 12px var(--fm);color:var(--mute)}.flow small{grid-column:1/-1;color:var(--mute);font-size:13px}
+.gets{margin:0;padding-left:18px;color:var(--mute);font-size:14px}.gets li{margin-bottom:6px}
+.notice{border-radius:var(--r-md);padding:12px 14px;font-size:14px;background:var(--s1);border:1px solid var(--bd);color:var(--mute)}
+.notice.warn{background:var(--ember-s);border-color:transparent;color:var(--ember)}
+[hidden]{display:none!important}
+
+/* setup */
+.setup{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(20px,2.5vw,40px);align-items:start}
+.setup .aside{grid-column:1/-1;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+.hero{display:flex;flex-direction:column;gap:20px}
+.heroface{height:clamp(220px,30vw,300px)}
+.opts{display:flex;flex-direction:column;gap:0;container-type:inline-size}
+@container (max-width:340px){.field{grid-template-columns:minmax(0,1fr);gap:6px}.field>.label{margin:0}}
+.opts .seg{padding:2px;border-radius:9px}.opts .seg button{min-height:28px;padding:3px 10px;font-size:13px;border-radius:7px}
+.opts .btn.sm{min-height:28px;padding:3px 10px;font-size:13px}.opts .sel{min-height:30px;padding:3px 32px 3px 10px;font-size:13px;margin-top:6px}
+.opts .field>.label{margin-top:6px}.thinkopt>span{font-size:13px}
+.opts .startrow{position:sticky;bottom:-18px;background:var(--s1);padding-bottom:18px;margin-bottom:-18px;z-index:1}.opts h2{margin-bottom:8px}
+.hist{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+.hist div{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--mute);padding:8px 12px;background:var(--s2);border-radius:var(--r-sm)}
+.hist b{font:500 13px var(--fm);color:var(--violet)}
+
+/* face */
+.face{position:relative;background:var(--s1);border:1px solid var(--bd);border-radius:var(--r-lg);display:grid;place-items:center;overflow:hidden;transition:background .4s var(--ease)}
+.face.hot{background:linear-gradient(var(--ember-s),var(--ember-s)),var(--s1)}
+.bars{display:flex;align-items:center;gap:10px;height:62%;transition:gap .4s var(--ease)}
+.bars.lean{gap:6px}
+.bar{width:clamp(10px,1.1vw,16px);height:12%;min-height:10px;border-radius:999px;background:var(--violet);transition:background-color .4s var(--ease)}
+.bars.ember .bar{background:var(--ember)}
+.face .st{position:absolute;left:14px;top:10px;font:500 12px/16px var(--fs);color:var(--mute)}
+.face .who{position:absolute;right:14px;top:10px;font:500 12px/16px var(--fs);color:var(--violet)}
+
+/* session */
+.session{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:20px;align-items:start}
+.center{display:flex;flex-direction:column;gap:16px}
+.fw{list-style:none;margin:4px 0 0;padding:0;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.fw li{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;font:500 11px/14px var(--fs);color:var(--mute)}
+.fw li i{width:24px;height:24px;border-radius:999px;display:grid;place-items:center;font:500 12px var(--fm);font-style:normal;background:var(--s2);color:var(--mute);transition:background .4s var(--ease),color .4s}
+.fw li.done{color:var(--ink)}.fw li.done i{background:var(--mint-s);color:var(--mint)}
+.fw li.now{color:var(--violet)}.fw li.now i{background:var(--violet);color:var(--on)}
+#fwCard{container-type:inline-size}
+@container (max-width:440px){.fw li span{display:none}.fw li.now span{display:block;white-space:nowrap}}
+.fwnext{margin:12px 0 0;padding:10px 12px;border-radius:var(--r-md);background:var(--violet-s);font-size:13px;line-height:19px}
+.fwnext b{color:var(--violet);font-weight:500}
+.fig{position:relative}.fig>svg{position:absolute;inset:0;width:100%;height:100%}
+.fig.mini{height:110px;margin:12px 0 6px}.fig.big{height:340px;margin-top:8px}
+.legend{display:flex;gap:14px;align-items:center;font-size:12px;color:var(--mute);margin-top:6px;flex-wrap:wrap}
+.lg{display:inline-block;width:18px;height:3px;border-radius:2px;margin-right:-8px;vertical-align:middle}.lg.own{background:var(--violet)}.lg.ast{background:var(--mute);opacity:.6}
+.progress{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:16px;align-items:start}
+.pcol{display:flex;flex-direction:column;gap:16px}
+.prow{display:grid;grid-template-columns:minmax(0,1fr) 90px 92px;gap:4px 12px;align-items:center;padding:10px 0;border-top:1px solid var(--bd)}
+.prow .pn{font:500 14px/20px var(--fs)}.prow .spark{height:28px;position:relative}.prow .spark svg{position:absolute;inset:0;width:100%;height:100%}
+.prow .pv{font:500 15px var(--fm);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.up{color:var(--mint)}.down{color:var(--danger)}.flat{color:var(--mute)}
+.prow.weak{background:var(--ember-s);border-radius:var(--r-md);padding:10px 12px;border-top-color:transparent}.prow.weak .pn{color:var(--ember)}
+#weakCard{background:linear-gradient(var(--ember-s),var(--ember-s)),var(--s1)}#weakCard h2{color:var(--ember)}
+.ahead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.opts3{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.opt3{display:block;width:100%;text-align:left;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-md);padding:10px 12px;font:400 14px/21px var(--fs);transition:background .12s,border-color .12s}
+.opt3{animation:optin .3s cubic-bezier(.2,0,0,1) both}
+@keyframes optin{from{opacity:0;transform:translateY(6px)}}
+.opt3.used{border-color:var(--mint);opacity:.55}
+.fw li.clk{cursor:pointer}.fw li.clk:hover i{box-shadow:0 0 0 2px var(--violet-s)}
+#input{transition:height .28s cubic-bezier(.2,0,0,1);overflow-y:auto}
+.mirror{position:absolute!important;left:-9999px;top:0;visibility:hidden;height:0!important;overflow:hidden;transition:none!important}
+.msg{overflow:hidden}.chat>*{flex-shrink:0}
+.msg .short{display:none;align-items:center;gap:10px;color:var(--mute);font-size:13px}
+.msg.collapsed .wbox{display:none}.msg.collapsed .short{display:flex}
+.msg .short button{background:none;border:0;color:var(--violet);font:500 13px var(--fs);padding:4px 0}
+.opt3:hover{border-color:var(--mint);background:var(--s1)}
+.opt3 b{display:block;font:500 12px/16px var(--fs);color:var(--violet);margin-bottom:2px}
+.opt3.sk{color:var(--mute);animation:pulse 1.2s infinite ease-in-out}
+.colR{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;align-items:start}
+.left{display:flex;flex-direction:column;gap:16px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tag{font:500 12px/16px var(--fs);padding:3px 8px;border-radius:var(--r-sm);background:var(--s2);color:var(--mute);border:1px solid var(--bd)}
+.tag.ai{background:var(--violet-s);color:var(--violet);border-color:transparent}
+.scen{font-size:16px;line-height:26px}
+.timer{display:flex;align-items:flex-end;justify-content:space-between;gap:12px}
+.digits{font:500 40px/44px var(--fm);font-variant-numeric:tabular-nums;color:var(--mint);transition:color .4s var(--ease)}
+.timer.hot .digits,.timer.hot .tright{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.endlink{background:none;border:0;padding:2px 0;color:var(--mute);font:500 12px var(--fs);text-decoration:underline;text-underline-offset:3px;min-height:24px}
+.endlink:hover{color:var(--ink)}.endlink.arm{color:var(--danger);text-decoration:none}
+.tlabel{color:var(--ember)}
+.timecard.hot{background:linear-gradient(var(--ember-s),var(--ember-s)),var(--s1)}
+.timecard.hot .digits,.timecard.hot .tright{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.endlink{background:none;border:0;padding:2px 0;color:var(--mute);font:500 12px var(--fs);text-decoration:underline;text-underline-offset:3px;min-height:24px}
+.endlink:hover{color:var(--ink)}.endlink.arm{color:var(--danger);text-decoration:none}
+.tlabel{color:var(--ember)}
+.tright{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.endlink{background:none;border:0;padding:2px 0;color:var(--mute);font:500 12px var(--fs);text-decoration:underline;text-underline-offset:3px;min-height:24px}
+.endlink:hover{color:var(--ink)}.endlink.arm{color:var(--danger);text-decoration:none}
+.tlabel{font:500 13px/18px var(--fs);color:var(--mute)}
+.stages{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.stages li{position:relative;font:500 12px/16px var(--fs);color:var(--mute);padding-top:8px;border-top:3px solid var(--s2);transition:border-color .4s var(--ease),color .4s}
+.stages li.done{border-color:rgba(45,212,191,.45)}
+.stages li.now{color:var(--ink)}
+.stages .pb{position:absolute;left:0;top:-3px;height:3px;width:0;border-radius:2px;background:var(--mint);transition:width .5s linear,background-color .6s var(--ease)}
+.stages li.warn .pb{background:var(--ember)}
+.stages li.over .pb{background:var(--danger);animation:pulse 1.6s infinite ease-in-out}
+#stageLeft{transition:color .6s var(--ease)}
+#stageLeft.warn{color:var(--ember)}#stageLeft.over{color:var(--danger)}
+.stages li span{display:block;font:400 11px var(--fm);color:var(--mute)}
+textarea{width:100%;background:var(--s2);border:1px solid var(--bd2);border-radius:var(--r-md);padding:12px;font-size:16px;line-height:24px;resize:vertical}
+.right{display:flex;flex-direction:column;gap:16px}
+.sface{height:170px}
+.chat{display:flex;flex-direction:column;gap:10px;max-height:46vh;min-height:200px;overflow-y:auto;padding:16px}
+.msg{padding:10px 14px;border-radius:var(--r-md);max-width:88%;animation:enter .22s var(--ease) both;white-space:pre-wrap}
+.msg .w{display:block;font:500 12px/16px var(--fs);margin-bottom:2px}
+.msg.ai{background:var(--violet-s);align-self:flex-start}.msg.ai .w{color:var(--violet)}
+.msg.me{background:var(--mint-s);align-self:flex-end}.msg.me .w{color:var(--mint)}
+.msg.push{background:var(--ember-s)}.msg.push .w{color:var(--ember)}
+.msg.sys{align-self:center;background:none;color:var(--mute);font-size:12px;padding:2px}
+.msg p{margin:0 0 10px}.msg p:last-child{margin:0}.msg p:not(:has(.wd.on)){display:none}
+.wd{display:none;transition:color .4s var(--ease)}.wd.on{display:inline;animation:wdin .25s var(--ease) both}
+@keyframes wdin{from{opacity:0}}.wd.now{color:var(--violet)}
+.msg.push .wd.now{color:var(--ember)}
+.scen p{margin:0 0 12px}.scen p:last-child{margin:0}.scen .ask{font-weight:600}
+@keyframes enter{from{opacity:0;transform:translateY(6px)}}
+.dots{display:flex;gap:6px;padding:12px 14px;background:var(--violet-s);border-radius:var(--r-md);align-self:flex-start}
+.dots i{width:6px;height:6px;border-radius:999px;background:var(--violet);animation:pulse 1.2s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.2s}.dots i:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+.composer{display:flex;flex-direction:column;gap:10px}
+.crow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.crow .sp{flex:1}
+.mic{width:48px;height:48px;border-radius:999px;display:grid;place-items:center;border:1px solid var(--bd2);background:var(--s1)}
+.mic svg{width:22px;height:22px;stroke:var(--mute);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.mic.live{background:var(--mint);border-color:transparent;animation:breathe 1.6s var(--ease) infinite}
+.mic.live svg{stroke:var(--on)}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 0 var(--mint-s)}50%{box-shadow:0 0 0 8px var(--mint-s)}}
+.hint{font-size:12px;color:var(--mute)}
+
+/* report */
+.report{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:20px;align-items:start}
+.overall{font:500 clamp(56px,9vw,88px)/1 var(--fm);color:var(--violet);font-variant-numeric:tabular-nums}
+.overall small{font-size:.32em;color:var(--mute)}
+.rows{display:flex;flex-direction:column;gap:14px}
+.row{display:grid;grid-template-columns:1fr auto;gap:6px 16px;align-items:center}
+.row .n{font:500 14px/20px var(--fs)}
+.row .v{font:500 20px/24px var(--fm);color:var(--violet);font-variant-numeric:tabular-nums}
+.track{grid-column:1/-1;height:6px;border-radius:999px;background:var(--s2);overflow:hidden}
+.fill{height:100%;border-radius:999px;background:var(--violet);transform-origin:left;animation:fill .4s cubic-bezier(0,0,.2,1) both}
+@keyframes fill{from{transform:scaleX(0)}}
+.row .q{grid-column:1/-1;font-size:13px;color:var(--mute)}
+.row .q em{color:var(--ink);font-style:normal}
+.row.missing{background:var(--ember-s);border-radius:var(--r-md);padding:12px 14px}
+.row.missing .n,.row.missing .v{color:var(--ember)}.row.missing .v{font:500 13px var(--fs)}
+ol.imp{margin:0;padding-left:20px}ol.imp li{margin-bottom:6px}
+details{margin-top:12px}summary{cursor:pointer;color:var(--mute);font:500 13px var(--fs);min-height:32px}
+.tline{font-size:13px;color:var(--mute);margin:4px 0}.tline b{color:var(--ink);font-weight:500}
+.foot{margin-top:32px;font-size:12px;color:var(--mute)}
+.foot{display:flex;align-items:center;gap:14px}
+.flink{display:inline-flex;align-items:center;gap:6px;color:var(--mute);text-decoration:none;min-height:28px;transition:color .15s}
+.flink:hover{color:var(--ink)}.flink svg,.flink img{width:20px;height:20px;display:block}
+.hint.beta{margin-top:8px;color:var(--mute);font-size:12px;line-height:17px}
+.lead .l1{display:block;color:var(--ink);margin-bottom:6px}.lead .l1 b{font-weight:600}
+.lead .l2{display:block;font-size:.9em;color:var(--mute)}.lead .l2>span{white-space:nowrap}.lead .l2 i{font-style:normal;margin:0 .2em 0 .45em;color:var(--mute);opacity:.6}.hero .lead{max-width:none}
+.flink img{opacity:.85;transition:opacity .15s}.flink:hover img{opacity:1}
+.flink.word span{font:600 13px var(--fd);letter-spacing:-.01em}
+
+@media(min-width:1400px){
+ .wrap{max-width:1560px}
+ .setup,.session{align-items:stretch}
+ .hero{height:100%}.hero .heroface{flex:1;height:auto;min-height:300px}
+ .opts{height:100%}.opts .startrow{margin-top:auto}
+ .aside{height:100%}.aside .grow{flex:1}
+ .left,.center,.colR{height:100%}
+ .left>.card:last-child{flex:1}
+ .center .chat{flex:1;max-height:none}
+ .colR .notescard{flex:1;display:flex;flex-direction:column}.colR .notescard textarea{flex:1;min-height:200px}
+ .setup{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr) minmax(0,.75fr)}
+ .setup .aside{grid-column:auto;display:flex}
+ .heroface{height:clamp(300px,24vw,420px)}
+ .session{grid-template-columns:minmax(0,.85fr) minmax(0,1.35fr) minmax(0,.8fr)}
+ .colR{grid-column:auto;display:flex;flex-direction:column}.colR>.card{width:100%}
+ .sface{height:200px}.chat{min-height:320px}
+}
+@media(min-width:1100px) and (min-height:680px){
+ html,body{height:100%;overflow:hidden}
+ .wrap{height:100vh;display:flex;flex-direction:column;padding-top:16px;padding-bottom:12px}
+ header.top{flex:none;margin-bottom:14px}
+ #chromeNote{flex:none}
+ .wrap>section:not([hidden]){flex:1;min-height:0}
+ .foot{flex:none;margin-top:10px}
+ .card{padding:18px 20px}
+ .session{grid-template-columns:minmax(0,.9fr) minmax(0,1.35fr) minmax(0,.85fr);grid-template-rows:minmax(0,1fr);align-items:stretch;gap:16px;height:100%}
+ .left,.center,.colR{height:100%;min-height:0;display:flex;flex-direction:column;gap:12px}
+ .colR{grid-column:auto}.colR>.card{width:100%}
+ .digits{font-size:34px;line-height:38px}.stages{margin-top:10px}
+ .session .left>.card.scencard{flex:1 1 auto;min-height:0;overflow:auto}
+ .scencard h2{font-size:19px;line-height:25px;margin-bottom:8px}.scen{font-size:15px;line-height:23px}.scen p{margin-bottom:9px}
+ .session .left>.card.notescard{flex:0 0 30%;min-height:140px;display:flex;flex-direction:column}.notescard textarea{flex:1;min-height:0;resize:none}
+ .sface{flex:none;height:clamp(100px,14vh,170px)}
+ .center .chat{flex:1;min-height:150px;max-height:none;overflow:auto}
+ .composer{flex:none}.composer textarea{min-height:0;height:72px;resize:none}
+ #assistCard{flex:1 1 auto;min-height:0;overflow:auto}
+ #fwCard,#guideCard{flex:none}
+ .setup,.report,.progress{height:100%;align-items:stretch}
+ .setup>*,.report>*,.progress>*{min-height:0;overflow:auto}
+ .pchart{display:flex;flex-direction:column;flex:1;min-height:0}.pchart .fig.big{flex:1;height:auto;min-height:180px}
+ .report .left,.report .right{display:flex;flex-direction:column;gap:12px}
+}
+/* 1100-1399 wide: keep three columns so the setup card is not squeezed into a short box */
+@media(min-width:1100px) and (max-width:1399px) and (min-height:680px){
+ .setup{grid-template-columns:minmax(0,.9fr) minmax(0,1.2fr) minmax(0,.8fr)}
+ .setup .aside{grid-column:auto;display:flex;flex-direction:column}.aside .grow{flex:1}
+ .hero h1{font-size:clamp(32px,3.4vw,44px);line-height:1.08}.hero .heroface{flex:1;height:auto;min-height:160px}.hero{height:100%;display:flex;flex-direction:column}
+ .opts{height:100%}.opts .startrow{margin-top:auto}
+}
+/* short screens: the summary repeats the choices above it, so drop it and tighten the controls */
+@media(min-width:1100px) and (min-height:680px) and (max-height:820px){
+ #summary{display:none}.opts .startrow{padding-top:12px}.opts h2{font-size:20px;margin-bottom:4px}
+ .field{padding:6px 0}.opts .label{margin-bottom:3px}
+ #h-optMode{display:none}.thinkopt{margin-top:6px}
+}
+@media(min-width:2000px){.wrap{max-width:1880px}}
+@media(min-width:2200px){.wrap{zoom:1.2;max-width:1800px}}
+@media(min-width:2200px) and (min-height:680px){.wrap{height:calc(100vh / 1.2)}}
+@media(max-width:900px){.progress{grid-template-columns:minmax(0,1fr)}.setup,.session,.report{grid-template-columns:minmax(0,1fr)}.setup .aside,.colR{grid-template-columns:minmax(0,1fr)}.chat{max-height:none}.field{grid-template-columns:minmax(0,1fr)}.field>.label{margin:0}}
+@media(max-width:600px){.stages{grid-template-columns:repeat(5,minmax(0,1fr))}.stages li{font-size:11px}.digits{font-size:32px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="brand">The Grill <small>(PM Edition)</small></div>
+<div class="hact"><span class="pill" id="status">Connecting…</span>
+<button class="btn ghost sm" id="copyBtn" hidden>Copy link (and paste in Chrome)</button></div></header>
+<div class="notice warn" id="chromeNote" hidden style="margin-bottom:16px">Voice works best in Google Chrome. Copy the link and open it in Chrome, or use the Claude desktop app.</div>
+
+<!-- SETUP -->
+<section id="vSetup" class="setup">
+  <div class="hero">
+    <div>
+      <h1>Get grilled before the real interview.</h1>
+      <p class="lead"><span class="l1">A timed <b>product sense</b> mock interview.</span><span class="l2"><span>Ask questions<i aria-hidden="true">·</i></span> <span>Pitch your approach<i aria-hidden="true">·</i></span> <span>Survive the pushback<i aria-hidden="true">·</i></span> <span>Get a report that quotes you</span></span></p>
+    </div>
+    <div class="face heroface" id="heroFace"></div>
+  </div>
+  <div class="card opts">
+    <h2>Set up your session</h2>
+    <div class="field"><span class="label">Domain</span><div class="vrow"><div class="seg" id="optDomain"></div><p class="help inl" id="h-optDomain"></p></div></div>
+    <div class="field"><span class="label">Interviewer</span><div><div class="seg" id="optPersona">
+      <button data-v="Friendly" aria-pressed="true" data-h="Warm, nods along, 1–2 pushback questions.">Friendly</button>
+      <button data-v="Skeptical" aria-pressed="false" data-h="Challenges every claim you can't back up, 3–4 pushback questions.">Skeptical</button>
+      <button data-v="Silent" aria-pressed="false" data-h="Short questions, lets silence stand so you have to fill it.">Silent</button></div></div></div>
+    <div class="field"><span class="label">Mode</span><div><div class="seg" id="optMode">
+      <button data-v="Practice" aria-pressed="true" data-h="Soft time limits and a stage guide beside the chat.">Practice</button>
+      <button data-v="Assisted" aria-pressed="false" data-h="Your next step lit up, plus three suggested answers. Marked as assisted.">Assisted</button>
+      <button data-v="Exam" aria-pressed="false" data-h="Each stage ends on time. No stage guide.">Exam</button>
+      <button data-v="Drill" aria-pressed="false" data-h="Five minutes on one skill, then an example of a 5. Not counted in your trends.">Drill</button></div>
+      <div id="drillOpt" hidden><select id="optDrill" class="sel" aria-label="Skill to drill"></select></div>
+      </div></div>
+    <div class="field" id="thinkOpt"><span class="label">Planning</span><div><div class="seg" id="optThink" role="group" aria-label="Planning time">
+        <button data-v="3" aria-pressed="true" data-h="">3 min</button><button data-v="5" aria-pressed="false" data-h="">5 min</button><button data-v="8" aria-pressed="false" data-h="">8 min</button></div></div></div>
+    <div class="field"><span class="label">Voice</span><div>
+      <div class="vrow"><div class="seg" id="optVoice">
+      <button data-v="on" aria-pressed="true" data-h="The interviewer reads every line aloud.">Speaks</button>
+      <button data-v="off" aria-pressed="false" data-h="Text only, words appear at reading pace.">Text only</button></div>
+      <button class="btn ghost sm" id="testVoice">Test voice</button></div>
+      <p class="help" id="voiceHint"></p></div></div>
+    <div class="field" id="micOpt" hidden><span class="label">Mic</span><div>
+      <div class="vrow"><div class="seg" id="optMic">
+      <button data-v="hands" aria-pressed="true" data-h="Mic opens at start and sends when you pause. Headphones recommended.">Hands-free</button>
+      <button data-v="type" aria-pressed="false" data-h="Type your answers, or tap the mic when you want.">Type</button></div></div></div></div>
+    <div class="field" id="focusOpt" hidden><span class="label">Focus</span><div class="vrow"><div class="seg" id="optFocus">
+      <button data-v="off" aria-pressed="true" data-h="">Off</button>
+      <button data-v="on" aria-pressed="false" id="focusOnBtn" data-h="">On</button></div><p class="help inl" id="h-optFocus"></p></div></div>
+    <div class="notice warn" id="noAI" hidden>The interviewer runs on Claude. Open this page signed in to Claude to start a session.</div>
+    <div class="startrow"><p class="help" id="summary"></p><button class="btn primary" id="startBtn" disabled>Start session · 25 min</button></div>
+  </div>
+  <aside class="aside">
+    <div class="card"><h2>How a session runs</h2><ol class="flow" id="flow"></ol></div>
+    <div class="card grow" id="getsCard"><h2>What you get</h2><ul class="gets" id="gets"></ul></div>
+    <div class="card grow" id="histWrap" hidden><div class="ahead"><h2 style="margin:0">Your progress</h2><button class="btn ghost sm" id="progBtn">Open →</button></div>
+      <div class="fig mini" id="miniFig"></div><p class="help" id="weakLine"></p><div class="hist" id="hist"></div></div>
+  </aside>
+</section>
+
+<!-- SESSION -->
+<section id="vSession" class="session" hidden>
+  <div class="left">
+    <div class="card timecard" id="timerCard"><div class="timer"><div><span class="tlabel" id="tLabel">Time left</span><div class="digits" id="digits">25:00</div></div><div class="tright"><div class="tlabel" id="stageLeft"></div><button class="endlink" id="endBtn">End early</button></div></div><ul class="stages" id="stages"></ul></div>
+    <div class="card scencard"><div class="tags" id="sTags"></div><h2 id="sTitle"></h2><div class="scen" id="sPrompt"></div></div>
+    <div class="card notescard"><span class="label">Your notepad · only you see it; it is included for grading</span><textarea id="notes" rows="6" placeholder="User, pains, solutions, metrics…"></textarea></div>
+  </div>
+  <div class="center">
+    <div class="face sface" id="sessFace"></div>
+    <div class="card chat" id="chat" aria-live="polite"></div>
+    <div class="card composer">
+      <textarea id="input" rows="3" placeholder="Type your answer, or use the mic."></textarea>
+      <div class="crow">
+        <button class="mic" id="micBtn" aria-label="Start speaking" hidden><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
+        <span class="sp"></span>
+        <button class="btn secondary" id="nextBtn">Next stage</button>
+        <button class="btn primary" id="sendBtn">Send</button>
+      </div>
+      <span class="hint" id="micHint"></span>
+    </div>
+  </div>
+  <div class="colR">
+    <div class="card" id="fwCard" hidden><span class="label">The answer flow</span><ol class="fw" id="fw"></ol><p class="fwnext" id="fwNext"></p></div>
+    <div class="card" id="assistCard" hidden><div class="ahead"><span class="label" style="margin:0" id="assistTitle">Suggested answers</span><button class="btn ghost sm" id="assistToggle" aria-expanded="true">Hide</button></div>
+      <div id="assistBody"><div class="opts3" id="opts3"></div><button class="btn secondary sm" id="stepNext" hidden style="margin-top:10px">Done with this step →</button><p class="help">Pick one to add it to your answer box. Edit freely, then send. Your draft carries over from Think to Pitch. Used suggestions are noted in the report.</p></div></div>
+    <div class="card" id="guideCard"><span class="label">Stage guide</span><h2 id="gTitle"></h2><p class="help" id="gText" style="font-size:14px;line-height:22px"></p></div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<section id="vProgress" class="progress" hidden>
+  <div class="pcol">
+    <div class="card pchart"><div class="ahead"><h2 style="margin:0">Overall score over time</h2><button class="btn ghost sm" id="progBack">← Back</button></div>
+      <p class="help" id="pNote"></p>
+      <div class="legend"><span class="lg own"></span>Your sessions <span class="lg ast"></span>Assisted (not counted in trends)</div>
+      <div class="fig big" id="bigFig"></div></div>
+    <div class="card" id="weakCard"><span class="label">Work on this next</span><h2 id="wName"></h2><p id="wTip" style="margin:0"></p></div>
+  </div>
+  <div class="card pcrit"><h2>By criterion</h2><p class="help" style="margin:-6px 0 12px">Average of your last 3 unassisted sessions, compared with the 3 before.</p><div id="pRows"></div></div>
+</section>
+
+<!-- GRADING -->
+<section id="vGrading" hidden>
+  <div class="card" style="max-width:640px;margin:0 auto;text-align:center">
+    <div class="face" id="gradeFace" style="height:200px;margin-bottom:20px"></div>
+    <h2 id="gradeMsg">Grading your interview…</h2>
+    <p class="lead" style="margin:0 auto">A separate, strict grader reads the full transcript three times against the rubric and takes the middle score for each criterion.</p>
+  </div>
+</section>
+
+<!-- REPORT -->
+<section id="vReport" class="report" hidden>
+  <div class="left">
+    <div class="card"><span class="label">Overall</span><div class="overall" id="rOverall"></div><p class="hint" id="rMeta"></p><p class="hint beta">Beta: this scoring has not yet been checked against human graders. Treat it as a strong second opinion, not a verdict.</p></div>
+    <div class="card"><h2>Fix these first</h2><ol class="imp" id="rImp"></ol></div>
+    <div class="card" id="fiveCard"><h2 id="fiveTitle">Show me a 5</h2><p class="help" id="fiveNote" style="margin:-6px 0 12px"></p><div id="fiveRows"></div></div>
+    <div class="card" id="cmpCard"><h2 id="cmpTitle">Against a strong answer</h2><p id="rCmp" style="margin:0"></p>
+      <details><summary>Show the strong answer outline</summary><div id="rOutline"></div></details></div>
+    <div class="crow"><button class="btn primary" id="againBtn">New session</button><button class="btn secondary" id="repProg">See your progress</button></div>
+  </div>
+  <div class="right">
+    <div class="card"><h2>By criterion</h2><div class="rows" id="rRows"></div></div>
+    <div class="card"><details><summary>Full transcript</summary><div id="rTranscript"></div></details></div>
+  </div>
+</section>
+
+<p class="foot"><a class="flink" href="https://github.com/tomerseladev" target="_blank" rel="noopener" aria-label="GitHub: tomerseladev" title="github.com/tomerseladev"><svg viewBox="0 0 16 16" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a><a class="flink" href="https://www.linkedin.com/in/tomersela/" target="_blank" rel="noopener" aria-label="LinkedIn: tomersela" title="linkedin.com/in/tomersela"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a><a class="flink word" href="https://tomersela.dev" target="_blank" rel="noopener" aria-label="tomersela.dev" title="tomersela.dev"><img src="data:image/png;base64,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" alt="" width="20" height="20"></a></p>
+</div>
+
+<script id="data" type="application/json">/*__DATA__*/</script>
+<script>
+{
+const D = JSON.parse(document.getElementById('data').textContent);
+const $ = id => document.getElementById(id);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const FULL = [{id:'clarify',name:'Clarify',min:5},{id:'think',name:'Think',min:3},{id:'pitch',name:'Pitch',min:8},{id:'pushback',name:'Pushback',min:6},{id:'wrap',name:'Wrap',min:3}];
+let STAGES = FULL, TOTAL = 25*60;
+/* drills: 5 minutes on one rubric skill. The opener is what the interviewer says after the scenario. */
+const DRILL_MIN=5;
+const DRILLS={
+ clarify_goal:{open:'Before you design anything, ask me what you need to know. When you are done, tell me the goal in one sentence.',guide:'Ask targeted questions on the goal, users, constraints and timeline. Then restate the goal in one sentence.'},
+ user_segment:{open:'Who would you build this for first, and why them over the others? You can ask me a question or two first.',guide:'Name one segment, say why it beats the others, and say who you are leaving out for now.'},
+ pain_points:{open:'Take your main user. What are their biggest pains, and which one matters most?',guide:'List two or three pains, rank them, and say why the top one comes first.'},
+ solutions:{open:'Give me two or three ways to solve the main pain. Which one would you build first?',guide:'Offer distinct options, not three versions of one idea. Pick one and say why.'},
+ tradeoffs:{open:'What would you not build, and what are you giving up with the choice you made?',guide:'Name what you cut, what it costs you, and what would make you change your mind.'},
+ metrics:{open:'How would you know this worked? Give me one main metric, and one thing you would watch so it does not backfire.',guide:'One north-star metric tied to the goal, plus a guardrail metric. Say what number would count as success.'},
+ structure:{open:'You have about two minutes. Walk me through your whole answer, and tell me your structure first.',guide:'Say the structure up front, then go part by part: user, pain, solution, trade-off, metric.'},
+ pushback:{open:'Give me your plan in two or three sentences: who it is for, what you would build first, and how you would measure it. Then I will push on it.',guide:'Concede what is fair, hold what is sound, and say what evidence would change your mind.'}};
+const GESTURES = ['none','nod','tilt','lean','brow','shake','approve'];
+
+/* ---------- VoiceBars ---------- */
+class Face{
+  constructor(el){
+    this.el=el;this.N=7;
+    el.innerHTML='<div class="bars"></div><span class="st">Idle</span><span class="who">Interviewer</span>';
+    this.wrap=el.querySelector('.bars');this.st=el.querySelector('.st');
+    this.bars=[...Array(this.N)].map(()=>{const b=document.createElement('div');b.className='bar';this.wrap.appendChild(b);return b});
+    this.cur=Array(this.N).fill(.12);this.tg=Array(this.N).fill(.12);
+    this.state='idle';this.shape=null;this.until=0;this.words=[];this.wi=0;this.next=0;this.t0=performance.now();
+    this.loop=this.loop.bind(this);requestAnimationFrame(this.loop);
+  }
+  set(s){this.state=s;this.wrap.classList.toggle('ember',s==='pushback');this.el.classList.toggle('hot',s==='pushback');
+    this.st.textContent={idle:'Idle',thinking:'Thinking…',speaking:'Speaking',pushback:'Pushback',listening:'Listening to you'}[s]||s;}
+  speak(text,push){this.words=String(text).split(/\s+/).filter(Boolean);this.wi=0;this.next=0;this.set(push?'pushback':'speaking');}
+  pulse(word){const w=word||'word';const amp=Math.min(1,.35+w.length*.08);
+    for(let i=0;i<this.N;i++){const c=1-Math.abs(i-3)/4;this.tg[i]=Math.min(1,amp*(.45+.55*c)*(.75+Math.random()*.5))}}
+  gesture(g){const now=performance.now(),N=this.N,d=reduce?1:1;
+    const curve={tilt:i=>.25+i*.09,approve:i=>.2+((i-3)/3)**2*.6,brow:i=>(i===0||i===N-1)?.85:.18,lean:i=>.55+Math.sin(i/(N-1)*Math.PI)*.35,nod:()=>.2};
+    if(reduce){return}
+    if(g==='nod')this.wrap.animate([{transform:'translateY(0)'},{transform:'translateY(8px)'},{transform:'translateY(-3px)'},{transform:'translateY(0)'}],{duration:520,easing:'cubic-bezier(.2,0,0,1)'});
+    if(g==='shake')this.wrap.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(-4px)'},{transform:'translateX(4px)'},{transform:'translateX(0)'}],{duration:480});
+    if(g==='tilt')this.wrap.animate([{transform:'rotate(0)'},{transform:'rotate(-7deg)',offset:.25},{transform:'rotate(-7deg)',offset:.75},{transform:'rotate(0)'}],{duration:1200,easing:'cubic-bezier(.2,0,0,1)'});
+    if(g==='lean'){this.wrap.classList.add('lean');this.wrap.animate([{transform:'scale(1)'},{transform:'scale(1.12)',offset:.2},{transform:'scale(1.12)',offset:.8},{transform:'scale(1)'}],{duration:1400});setTimeout(()=>this.wrap.classList.remove('lean'),1400)}
+    if(curve[g]){this.shape=curve[g];this.until=now+(g==='lean'?1400:g==='tilt'?1200:g==='nod'?260:900)}}
+  loop(now){const t=(now-this.t0)/1000,N=this.N;
+    if(this.shape&&now<this.until){for(let i=0;i<N;i++)this.tg[i]=this.shape(i)}
+    else{this.shape=null;const s=this.state;
+      if(s==='idle')for(let i=0;i<N;i++)this.tg[i]=.12+.04*Math.sin(t*1.6+i*.5);
+      else if(s==='thinking')for(let i=0;i<N;i++)this.tg[i]=.14+.22*Math.max(0,Math.sin(t*5-i*.7));
+      else if(s==='listening')for(let i=0;i<N;i++)this.tg[i]=.1+.05*Math.sin(t*2+i);
+      else{ if(this.driver!=='boundary'&&this.words.length&&now>this.next&&this.wi<this.words.length){const w=this.words[this.wi++];this.pulse(w.replace(/\W/g,''));
+          const pause=/[,.?!:;]$/.test(w);this.next=now+90+w.length*38+(pause?260:0);
+          if(pause)setTimeout(()=>{for(let i=0;i<N;i++)this.tg[i]=.14},140+w.length*38)}
+        for(let i=0;i<N;i++)this.tg[i]=Math.max(.1,this.tg[i]*.985)}}
+    for(let i=0;i<N;i++){this.cur[i]+=(this.tg[i]-this.cur[i])*(reduce?1:.22);this.bars[i].style.height=(this.cur[i]*100).toFixed(1)+'%'}
+    requestAnimationFrame(this.loop)}
+}
+const heroFace=new Face($('heroFace')), sessFace=new Face($('sessFace')), gradeFace=new Face($('gradeFace'));
+gradeFace.set('thinking');
+
+/* ---------- capabilities ---------- */
+let sample=null, tts=null, dict=null, db=null, userId=null, accountSave=false;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function use(n){for(let i=0;i<50&&!(window.claude&&window.claude.use);i++)await sleep(200);
+  try{return window.claude&&window.claude.use?await window.claude.use(n):null}catch(e){return null}}
+
+/* ---------- state ---------- */
+const opt={domain:null,persona:'Friendly',mode:'Practice',voice:'on',mic:'hands',focus:'off',focusId:null,think:'3'};
+try{const t=localStorage.getItem('grill-think');if(['3','5','8'].includes(t))opt.think=t}catch(e){}
+function thinkMin(){return opt.mode==='Exam'?3:Number(opt.think)}
+function fullStages(){return FULL.map(x=>x.id==='think'?{...x,min:thinkMin()}:x)}
+let S=null; // session
+let history=[]; // saved sessions
+
+function readyStatus(){setStatus(!sample?'Claude not connected':'Ready · voice: '+(tts?'Claude':('speechSynthesis' in window?'browser':'none'))+' · mic: '+(dict?'on':'off')+' · saves: '+(accountSave?'account':'this browser'))}
+function setStatus(t){$('status').textContent=t}
+function show(v){for(const id of['vSetup','vSession','vGrading','vReport','vProgress'])$(id).hidden=id!==v;window.scrollTo(0,0)}
+function help(id){const el=$(id),b=el.querySelector('[aria-pressed=true]'),h=$('h-'+id);if(h)h.textContent=b?b.dataset.h||'':''}
+function seg(id,key){const el=$(id);help(id);el.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;opt[key]=b.dataset.v;for(const x of el.querySelectorAll('button'))x.setAttribute('aria-pressed',x===b?'true':'false');help(id);renderStart()})}
+for(const x of document.querySelectorAll('.seg button[data-h]'))if(x.dataset.h)x.title=x.dataset.h;
+seg('optPersona','persona');seg('optFocus','focus');seg('optMic','mic');seg('optMode','mode');seg('optVoice','voice');seg('optThink','think');
+for(const x of $('optThink').querySelectorAll('button'))x.setAttribute('aria-pressed',x.dataset.v===opt.think?'true':'false');
+
+/* a scenario counts as seen once it is started, not only once it is graded, so an abandoned session does not come straight back */
+function startedIds(){try{return JSON.parse(localStorage.getItem('grill-started')||'[]')}catch(e){return[]}}
+function markStarted(id){try{const a=startedIds().filter(x=>x!==id);a.push(id);localStorage.setItem('grill-started',JSON.stringify(a.slice(-100)))}catch(e){}}
+function seenIds(){return new Set([...history.map(h=>h.scenarioId),...startedIds()])}
+function renderDomains(){
+  const seen=seenIds();const doms=[...new Set(D.scenarios.map(s=>s.domain))];
+  if(!opt.domain)opt.domain=doms[0];
+  $('optDomain').innerHTML=doms.map(d=>{const all=D.scenarios.filter(s=>s.domain===d);const left=all.filter(s=>!seen.has(s.id)).length;
+    const name=d==='fintech'?'Fintech':d==='cybersecurity'?'Cybersecurity':d;
+    const h=left?'':'All '+all.length+' done. You will get a repeat.';
+    return '<button data-v="'+d+'" aria-pressed="'+(d===opt.domain)+'" data-h="'+h+'">'+name+'</button>'}).join('');
+  help('optDomain');
+}
+seg('optDomain','domain');
+/* ---------- progress ---------- */
+const crName=id=>{const c=D.rubric.criteria.find(x=>x.id===id);return c?c.name:id};
+const scoreOf=(h,id)=>{const c=(h.criteria||[]).find(x=>x.id===id);return !c?null:c.status==='missing'?1:c.score};
+const avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+function stats(){
+  const own=history.filter(h=>h.mode!=='Assisted'&&h.mode!=='Drill'&&h.overall!=null);
+  const rows=D.rubric.criteria.map(c=>{const vals=own.map(h=>scoreOf(h,c.id)).filter(v=>v!=null);
+    const recent=avg(vals.slice(-3)),prev=vals.length>3?avg(vals.slice(-6,-3)):null;return{id:c.id,name:c.name,vals,recent,prev,tip:c.anchors['5']}});
+  const scored=rows.filter(r=>r.recent!=null);const weak=scored.length?scored.reduce((a,b)=>b.recent<a.recent?b:a):null;
+  return{own,rows,weak};
+}
+function lineChart(box,series,opts){opts=opts||{};
+  const draw=()=>{const W=box.clientWidth,H=box.clientHeight;if(!W||!H)return;const pl=opts.axes?28:4,pr=8,pt=8,pb=opts.axes?22:6;
+    const n=Math.max(2,...series.map(s=>s.pts.length?s.pts[s.pts.length-1].x+1:0));
+    const X=i=>pl+(n<=1?0:i*(W-pl-pr)/(n-1)),Y=v=>pt+(5-v)*(H-pt-pb)/4;let g='';
+    if(opts.axes){for(let v=1;v<=5;v++){g+='<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+Y(v)+'" y2="'+Y(v)+'" stroke="rgba(255,255,255,.07)"/><text x="'+(pl-8)+'" y="'+(Y(v)+4)+'" fill="#9aa3b2" font-size="11" text-anchor="end" font-family="JetBrains Mono">'+v+'</text>'}
+      if(W>520)for(let i=0;i<n;i++)g+='<text x="'+X(i)+'" y="'+(H-4)+'" fill="#9aa3b2" font-size="11" text-anchor="middle" font-family="JetBrains Mono">'+(i+1)+'</text>'}
+    for(const s of series){if(!s.pts.length)continue;const d=s.pts.map((p,i)=>(i?'L':'M')+X(p.x).toFixed(1)+' '+Y(p.v).toFixed(1)).join(' ');
+      g+='<path d="'+d+'" fill="none" stroke="'+s.color+'" stroke-width="'+(s.w||2)+'" stroke-linejoin="round" stroke-linecap="round"'+(s.dash?' stroke-dasharray="4 5" opacity=".6"':'')+'/>';
+      if(s.dots)for(const p of s.pts)g+='<circle cx="'+X(p.x)+'" cy="'+Y(p.v)+'" r="'+(opts.axes?4:3)+'" fill="'+(s.dash?'#0f1117':s.color)+'" stroke="'+s.color+'" stroke-width="2"/>'}
+    box.innerHTML='<svg viewBox="0 0 '+W+' '+H+'" aria-hidden="true">'+g+'</svg>'};
+  draw();if(!box._ro){box._ro=new ResizeObserver(()=>box._draw&&box._draw());box._ro.observe(box)}box._draw=draw;
+}
+function overallSeries(){const own=[],ast=[];history.filter(h=>h.mode!=='Drill').forEach((h,i)=>{if(h.overall==null)return;(h.mode==='Assisted'?ast:own).push({x:i,v:+h.overall})});
+  return[{pts:ast,color:'#9aa3b2',dash:true,dots:true},{pts:own,color:'#a78bfa',dots:true,w:2.5}]}
+function renderProgress(){
+  const st=stats(),n=st.own.length;
+  $('pNote').textContent=n<3?'You have '+n+' unassisted session'+(n===1?'':'s')+'. Trends become meaningful after about 3; until then, treat them as a rough signal.':n+' unassisted sessions, '+history.filter(h=>h.mode==='Assisted').length+' assisted, '+history.filter(h=>h.mode==='Drill').length+' drills (drills are not in the chart).';
+  lineChart($('bigFig'),overallSeries(),{axes:true});
+  $('weakCard').hidden=!st.weak;if(st.weak){$('wName').textContent=st.weak.name+' · '+st.weak.recent.toFixed(1);$('wTip').textContent='What a 5 looks like: '+st.weak.tip}
+  $('pRows').innerHTML='';
+  for(const r of st.rows){const row=el('div','prow'+(st.weak&&r.id===st.weak.id?' weak':''));row.appendChild(el('span','pn',r.name));
+    const sp=el('div','spark');row.appendChild(sp);
+    const v=el('span','pv');if(r.recent==null)v.append(el('span','flat','no data'));
+    else{let cls='flat',arrow='→';if(r.prev!=null){const d=r.recent-r.prev;if(d>=0.25){cls='up';arrow='↑'}else if(d<=-0.25){cls='down';arrow='↓'}}
+      v.append(r.prev!=null?r.prev.toFixed(1)+' → ':'',el('span',cls,r.recent.toFixed(1)+' '+(r.prev!=null?arrow:'')))}
+    row.appendChild(v);$('pRows').appendChild(row);
+    requestAnimationFrame(()=>lineChart(sp,[{pts:r.vals.map((x,i)=>({x:i,v:x})),color:'#a78bfa',dots:r.vals.length<2}]))}
+}
+function renderFocus(){const st=stats();const on=$('focusOnBtn');
+  $('focusOpt').hidden=!st.weak||opt.mode==='Drill';if(!st.weak){opt.focus='off';return}
+  on.dataset.h='Pushes hardest on '+st.weak.name+', your weakest.';opt.focusId=st.weak.id;help('optFocus')}
+
+function renderHistory(){renderFocus();renderDrillPick();
+  $('getsCard').hidden=!!history.length;
+  if(history.length)requestAnimationFrame(()=>lineChart($('miniFig'),overallSeries()));
+  {const st=stats();$('weakLine').textContent=st.weak?'Weakest lately: '+st.weak.name+' ('+st.weak.recent.toFixed(1)+')':'Finish an unassisted session to see your weakest area.'}
+  $('histWrap').hidden=!history.length;
+  $('hist').innerHTML='';
+  for(const h of history.slice(-3).reverse()){const d=document.createElement('div');const a=document.createElement('span');
+    const sc=D.scenarios.find(s=>s.id===h.scenarioId);a.textContent=(sc?sc.title:h.scenarioId)+' · '+(h.mode==='Drill'?'drill: '+crName(h.drill):h.persona+(h.mode==='Assisted'?' · assisted':''));
+    const b=document.createElement('b');const hv=h.mode==='Drill'?h.score:h.overall;b.textContent=hv!=null?Number(hv).toFixed(1):'–';d.append(a,b);$('hist').appendChild(d)}
+}
+function renderDrillPick(){const st=stats();const s=$('optDrill');const keep=opt.drill;s.innerHTML='';
+  for(const c of D.rubric.criteria){const o=document.createElement('option');o.value=c.id;o.textContent=c.name+(st.weak&&st.weak.id===c.id?' (your weakest)':'');s.appendChild(o)}
+  opt.drill=keep||(st.weak?st.weak.id:D.rubric.criteria[0].id);s.value=opt.drill;
+}
+$('optDrill').addEventListener('change',e=>{opt.drill=e.target.value;renderStart()});
+const FLOW_FULL=[['Clarify','5 min','Ask questions. Facts come only when you ask.'],['Think','3 min','Plan in the notepad.'],['Pitch','8 min','Walk through your answer.'],['Pushback','6 min','Hold up under pressure.'],['Wrap','3 min','Final summary, then the report.']];
+const FLOW_DRILL=[['Scenario','read','The same kind of case as a full session.'],['Drill','5 min','One skill. The interviewer asks, then follows up once or twice.'],['Score','after','A score for that skill and an example of a 5.']];
+function renderStart(){$('startBtn').disabled=!sample;$('noAI').hidden=!!sample;const drill=opt.mode==='Drill';
+  $('drillOpt').hidden=!drill;if(drill)$('focusOpt').hidden=true;else renderFocus();
+  try{localStorage.setItem('grill-think',opt.think)}catch(e){}
+  const tm=thinkMin(),tot=FULL.reduce((a,x)=>a+(x.id==='think'?tm:x.min),0);
+  $('thinkOpt').hidden=drill||opt.mode==='Exam';
+  $('startBtn').textContent=drill?'Start drill · 5 min':'Start session · '+tot+' min';
+  $('gets').innerHTML=(drill?['One skill scored 1–5, backed by a quote of what you said','The one fix that matters most','An example of a 5, written for the same scenario','The strong answer for that skill']:['Eight criteria scored 1–5, each backed by a quote of what you said','Anything you never covered marked as missing','The three fixes that matter most','A comparison with a strong answer, and an example of a 5 for your two lowest skills']).map(t=>'<li>'+t+'</li>').join('');
+  $('flow').innerHTML=(drill?FLOW_DRILL:FLOW_FULL.map(x=>x[0]==='Think'?[x[0],tm+' min',x[2]]:x)).map(x=>'<li><b>'+x[0]+'</b><span>'+x[1]+'</span><small>'+x[2]+'</small></li>').join('');
+  const dn=opt.domain==='fintech'?'Fintech':'Cybersecurity';$('summary').textContent=dn+' · '+opt.persona+' interviewer · '+(drill?'drill: '+crName(opt.drill):opt.mode+(tm!==3?' · '+tm+' min planning':''))+' · '+(opt.voice==='on'?'spoken':'text only')+(!drill&&opt.focus==='on'&&opt.focusId?' · focus: '+crName(opt.focusId):'');}
+const GUIDE={clarify:['Clarify','Ask about the users, the goal, constraints and data. The interviewer answers only what you ask, so ask well.'],
+ think:['Think','Plan silently. Pick one user, their top pains, two or three solutions, one trade-off and a success metric. Speak or type into the notepad.'],
+ pitch:['Pitch','Walk through your plan out loud. Say the structure first, then go part by part.'],
+ pushback:['Pushback','Defend or adapt. Concede what is fair, hold what is sound, and say what evidence would change your mind.'],
+ wrap:['Wrap','Give your recommendation in under a minute: user, problem, solution, metric.']};
+
+/* ---------- persistence ---------- */
+/* Visitors from outside the organization, Viewers and Commenters can read the database but not write to it, so a
+   refused save is kept in this browser and both places are read back. The browser copy is kept per account. */
+function localKey(){return userId?'grill-history-'+userId:'grill-history'}
+function localHistory(){try{const a=JSON.parse(localStorage.getItem(localKey())||'[]');return Array.isArray(a)?a:[]}catch(e){return[]}}
+function limit(p){return Promise.race([p,new Promise((_,r)=>setTimeout(()=>r('t'),10000))])}
+async function loadHistory(){
+  const local=localHistory(),arr=[];
+  try{ if(db&&userId){const snap=await limit(db.collection('data/users/'+userId).get());
+      (snap.docs||snap||[]).forEach(d=>{const v=typeof d.data==='function'?d.data():d;if(v&&v.scenarioId)arr.push(v)})}
+  }catch(e){}
+  const byId=new Map();for(const h of [...local,...arr])if(h&&h.scenarioId)byId.set(h.id,h);
+  history=[...byId.values()].sort((a,b)=>(a.at||'').localeCompare(b.at||''));
+}
+async function saveSession(rec){
+  history.push(rec);
+  if(db&&userId)try{await limit(db.collection('data/users/'+userId).doc(rec.id).set(rec));accountSave=true;readyStatus();return}catch(e){}
+  accountSave=false;readyStatus();
+  try{localStorage.setItem(localKey(),JSON.stringify([...localHistory().filter(h=>h&&h.id!==rec.id),rec].slice(-50)))}catch(e){}
+}
+
+/* ---------- voice out ---------- */
+let voiceErr='';
+function browserSpeak(text,done,rv){
+  if(!('speechSynthesis' in window)){voiceNote('This browser has no built-in voice.');return false}
+  try{const u=new SpeechSynthesisUtterance(text);u.lang='en-US';u.rate=1.02;
+    const jt=paras(text).join(' ');
+    u.text=jt;u.onboundary=e=>{sessFace.driver='boundary';const w=jt.substr(e.charIndex,12).split(/\s/)[0];sessFace.pulse(w);rv&&rv.to(e.charIndex+1)};
+    u.onend=done;u.onerror=e=>{if(!/interrupted|canceled/.test(e.error||''))voiceNote('Browser voice failed ('+(e.error||'error')+').');done()};
+    speechSynthesis.cancel();speechSynthesis.speak(u);return true}catch(e){voiceNote('Browser voice failed.');return false}
+}
+function voiceNote(t){if(voiceErr===t)return;voiceErr=t;if(S&&!S.ended)addMsg('sys',t);$('voiceHint').textContent=t}
+let ttsRoute=null; /* {rv, offs} for the line being read by the Claude voice */
+function lineIdx(x,cur){if(typeof x==='number')return x;const id=(x&&x.id)||x;const m=/^L(\d+)$/.exec(String(id||''));return m?+m[1]:cur}
+let curRv=null;
+function speak(text,push,face,rv,onEnd){if(rv)curRv=rv;let ended=false;
+  face=face||sessFace;face.driver=null;face.speak(text,push);
+  if(face===sessFace&&S){S.said=[...(S.said||[]).slice(-1),text];S.heard=new Set(norm(S.said.join(' ')))}
+  if(face===sessFace&&S&&opt.voice==='on'){S.speaking=true;clearTimeout(micTimer);$('input').value=micBuf}
+  let timer=null;
+  const done=()=>{if(ended)return;ended=true;clearInterval(timer);if(rv){rv.all();const f=rv.onDone;rv.onDone=null;f&&f()}ttsRoute=null;
+    if(face!==sessFace){face.set('idle');onEnd&&onEnd();return}
+    if(S){const more=(S.qLen||0)>1;S.speaking=more&&opt.voice==='on';quietUntil=Date.now()+1200;if(!S.ended&&!more)sessFace.set(S.dictating?'listening':(S.busy?'thinking':'idle'))}
+    onEnd&&onEnd()};
+  const est=Math.min(60000,600+text.split(/\s+/).length*330);
+  const clockReveal=cps=>{if(!rv)return;const t0=Date.now();clearInterval(timer);timer=setInterval(()=>{rv.to((Date.now()-t0)/1000*cps)},80)};
+  const viaBrowser=()=>{const ok=browserSpeak(text,done,rv);if(!ok){clockReveal(15);setTimeout(done,est)}};
+  if(opt.voice!=='on'){clockReveal(45);setTimeout(done,Math.min(est,600+text.length/45*1000));return}
+  if(S&&(S.dictating||S.handsfree)){viaBrowser();return}
+  if(tts){const ps=paras(text);const offs=joinOffsets(ps);ttsRoute={rv,offs,cur:0};
+    tts.speak(ps.map((t,i)=>({text:t,voice:'glassy',id:'L'+i}))).then(done,e=>{const c=e&&e.code||'error';ttsRoute=null;
+      if(c==='viewer_stopped'||Date.now()-hushedAt<1500){done();return}
+      if(c!=='busy')voiceNote('Claude voice unavailable ('+c+'). Using the browser voice.');
+      if(c==='not_granted')tts=null;viaBrowser()});return}
+  viaBrowser();
+}
+let hushedAt=0;
+function hush(){hushedAt=Date.now();try{curRv&&curRv.all()}catch(e){}try{tts&&tts.stop()}catch(e){}try{window.speechSynthesis&&speechSynthesis.cancel()}catch(e){}}
+
+/* ---------- paragraphs + word reveal ---------- */
+function paras(text){
+  const sn=(String(text).match(/[^.!?]+[.!?]+["')]*\s*/g)||[String(text)]).map(x=>x.trim()).filter(Boolean);
+  if(sn.length<=2)return[sn.join(' ')];
+  let k=sn.findIndex((x,i)=>i>0&&/^(You are|You're|As the|Your task|Design|Imagine you)/.test(x));
+  const out=[];const body=k>0?sn.slice(0,k):sn;
+  for(let i=0;i<body.length;i+=2)out.push(body.slice(i,i+2).join(' '));
+  if(k>0)out.push(sn.slice(k).join(' '));return out;
+}
+/* builds <p> per paragraph with one span per word; returns a reveal controller keyed by character offset in the joined text */
+function wordsInto(box,ps,askLast){
+  box.innerHTML='';const words=[];let off=0;
+  ps.forEach((t,pi)=>{const p=document.createElement('p');if(askLast&&pi===ps.length-1&&ps.length>1)p.className='ask';
+    t.split(/(\s+)/).forEach(tok=>{if(!tok)return;if(/^\s+$/.test(tok)){p.appendChild(document.createTextNode(tok));off+=tok.length;return}
+      const w=document.createElement('span');w.className='wd';w.textContent=tok;w.dataset.c=off;words.push(w);p.appendChild(w);off+=tok.length});
+    box.appendChild(p);off+=1;});
+  let shown=0,now=null;
+  const ctl={len:off,to(c){while(shown<words.length&&+words[shown].dataset.c<=c){words[shown].classList.add('on');shown++}
+      if(now)now.classList.remove('now');now=words[shown-1]||null;if(now&&shown<words.length)now.classList.add('now');
+      const ch=$('chat');if(box.closest('#chat'))ch.scrollTop=ch.scrollHeight},
+    all(){for(const w of words)w.classList.add('on');if(now)now.classList.remove('now');shown=words.length}};
+  if(reduce)ctl.all();return ctl;
+}
+function joinOffsets(ps){const o=[];let c=0;for(const t of ps){o.push(c);c+=t.length+1}return o}
+
+/* ---------- chat ---------- */
+function addMsg(kind,text,push){
+  const m=document.createElement('div');m.className='msg '+kind+(push?' push':'');
+  if(kind!=='sys'){const w=document.createElement('span');w.className='w';w.textContent=kind==='ai'?(push?'Interviewer · pushback':'Interviewer'):'You';m.appendChild(w)}
+  let rv=null;
+  if(kind==='ai'){const box=document.createElement('div');box.className='wbox';m.appendChild(box);rv=wordsInto(box,paras(text),false)}
+  else m.appendChild(document.createTextNode(text));
+  $('chat').appendChild(m);$('chat').scrollTop=$('chat').scrollHeight;return rv;
+}
+let dotsEl=null;
+function thinking(on){if(on&&!dotsEl){dotsEl=document.createElement('div');dotsEl.className='dots';dotsEl.innerHTML='<i></i><i></i><i></i>';$('chat').appendChild(dotsEl);$('chat').scrollTop=$('chat').scrollHeight;if(!S||!S.speaking)sessFace.set('thinking')}
+  if(!on&&dotsEl){dotsEl.remove();dotsEl=null}}
+/* interviewer lines play one after another: a new line waits until the current one has been spoken */
+let vq=Promise.resolve();
+function say(text,{push=false,gesture='none',log=true,onShow=null}={}){
+  if(log)S.transcript.push({who:'Interviewer',stage:stage().id,text});
+  const sess=S;sess.qLen=(sess.qLen||0)+1;if(opt.voice==='on'){sess.speaking=true;clearTimeout(micTimer)}
+  vq=vq.then(()=>new Promise(res=>{
+    if(S!==sess||sess.ended){res();return}
+    thinking(false);const rv=addMsg('ai',text,push);if(onShow)onShow($('chat').lastElementChild,rv);setTimeout(suggest,0);
+    const go=()=>speak(text,push,null,rv,res);
+    if(GESTURES.includes(gesture)&&gesture!=='none'){sessFace.gesture(gesture);setTimeout(go,gesture==='lean'?500:250)}else go();
+  })).then(()=>{sess.qLen=Math.max(0,(sess.qLen||1)-1)});
+  return vq;
+}
+
+/* ---------- assistant suggestions ---------- */
+const STEPS=[{id:'clarify_goal',k:'Goal',n:'Goal and context',tip:'Restate the goal and what success looks like, in one or two sentences.'},
+ {id:'user_segment',k:'Users',n:'Users',tip:'List the user groups, then focus on one and say why. Pick one.'},
+ {id:'pain_points',k:'Pains',n:'Pain points',tip:'Name the main pains for that user, most painful first. Pick one or more.'},
+ {id:'solutions',k:'Solutions',n:'Solutions',tip:'Offer two or three ideas for the top pain. Pick one or more.'},
+ {id:'tradeoffs',k:'Trade-offs',n:'Prioritise and trade-offs',tip:'Pick one idea. Say what you give up and why it is worth it.'},
+ {id:'metrics',k:'Metrics',n:'Success metrics',tip:'One north-star metric, plus a guardrail that catches harm. Pick one or more.'},
+ {id:'summary',k:'Summary',n:'Risks and summary',tip:'Name the biggest risk, then sum up in one sentence.'}];
+const STAGE_NEXT={clarify:'clarify_goal',think:'user_segment',pitch:'user_segment',pushback:'tradeoffs',wrap:'summary'};
+const COUNTS=[1,3,3,3,2,2,1];
+const MULTI=new Set([2,3,5]); /* pains, solutions, metrics: a good answer has more than one */
+function flowMode(){const id=stage().id;return id==='clarify'?'clarify':id==='pushback'?'pushback':id==='wrap'?'wrap':'build'}
+function curStep(){const m=flowMode();return m==='clarify'?0:m==='wrap'?6:S.step}
+function renderFw(){if(!S)return;const m=flowMode(),cur=curStep();
+  $('fw').innerHTML='';STEPS.forEach((st,i)=>{const done=S.done.has(i),now=i===cur&&m!=='pushback';
+    const li=el('li',(done&&!now?'done':now?'now':'')+(m==='build'?' clk':''));li.title=st.n+(m==='build'?' (click to work on this step)':'');
+    li.appendChild(el('i',null,done&&!now?'✓':String(i+1)));li.appendChild(el('span',null,st.k));
+    if(m==='build')li.addEventListener('click',()=>{if(S.step===i)return;S.step=i;renderFw();suggest()});$('fw').appendChild(li)});
+  const box=$('fwNext');box.innerHTML='';
+  if(m==='pushback')box.append(el('b',null,'Pushback. '),'The flow pauses. Answer the challenge, then keep your plan.');
+  else if(m==='clarify')box.append(el('b',null,'Now: '+STEPS[0].n+'. '),'Ask questions before you answer. '+STEPS[0].tip);
+  else if(cur>=STEPS.length)box.append(el('b',null,'All steps done. '),stage().id==='think'?'Press "I\'m ready to pitch" to deliver it.':'Press "Send pitch" when it reads well.');
+  else box.append(el('b',null,'Now: '+STEPS[cur].n+'. '),STEPS[cur].tip);
+  box.animate([{opacity:0,transform:'translateY(4px)'},{opacity:1,transform:'none'}],{duration:reduce?1:260,easing:'cubic-bezier(.2,0,0,1)'});
+}
+function insertDraft(text,target){
+  const ta=$(target==='notes'?'notes':'input');const cur=ta.value.trim();ta.value=cur?cur+(target==='notes'?'\n':'\n\n')+text:text;
+  if(target!=='notes'){micBuf=ta.value;S.draftPicked=true;growBox()}
+  ta.scrollTop=ta.scrollHeight;
+  ta.animate([{boxShadow:'0 0 0 3px rgba(45,212,191,.45)'},{boxShadow:'0 0 0 0 rgba(45,212,191,0)'}],{duration:reduce?1:700});
+}
+function renderOpts(list,loading,n){const box=$('opts3');box.innerHTML='';n=n||3;$('stepNext').hidden=true;
+  if(S&&!loading&&flowMode()==='build'&&MULTI.has(S.step)&&S.step<STEPS.length)box.appendChild(el('p','help','Pick one or more, then go to the next step.'));
+  if(loading){for(let i=0;i<n;i++){const d=el('div','opt3 sk','Thinking of an option…');box.appendChild(d)}return}
+  if(!list||!list.length){box.appendChild(el('p','help','No suggestions right now.'));return}
+  list.slice(0,n).forEach((o,i)=>{const b=el('button','opt3');b.appendChild(el('b',null,String(o.label||'Option')));b.append(String(o.text||''));
+    b.style.animationDelay=(i*60)+'ms';
+    b.addEventListener('click',()=>{if(!S||S.ended)return;S.picks=(S.picks||0)+1;const m=flowMode(),t=String(o.text||'');
+      insertDraft(t,'input');
+      b.classList.add('used');b.disabled=true;
+      if(m==='build'&&S.step<STEPS.length){if(MULTI.has(S.step)){S.multiPicked=true;$('stepNext').hidden=false;return}S.done.add(S.step);S.step++;renderFw();suggest()}
+});
+    box.appendChild(b)});
+}
+async function suggest(){
+  if(!S||S.ended||opt.mode!=='Assisted'||!sample)return;
+  const m=flowMode(),cur=curStep();
+  if(m==='build'&&cur>=STEPS.length){$('opts3').innerHTML='';$('opts3').appendChild(el('p','help',(stage().id==='think'?'Every step is in your answer box. Edit it, then press "I\'m ready to pitch".':'Every step is in your answer box. Edit it, then press "Send pitch".')));return}
+  const n=m==='clarify'?3:m==='pushback'?3:COUNTS[cur];
+  try{S.sugCtrl&&S.sugCtrl.abort()}catch(e){}const ctrl=new AbortController();S.sugCtrl=ctrl;renderOpts(null,true,n);
+  const st=STEPS[cur],notes=$('notes').value.trim(),draft=$('input').value.trim();
+  const RUB={0:'clarify_goal',1:'user_segment',2:'pain_points',3:'solutions',4:'tradeoffs',5:'metrics',6:'structure'};
+  const crit=id=>D.rubric.criteria.find(c=>c.id===id);
+  const top=id=>{const c=crit(id);return c?'Score-5 standard for "'+c.name+'": '+c.anchors['5']:''};
+  /* the coach may know WHICH topics matter (not the answers), so it can point the candidate at the right questions */
+  const asked=S.transcript.filter(t=>t.who==='Candidate').map(t=>t.text).join(' ').toLowerCase();
+  const topics=(S.sc.hidden_facts||[]).map(h=>h.topic+' ('+h.question_hint+')').join('; ');
+  const task=m==='clarify'?'Suggest exactly 3 clarifying questions the candidate should ask the interviewer next. The facts worth uncovering in this scenario are about: '+topics+'. Pick the 3 most important of these that have NOT been asked yet, most important first (business goal and users before details). Each option is ONE short, direct question of at most 140 characters. No statements, no assumptions, no answers; just the question. '+top('clarify_goal')
+   :m==='pushback'?'Suggest exactly 3 strong answers to the interviewer\'s latest challenge. Each must answer the exact question asked, directly, in the first sentence, then support it with facts the interviewer stated earlier, and say what it changes in the plan. Vary the stance: adapt the plan, defend it with evidence, or reframe the trade-off. '+top('pushback')
+   :'Suggest exactly '+n+' option'+(n>1?'s':'')+' for ONE step of the pitch: '+st.n+'. What this step needs: '+st.tip+(n>1?' Each option must take a genuinely different direction, and each must be strong enough to score 5.':' It must be strong enough to score 5.')+' '+top(RUB[cur])+
+     ' Use the facts the interviewer revealed in the transcript wherever they apply, and name them. Stay consistent with the candidate\'s draft: solutions must address the top pain already chosen, trade-offs must compare impact, effort and risk and say what would change the decision, metrics must measure the stated goal and the chosen solution with a target and a time frame, and the summary must tie user, pain, solution and metric together. Write it as spoken words the candidate will say in their pitch.';
+  const input=[{role:'user',content:'You are an expert product-sense interview coach. Your suggestions should lead to a top score on the rubric. '+task+
+   (m==='clarify'?'\nGive each question a 2 to 4 word label such as "Ask about users".\n\n':'\nRules: first person; at most 350 characters each; use only facts from the scenario prompt or that the interviewer stated (never invent facts the interviewer did not give; state an assumption out loud when needed); give each option a 2 to 4 word label.\n\n')+
+   'Scenario prompt:\n'+S.sc.prompt+'\n\nTranscript so far:\n'+S.transcript.map(t=>t.who+': '+t.text).join('\n')+
+   (notes?'\n\nCandidate notes:\n'+notes:'')+(draft?'\n\nCandidate draft answer (not sent yet):\n'+draft:'')+
+   '\n\nReturn only JSON: {"options":[{"label":"...","text":"..."}]}'}];
+  try{let v=null;if(typeof sample.json==='function')v=await sample.json(input,{modelTier:m==='clarify'?'quick':'default',signal:ctrl.signal,cache:false});
+    else{const r=await sample(input,{modelTier:m==='clarify'?'quick':'default',signal:ctrl.signal,cache:false});v=parseJSON(r&&r.text)}
+    if(S.sugCtrl!==ctrl)return;renderOpts(v&&v.options,false,n)}catch(e){if(S&&S.sugCtrl===ctrl)renderOpts([],false,n)}
+}
+$('stepNext').addEventListener('click',()=>{if(!S||flowMode()!=='build'||S.step>=STEPS.length)return;S.done.add(S.step);S.step++;renderFw();suggest()});
+$('assistToggle').addEventListener('click',()=>{const b=$('assistToggle'),open=b.getAttribute('aria-expanded')==='true';
+  b.setAttribute('aria-expanded',open?'false':'true');b.textContent=open?'Show':'Hide';$('assistBody').hidden=open});
+
+/* ---------- growing answer box + collapsing scenario ---------- */
+const mirror=document.createElement('textarea');mirror.className='mirror';mirror.setAttribute('aria-hidden','true');mirror.tabIndex=-1;document.body.appendChild(mirror);
+function growBox(){const ta=$('input');if(!ta.offsetParent)return;mirror.style.width=ta.clientWidth+'px';mirror.value=ta.value||' ';
+  const c=document.querySelector('.center');const maxH=Math.max(140,(c?c.clientHeight:700)*0.6);
+  ta.style.height=Math.round(Math.min(maxH,Math.max(72,mirror.scrollHeight+2)))+'px'}
+$('input').addEventListener('input',growBox);addEventListener('resize',growBox);
+new ResizeObserver(()=>{const c=$('chat');c.scrollTop=c.scrollHeight}).observe($('chat'));
+function flip(m,fn){const h1=m.offsetHeight;fn();const h2=m.offsetHeight;if(!reduce)m.animate([{height:h1+'px'},{height:h2+'px'}],{duration:400,easing:'cubic-bezier(.2,0,0,1)'})}
+function collapseScen(){if(!S||!S.scenMsg||S.scenCollapsed)return;S.scenCollapsed=true;const m=S.scenMsg;
+  if(!m.querySelector('.short')){const sh=el('div','short');sh.append('Scenario read. It is on the left.');const b=el('button',null,'Show again');
+    b.addEventListener('click',()=>flip(m,()=>m.classList.remove('collapsed')));sh.appendChild(b);
+    const hide=el('button',null,'Hide');hide.style.display='none';m.appendChild(sh);
+    m.addEventListener('click',e=>{if(e.target.closest('.short'))return;if(!m.classList.contains('collapsed')&&S.scenCollapsed&&e.target.closest('.wbox'))flip(m,()=>m.classList.add('collapsed'))})}
+  flip(m,()=>m.classList.add('collapsed'))}
+
+/* ---------- session ---------- */
+function stage(){return STAGES[S.si]}
+function fmt(s){s=Math.max(0,Math.round(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function renderGuide(){const g=stage().id==='drill'?['Drill: '+crName(S.drill),DRILLS[S.drill].guide]:GUIDE[stage().id];$('guideCard').hidden=!(opt.mode==='Practice'||opt.mode==='Drill');$('assistCard').hidden=opt.mode!=='Assisted';$('fwCard').hidden=opt.mode!=='Assisted'||stage().id==='clarify';
+  $('assistTitle').textContent=stage().id==='clarify'?'Questions you could ask':stage().id==='pushback'?'Ways to answer the challenge':'Suggested answers';
+  if(S&&(stage().id==='think'||stage().id==='pitch')&&!S.flowStage){S.flowStage=stage().id;S.step=0;S.done=new Set()}
+  if(S)renderFw();$('gTitle').textContent=g[0];$('gText').textContent=g[1]}
+function renderStages(){renderGuide();$('stages').innerHTML=STAGES.map((s,i)=>'<li class="'+(i<S.si?'done':i===S.si?'now':'')+'">'+(i===S.si?'<i class="pb" id="pb"></i>':'')+s.name+'<span>'+s.min+' min</span></li>').join('');
+  $('stages').style.gridTemplateColumns=STAGES.length===1?'minmax(0,1fr)':'';if(S&&S.dictating)$('micHint').textContent=micLiveHint();
+  const id=stage().id,think=id==='think';
+  /* one primary action per stage: in Think it is "I'm ready to pitch", which also sends the draft as the pitch */
+  $('sendBtn').hidden=think;
+  $('sendBtn').textContent={clarify:'Ask',pitch:'Send pitch',pushback:'Send',wrap:'Send and finish'}[id]||'Send';
+  $('nextBtn').textContent={clarify:'Done asking →',think:"I'm ready to pitch →",pitch:'Pitch done →',pushback:'Wrap up →',wrap:'Finish',drill:'Finish drill →'}[id];
+  $('nextBtn').className='btn '+(think?'primary':'secondary');
+  $('input').placeholder=stage().id==='think'?(opt.mode==='Assisted'?'Build your answer here step by step. It carries over to the Pitch.':'Think stage: plan in your notepad. Press "I\'m ready to pitch" when done.'):'Type your answer, or use the mic.';}
+function tick(){
+  if(!S||S.ended)return;const now=Date.now();const left=TOTAL-(now-S.start)/1000;const sl=stage().min*60-(now-S.stageStart)/1000;
+  $('digits').textContent=fmt(left);
+  const hot=left<=120;$('timerCard').classList.toggle('hot',hot);$('tLabel').textContent=hot?(left>60?'2 minutes left':'Final minute'):'Time left';
+  const bud=stage().min*60,pct=(bud-sl)/bud,warn=pct>=0.8&&sl>=0,over=sl<0;
+  $('stageLeft').textContent=stage().name+(sl>=0?' · '+fmt(sl)+' left':' · over by '+fmt(-sl)+' · move on');
+  $('stageLeft').className='tlabel'+(over?' over':warn?' warn':'');
+  const pb=$('pb');if(pb){pb.style.width=Math.min(100,pct*100).toFixed(1)+'%';const li=pb.parentNode;li.classList.toggle('warn',warn);li.classList.toggle('over',over)}
+  if(over&&-sl>=60&&opt.mode!=='Exam'&&!S.busy&&!S.speaking&&!S.nudged[stage().id]){S.nudged[stage().id]=true;
+    const N={clarify:"We are past time on questions. Let's move on when you're ready.",think:"Time's up for planning. Take me through it when you're ready.",
+      pitch:"We're running long. Bring it to a close.",pushback:"Let's leave it there and wrap up.",wrap:"We need to finish now.",drill:"We're at time. Finish your thought."};
+    /* Pushback over time: if a question is still open, ask for a short answer and wrap after it; otherwise wrap now. The line goes into the transcript so the AI interviewer knows it was said. */
+    const sid=stage().id,last=S.transcript[S.transcript.length-1],open=sid==='pushback'&&last&&last.who==='Interviewer';
+    if(sid==='pushback'&&open){S.wrapAfterAnswer=true;say("We're over time. Give me a short answer to that, and then we'll wrap up.",{gesture:'lean'});return}
+    say(N[sid],{gesture:'lean',log:sid==='pushback'});
+    if(sid==='pushback'){vq=vq.then(()=>{if(S&&!S.ended&&stage().id==='pushback')advance(false,{keepVoice:true,short:true})});return}
+    /* the interviewer has just invited the pitch, so from here on speech and typing go to the conversation, not the notepad */
+    if(stage().id==='think'){S.si++;S.stageStart=Date.now();renderStages();addMsg('sys','Pitch stage')}}
+  if(opt.mode==='Exam'&&sl<=0&&!S.busy){advance(true)}
+  if(left<=0&&!S.busy){
+    /* time is up: if an answer is being written, give up to two minutes to send it; finish() keeps any unsent draft either way */
+    if($('input').value.trim()&&left>-120){if(!S.timeUp){S.timeUp=true;addMsg('sys','Time is up. Send your answer to finish.');$('nextBtn').className='btn primary'}return}
+    finish();return}
+}
+async function startSession(o){o=o||{};
+  hush();const seen=seenIds();const pool=D.scenarios.filter(s=>s.domain===opt.domain);
+  const fresh=pool.filter(s=>!seen.has(s.id));const sc=o.sc||(fresh.length?fresh:pool)[Math.floor(Math.random()*(fresh.length||pool.length))];
+  const drill=opt.mode==='Drill'?(o.drill||opt.drill):null;markStarted(sc.id);
+  if(drill){STAGES=[{id:'drill',name:'Drill · '+crName(drill),min:DRILL_MIN}];TOTAL=DRILL_MIN*60}else{STAGES=fullStages();TOTAL=STAGES.reduce((a,x)=>a+x.min,0)*60}
+  $('assistBody').hidden=false;$('assistToggle').textContent='Hide';$('assistToggle').setAttribute('aria-expanded','true');renderOpts(null,true);
+  S={id:'s'+Date.now().toString(36),picks:0,nudged:{},focusId:opt.focus==='on'?opt.focusId:null,step:0,done:new Set(),flowStage:null,draftPicked:false,sc,si:0,start:Date.now(),stageStart:Date.now(),transcript:[],interrupts:0,pushes:0,busy:false,ended:false,dictating:false,handsfree:!!(dict&&opt.mic==='hands'),drill};
+  $('chat').innerHTML='';$('notes').value='';$('input').value='';
+  $('sTags').innerHTML='';for(const t of[sc.domain==='fintech'?'Fintech':'Cybersecurity',sc.sub_domain.replace(/-/g,' '),sc.difficulty,opt.persona,drill?'Drill':opt.mode]){const s=document.createElement('span');s.className='tag'+(t===sc.difficulty?' ai':'');s.textContent=t;$('sTags').appendChild(s)}
+  $('sTitle').textContent=sc.title;wordsInto($('sPrompt'),paras(sc.prompt),true).all();
+  renderStages();show('vSession');$('input').style.height='';S.timer=setInterval(tick,500);tick();
+  addMsg('sys',drill?'Drill · '+crName(drill)+' · 5 min':'Clarify stage · ask your questions');
+  say(sc.prompt,{onShow:(m,rv)=>{S.scenMsg=m;rv.onDone=()=>setTimeout(collapseScen,1500)}});
+  if(drill){const op=DRILLS[drill].open,me=S;
+    (async()=>{const pre=DRILL_PRIOR[drill].length||DRILL_FACTS[drill];
+      if(pre){sessFace.set('thinking');const b=await drillBrief(drill,sc);if(S!==me||S.ended)return;if(!S.speaking)sessFace.set('idle');
+        if(b)say(b,{gesture:'nod'});else addMsg('sys','Could not prepare the case summary. The full case is on the left.')}
+      /* the drill clock starts when the question appears, not while the case is being read */
+      say(op,{gesture:'lean',onShow:()=>{if(S===me){S.start=Date.now();S.stageStart=S.start}}})})()}
+  growBox();
+}
+function setBusy(b){S.busy=b;$('sendBtn').disabled=b;$('nextBtn').disabled=b;thinking(b)}
+
+function parseJSON(t){if(t&&typeof t==='object')return t;const m=String(t||'').match(/\{[\s\S]*\}/);if(!m)return null;try{return JSON.parse(m[0])}catch(e){return null}}
+async function ask(input,tier){
+  try{if(typeof sample.json==='function'){const v=await sample.json(input,{modelTier:tier,cache:false});if(v)return v}}catch(e){if(e&&e.code==='not_granted')throw e}
+  const r=await sample(input,{modelTier:tier,cache:false});return parseJSON(r&&r.text);
+}
+function interviewerInput(note){
+  const sc={...S.sc};delete sc.reviewed_by_human;
+  return [{role:'user',content:
+'# Instructions\n'+D.interviewer+
+'\n\n# Session\nPersona: '+opt.persona+'\nMode: '+opt.mode+'\nCurrent stage: '+stage().name+'\nTime left in session: '+fmt(TOTAL-(Date.now()-S.start)/1000)+
+(S.focusId?'\nFocus for this session: the candidate is practising "'+crName(S.focusId)+'". Probe it hardest: ask at least two follow-ups about it, and aim your pushback at it.':'')+'\nInterruptions used in Pitch: '+S.interrupts+'\nPushback questions asked so far: '+S.pushes+
+(S.drill?'\nDrill: this is a '+DRILL_MIN+'-minute drill on one skill only: "'+crName(S.drill)+'". You already asked the opening question (it is in the transcript). Keep to this skill. Answer clarifying questions from the hidden facts as usual. Ask at most two short follow-ups that probe this skill'+(S.drill==='pushback'?' (each one a pressure question; set pushback true)':'')+'. After the candidate answers your last follow-up, say one short closing line with no question and set advance_stage to true. Do not give feedback or hints.':'')+
+(stage().id==='clarify'?'\nStage end: if the candidate says they have no more questions or are ready to move on ("I\'m good", "that\'s all", "no more questions"), reply with one short line telling them to take a few minutes to plan, ask nothing, and set advance_stage to true. Only do this when they clearly mean they are done asking.':'')+
+(note?'\nEvent: '+note:'')+
+'\n\n# Scenario JSON (private to you)\n'+JSON.stringify(sc)+
+'\n\n# Transcript so far\n'+S.transcript.map(t=>'['+t.stage+'] '+t.who+': '+t.text).join('\n')+
+'\n\nReply now as the interviewer with the single JSON object only.'}];
+}
+async function aiTurn(note){
+  setBusy(true);let r=null;
+  try{r=await ask(interviewerInput(note),stage().id==='clarify'?'quick':'default')}catch(e){
+    setBusy(false);addMsg('sys',e&&e.code==='rate_limited'?'Claude is busy. Wait a moment and send again.':'The interviewer could not reply. Try sending again.');sessFace.set('idle');return null}
+  setBusy(false);
+  if(!r||typeof r.say!=='string'){addMsg('sys','The interviewer did not answer clearly. Send again.');sessFace.set('idle');return null}
+  const text=r.say.slice(0,600).trim();
+  if(r.pushback)S.pushes++;
+  if(stage().id==='pitch'&&text)S.interrupts++;
+  if(text)say(text,{push:!!r.pushback,gesture:r.gesture});else{sessFace.set('idle');if(r.gesture&&r.gesture!=='none')sessFace.gesture(r.gesture)}
+  return r;
+}
+async function send(o){const fullPitch=!!(o&&o.fullPitch);const picked=!!(S&&S.draftPicked);
+  if(!S||S.busy||S.ended)return;const v=$('input').value.trim();if(!v)return;
+  if(S.dictating&&echoLike(v)){resetMic();addMsg('sys','Ignored: the mic picked up the interviewer. Headphones help.');return}
+  hush();resetMic();S.transcript.push({who:'Candidate',stage:stage().id,text:v,picked});S.draftPicked=false;growBox();collapseScen();addMsg('me',v);
+  if(S.timeUp){finish();return}
+  const flowDone=S.step>=STEPS.length;
+  if(stage().id==='think'){
+    if(!(v.length>300||flowDone)){addMsg('sys','Noted. The interviewer stays silent during Think.');suggest();return}
+    /* a full answer sent during Think is the pitch: move to Pitch without the "go ahead" line */
+    S.si++;S.stageStart=Date.now();renderStages();addMsg('sys','Pitch stage');S.transcript[S.transcript.length-1].stage='pitch';
+  }
+  if(stage().id==='pitch'){
+    if(fullPitch||flowDone||v.length>400){const r=await aiTurn('The candidate has just finished their full pitch. Acknowledge it in one short sentence without asking anything, and set advance_stage to true.');
+      if(r&&S&&!S.ended&&stage().id==='pitch')advance(false,{keepVoice:true});return}
+    if(S.interrupts>=1){sessFace.gesture('nod');addMsg('sys','The interviewer is listening. Keep going, or press Next stage when your pitch is done.');suggest();return}
+  }
+  if(stage().id==='pushback'&&S.wrapAfterAnswer){S.wrapAfterAnswer=false;
+    await aiTurn('Time is up for pushback. Acknowledge the answer in one short sentence, ask nothing, and set advance_stage to true.');
+    if(S&&!S.ended&&stage().id==='pushback')vq=vq.then(()=>{if(S&&!S.ended&&stage().id==='pushback')advance(false,{keepVoice:true,short:true})});return}
+  const r=await aiTurn();
+  if(r&&r.advance_stage&&stage().id==='wrap')finish();
+  /* the interviewer decided the stage is over (e.g. "No, I'm good" in Clarify): move on once its line has been spoken */
+  {const id=stage().id;if(r&&r.advance_stage&&(id==='clarify'||id==='pushback'))vq=vq.then(()=>{if(S&&!S.ended&&stage().id===id)advance(false,{keepVoice:true,quiet:id==='clarify'})})}
+  if(r&&r.advance_stage&&stage().id==='drill'&&!S.drillDone){S.drillDone=true;$('nextBtn').className='btn primary';vq=vq.then(()=>{if(S&&!S.ended)addMsg('sys','That is the drill. Press "Finish drill" for your score, or add one more point first.')})}
+}
+function waitQuiet(){return new Promise(res=>{const t0=Date.now();const iv=setInterval(()=>{if(!S||!S.speaking||Date.now()-t0>20000){clearInterval(iv);setTimeout(res,400)}},200)})}
+async function advance(auto,o){
+  if(!S||S.ended)return;if(!(o&&o.keepVoice))hush();
+  if(S.si>=STAGES.length-1){finish();return}
+  S.si++;S.stageStart=Date.now();renderStages();
+  addMsg('sys',(auto?'Time. ':'')+stage().name+' stage');
+  const id=stage().id;
+  if(id==='think'){sessFace.set('idle');if(!(o&&o.quiet))say('Take a few minutes to plan. I will wait.',{log:true})}
+  else if(id==='pitch'){say('Go ahead. Walk me through your approach.',{gesture:'nod'})}
+  else if(id==='pushback'){await aiTurn('Pushback stage has just started. Ask your first pressure question.')}
+  else if(id==='wrap'){say((o&&o.short?'':'Let us wrap up. ')+'Give me your final summary in under a minute.',{gesture:'lean'})}
+}
+async function finish(){
+  if(!S||S.ended)return;{const v=$('input').value.trim();if(v){S.transcript.push({who:'Candidate',stage:stage().id,text:v,picked:!!S.draftPicked});addMsg('me',v);$('input').value='';growBox()}}
+  S.ended=true;clearInterval(S.timer);hush();if(S.dictating)await stopDict();
+  sessFace.set('idle');show('vGrading');if(S.drill)await gradeDrill();else await grade();
+}
+
+/* ---------- dictation ---------- */
+async function stopDict(){try{await dict.stop()}catch(e){}S.dictating=false;$('micBtn').classList.remove('live');$('micBtn').setAttribute('aria-label','Start speaking')}
+let micBuf='',micTimer=null,quietUntil=0;
+function resetMic(){micBuf='';clearTimeout(micTimer);$('input').value='';growBox();if(S){S.draftTyped=false;if(S.dictating)$('micHint').textContent=micLiveHint()}}
+function gated(){return !S||S.ended||S.busy||S.speaking||Date.now()<quietUntil||Date.now()-(S.typedAt||0)<2000}
+/* echo guard: the mic can pick up the interviewer's own voice and deliver it as a late final phrase */
+const norm=t=>String(t).toLowerCase().replace(/[^a-z0-9\s]/g,' ').split(/\s+/).filter(w=>w.length>1);
+function grams(w,n){const g=new Set();for(let i=0;i+n<=w.length;i++)g.add(w.slice(i,i+n).join(' '));return g}
+function echoLike(t){if(!S||!S.said||!S.said.length)return false;const w=norm(t);if(w.length<4)return false;
+  const n=w.length<8?2:3;const src=grams(norm(S.said.join(' ')),n),mine=[...grams(w,n)];if(!mine.length)return false;
+  return mine.filter(g=>src.has(g)).length/mine.length>=0.6}
+function pauseMs(){const id=S&&stage().id;return id==='pitch'?3000:id==='wrap'?2500:id==='pushback'?2000:1600}
+function autoSend(){if(!S||S.ended||gated()||S.draftTyped)return;const v=$('input').value.trim();if(!v)return;
+  if(S.draftPicked&&(stage().id==='pitch'||stage().id==='think'))return;
+  if(stage().id==='think'){const n=$('notes');n.value=(n.value+'\n'+v).trim();n.scrollTop=n.scrollHeight;resetMic();
+    n.animate([{boxShadow:'0 0 0 3px rgba(45,212,191,.45)'},{boxShadow:'0 0 0 0 rgba(45,212,191,0)'}],{duration:reduce?1:700});return}
+  send()}
+function micLiveHint(){return S&&stage().id==='think'?'Think stage: what you say goes into your notepad. Press "I\'m ready to pitch" to talk to the interviewer.':'Hands-free: just talk. Your answer is sent when you pause.'}
+function micStart(){ /* must run straight from a click */
+  if(!dict)return;try{dict.start().catch(e=>{$('micHint').textContent=e&&e.code==='not_granted'?'Microphone off. Type instead.':'Could not start the mic. Tap it to try again.';if(e&&e.code==='not_granted')$('micBtn').hidden=true})}catch(e){}
+}
+/* typed text is part of the draft too: keep the mic buffer in step with the box, so the box is never reset to mic-only text */
+$('input').addEventListener('input',()=>{micBuf=$('input').value;clearTimeout(micTimer);if(S){S.draftTyped=true;S.typedAt=Date.now();if(S.dictating)$('micHint').textContent='You are typing, so nothing is sent until you press Send.'}});
+function setupMic(){
+  if(!dict){$('micHint').textContent='Voice input is not available here. Type and press Enter.';return}
+  $('micBtn').hidden=false;$('micHint').textContent='Tap the mic to talk hands-free';
+  dict.onPartial(({text})=>{if(gated()||echoLike(text))return;$('input').value=(micBuf+' '+text).trim();growBox();clearTimeout(micTimer);micTimer=setTimeout(autoSend,pauseMs())});
+  dict.onFinal(({text})=>{if(gated())return;if(echoLike(text)){$('input').value=micBuf;return}micBuf=(micBuf+' '+text).trim();$('input').value=micBuf;growBox();clearTimeout(micTimer);micTimer=setTimeout(autoSend,pauseMs())});
+  dict.onState(({state,reason})=>{const live=state==='listening';if(S)S.dictating=live;$('micBtn').classList.toggle('live',live);
+    $('micBtn').setAttribute('aria-label',live?'Mute mic':'Start talking');
+    $('micHint').textContent=live?micLiveHint():(S&&!S.ended?'Mic paused'+(reason&&reason!=='stopped'?' ('+reason+')':'')+'. Tap it to resume.':'Tap the mic to talk hands-free');
+    if(S&&!S.ended&&!S.busy&&!S.speaking)sessFace.set(live?'listening':'idle')});
+  $('micBtn').addEventListener('click',()=>{if(S&&S.dictating){stopDict();return}hush();micStart()});
+}
+
+/* ---------- grading ---------- */
+function median(a){const s=[...a].sort((x,y)=>x-y);const m=Math.floor(s.length/2);return s.length%2?s[m]:(s[m-1]+s[m])/2}
+async function grade(){
+  const notes=$('notes').value.trim();
+  const tr=S.transcript.map(t=>'['+t.stage+'] '+t.who+(t.picked?' (includes text from assistant suggestions)':'')+': '+t.text).join('\n')+(notes?'\n\n[notes] Candidate notepad:\n'+notes:'');
+  const input=[{role:'user',content:'# Instructions\n'+D.grader+'\n\n# Rubric\n'+JSON.stringify(D.rubric)+'\n\n# Scenario JSON\n'+JSON.stringify(S.sc)+'\n\n# Transcript\n'+tr+'\n\nReturn the single JSON object only.'}];
+  const runs=[];
+  for(let i=0;i<3;i++){$('gradeMsg').textContent='Grading your interview · pass '+(i+1)+' of 3';
+    try{const r=await ask(input,'complex');if(r&&Array.isArray(r.criteria))runs.push(r)}catch(e){if(e&&e.code==='rate_limited')await new Promise(r=>setTimeout(r,4000))}}
+  if(!runs.length){$('gradeMsg').textContent='Grading failed. Your transcript is below; try again.';
+    const b=document.createElement('button');b.className='btn primary';b.textContent='Try grading again';b.style.marginTop='16px';b.onclick=()=>{b.remove();grade()};$('gradeMsg').after(b);return}
+  const crit=D.rubric.criteria.map(c=>{
+    const got=runs.map(r=>r.criteria.find(x=>x.id===c.id)).filter(Boolean);
+    const scored=got.filter(x=>x.status!=='missing'&&typeof x.score==='number');
+    if(scored.length*2<=got.length||!scored.length){const m=got.find(x=>x.status==='missing')||got[0]||{};return{id:c.id,name:c.name,status:'missing',score:null,evidence:[],gap:m.gap||'Not addressed in the interview.',strength:''}}
+    const med=median(scored.map(x=>x.score));const best=scored.reduce((a,b)=>Math.abs(b.score-med)<Math.abs(a.score-med)?b:a);
+    return{id:c.id,name:c.name,status:'scored',score:Math.round(med*2)/2,evidence:best.evidence||[],strength:best.strength||'',gap:best.gap||''}});
+  const overall=Math.round(crit.reduce((s,c)=>s+(c.status==='missing'?1:c.score),0)/crit.length*10)/10;
+  const lead=runs.reduce((a,b)=>Math.abs((b.overall||0)-overall)<Math.abs((a.overall||0)-overall)?b:a);
+  const rep={crit,overall,imp:(lead.top_improvements||[]).slice(0,3),cmp:lead.compared_to_strong_answer||'',runs:runs.length};
+  renderReport(rep);
+  await saveSession({id:S.id,scenarioId:S.sc.id,domain:S.sc.domain,persona:opt.persona,mode:opt.mode,focus:S.focusId||null,think:STAGES.find(x=>x.id==='think').min,at:new Date().toISOString(),overall,criteria:crit.map(c=>({id:c.id,status:c.status,score:c.score}))});
+}
+/* ---------- drills and "show me a 5" ---------- */
+/* what a drill hands the candidate before its question: decisions from the earlier steps, plus the facts that skill needs */
+const DRILL_PRIOR={clarify_goal:[],user_segment:['clarify_goal'],pain_points:['clarify_goal','user_segment'],solutions:['clarify_goal','user_segment','pain_points'],tradeoffs:['clarify_goal','user_segment','pain_points','solutions'],metrics:['clarify_goal','user_segment','pain_points','solutions'],structure:[],pushback:[]};
+const DRILL_FACTS={user_segment:['business_goal','users','market'],pain_points:['users','current_product','data_metrics'],solutions:['current_product','constraints','timeline_resources'],tradeoffs:['constraints','timeline_resources','competition'],metrics:['business_goal','data_metrics']};
+async function drillBrief(id,sc){
+  const prior=DRILL_PRIOR[id]||[],topics=DRILL_FACTS[id]||[];if(!prior.length&&!topics.length)return null;
+  const facts=sc.hidden_facts.filter(f=>topics.includes(f.topic)).map(f=>f.fact);
+  const decided=prior.map(k=>crName(k)+': '+sc.strong_answer_outline[k]);
+  const input=[{role:'user',content:'# Instructions\nYou are the interviewer in a product sense mock interview. The candidate is starting a short drill on one skill only: "'+crName(id)+'". Before you ask about it, brief them on where the case stands, so they can focus on that one skill.\n- Speak to the candidate in the second person, in plain spoken words. Under 110 words, in 2 or 3 short paragraphs. Start with "Here is where we are."\n- State the goal in one sentence.\n- State the decisions already made as decisions ("We are building for ...", "The main pain is ..."). Use only these:\n'+decided.join('\n')+'\n- Include the facts they need, keeping the numbers exactly as written:\n'+facts.join('\n')+'\n- Say nothing about how to answer "'+crName(id)+'": no examples, no hints, no options for it. Do not ask a question.\n- Use only what is given here. Do not invent anything.\n\nReturn a single JSON object only: {"brief":"..."}'}];
+  try{const r=await ask(input,'default');if(r&&typeof r.brief==='string'&&r.brief.trim())return r.brief.trim()}catch(e){}
+  return null}
+const FIVE_RULES='Write how a candidate who scores 5 on this skill would say it, in this exact scenario: first person, spoken, plain words, under 110 words. Build on what this candidate said where it was sound. Use only facts from the scenario JSON and the transcript. Do not invent numbers that are not there; if a target is needed, say how you would set it.';
+function transcriptText(){return S.transcript.map(t=>'['+t.stage+'] '+t.who+(t.picked?' (includes text from assistant suggestions)':'')+': '+t.text).join('\n')}
+function crit(id){return D.rubric.criteria.find(c=>c.id===id)}
+async function gradeDrill(){
+  const id=S.drill,notes=$('notes').value.trim();
+  const input=[{role:'user',content:'# Instructions\nYou are a strict, fair grader who did not run the interview. This was a '+DRILL_MIN+'-minute drill on ONE skill. Grade only that skill against its anchors, and do not penalise the candidate for skills outside the drill.\n'+
+    '- Cite at least one verbatim quote from the candidate as evidence. Copy it exactly. Never quote the interviewer.\n- Scale 1-5, half points allowed. If the candidate never addressed the skill: status "missing", score null.\n- Do not score tone, accent or confidence. Only what was said.\n- strength and gap: one sentence each.\n- example: '+FIVE_RULES+
+    '\n\n# The skill\n'+JSON.stringify(crit(id))+'\n\n# Scenario JSON\n'+JSON.stringify(S.sc)+'\n\n# Transcript\n'+transcriptText()+(notes?'\n\n[notes] Candidate notepad:\n'+notes:'')+
+    '\n\nReturn a single JSON object only: {"status":"scored|missing","score":number|null,"evidence":["quote"],"strength":"...","gap":"...","example":"..."}'}];
+  const runs=[];
+  for(let i=0;i<3;i++){$('gradeMsg').textContent='Grading your drill · pass '+(i+1)+' of 3';
+    try{const r=await ask(input,'complex');if(r&&(r.status==='missing'||typeof r.score==='number'))runs.push(r)}catch(e){if(e&&e.code==='rate_limited')await sleep(4000)}}
+  if(!runs.length){$('gradeMsg').textContent='Grading failed. Try again.';
+    const b=el('button','btn primary','Try grading again');b.style.marginTop='16px';b.onclick=()=>{b.remove();gradeDrill()};$('gradeMsg').after(b);return}
+  const scored=runs.filter(r=>r.status!=='missing'&&typeof r.score==='number');let c;
+  if(scored.length*2<=runs.length||!scored.length){const m=runs.find(r=>r.status==='missing')||runs[0];c={id,name:crName(id),status:'missing',score:null,evidence:[],gap:m.gap||'The drill did not show this skill.',strength:'',example:m.example||''}}
+  else{const med=median(scored.map(x=>x.score));const best=scored.reduce((a,b)=>Math.abs(b.score-med)<Math.abs(a.score-med)?b:a);
+    c={id,name:crName(id),status:'scored',score:Math.round(med*2)/2,evidence:best.evidence||[],strength:best.strength||'',gap:best.gap||'',example:best.example||''}}
+  renderReport({drill:true,crit:[c],overall:c.score,imp:c.gap?[c.gap]:[],cmp:'',runs:runs.length});
+  await saveSession({id:S.id,scenarioId:S.sc.id,domain:S.sc.domain,persona:opt.persona,mode:'Drill',drill:id,at:new Date().toISOString(),overall:null,score:c.score,criteria:[{id,status:c.status,score:c.score}]});
+}
+async function showFive(c,box,btn){
+  if(!sample)return;btn.disabled=true;box.hidden=false;box.className='ex load';box.textContent='Writing an example for this scenario…';
+  const input=[{role:'user',content:'# Instructions\nYou help a candidate after a product sense mock interview. '+FIVE_RULES+'\nThis candidate was weak here: '+(c.gap||'not addressed')+'\n\n# The skill\n'+JSON.stringify(crit(c.id))+'\n\n# Scenario JSON\n'+JSON.stringify(S.sc)+'\n\n# Transcript\n'+transcriptText()+'\n\nReturn a single JSON object only: {"example":"..."}'}];
+  try{const r=await ask(input,'default');if(!r||typeof r.example!=='string'||!r.example.trim())throw 0;box.className='ex';box.textContent=r.example.trim();btn.hidden=true}
+  catch(e){box.className='ex load';box.textContent=e&&e.code==='rate_limited'?'Claude is busy. Try again in a moment.':'Could not write the example. Try again.';btn.disabled=false}
+}
+function setMode(v){opt.mode=v;for(const x of $('optMode').querySelectorAll('button'))x.setAttribute('aria-pressed',x.dataset.v===v?'true':'false');help('optMode');renderStart()}
+function drillFrom(id,sc){if(!sample)return;opt.drill=id;$('optDrill').value=id;setMode('Drill');if(dict&&opt.mic==='hands')micStart();startSession({sc,drill:id})}
+function fiveRow(c,{example,drillLabel,newScen}){
+  const row=el('div','five');const h=el('div','fh');h.appendChild(el('b',null,c.name));h.appendChild(el('span','sc',c.status==='missing'?'Missing':c.score.toFixed(1)+' / 5'));
+  const ex=el('p','ex');ex.hidden=!example;if(example)ex.textContent=example;
+  if(!example){const sb=el('button','btn secondary sm','Show me a 5');sb.addEventListener('click',()=>showFive(c,ex,sb));h.appendChild(sb)}
+  const db=el('button','btn ghost sm',drillLabel||'Drill it · 5 min');const sc=S.sc;db.addEventListener('click',()=>drillFrom(c.id,sc));h.appendChild(db);
+  if(newScen){const nb=el('button','btn ghost sm','New scenario');nb.addEventListener('click',()=>drillFrom(c.id,null));h.appendChild(nb)}
+  row.append(h,ex);return row}
+function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e}
+function renderReport(r){
+  $('rOverall').innerHTML='';$('rOverall').append(r.overall!=null?r.overall.toFixed(1):'–',el('small',null,' / 5'));
+  $('rMeta').textContent=S.sc.title+' · '+opt.persona+' · '+(r.drill?'drill: '+r.crit[0].name:opt.mode+(STAGES[1]&&STAGES[1].min!==3?' · '+STAGES[1].min+' min planning':''))+' · median of '+r.runs+' grading pass'+(r.runs>1?'es':'')+(S.picks?' · assisted: '+S.picks+' suggestion'+(S.picks>1?'s':'')+' used':'');
+  $('rImp').innerHTML='';for(const t of r.imp)$('rImp').appendChild(el('li',null,String(t)));
+  $('rCmp').textContent=r.drill?String(S.sc.strong_answer_outline[r.crit[0].id]||''):r.cmp;
+  $('cmpTitle').textContent=r.drill?'The strong answer, for this skill':'Against a strong answer';$('rOutline').parentNode.hidden=!!r.drill;
+  $('fiveRows').innerHTML='';
+  if(r.drill){const c=r.crit[0];$('fiveTitle').textContent='What a 5 sounds like';$('fiveNote').textContent='Written for this scenario. Read it next to what you said, then try again.';
+    $('fiveCard').hidden=!c.example;if(c.example)$('fiveRows').appendChild(fiveRow(c,{example:c.example,drillLabel:'Drill again',newScen:true}))}
+  else{const low=r.crit.map((c,i)=>({c,i,v:c.status==='missing'?1:c.score})).filter(x=>x.v<5).sort((a,b)=>a.v-b.v||a.i-b.i).slice(0,2);
+    $('fiveTitle').textContent='Show me a 5';$('fiveNote').textContent='Your two lowest skills. See how a 5 would sound in this scenario, then drill it for 5 minutes.';
+    $('fiveCard').hidden=!low.length;for(const x of low)$('fiveRows').appendChild(fiveRow(x.c,{}))}
+  $('rOutline').innerHTML='';for(const c of D.rubric.criteria){const p=el('p','tline');p.append(el('b',null,c.name+': '),String(S.sc.strong_answer_outline[c.id]||''));$('rOutline').appendChild(p)}
+  $('rRows').innerHTML='';r.crit.forEach((c,i)=>{
+    const row=el('div','row'+(c.status==='missing'?' missing':''));row.appendChild(el('span','n',c.name));
+    row.appendChild(el('span','v',c.status==='missing'?'Missing':c.score.toFixed(1)));
+    if(c.status!=='missing'){const t=el('div','track');const f=el('div','fill');f.style.width=(c.score/5*100)+'%';f.style.animationDelay=(i*60)+'ms';t.appendChild(f);row.appendChild(t)}
+    const q=el('div','q');if(c.evidence&&c.evidence[0]){q.append('You said: ',el('em',null,'"'+String(c.evidence[0])+'"'),'. ')}
+    q.append(String(c.status==='missing'?c.gap:(c.gap||c.strength)));row.appendChild(q);$('rRows').appendChild(row)});
+  $('rTranscript').innerHTML='';for(const t of S.transcript){const p=el('p','tline');p.append(el('b',null,t.who+': '),t.text);$('rTranscript').appendChild(p)}
+  show('vReport');
+}
+
+/* ---------- wiring ---------- */
+$('startBtn').addEventListener('click',()=>{if(!sample)return;const hf=!!(dict&&opt.mic==='hands');if(hf)micStart();startSession()});
+$('sendBtn').addEventListener('click',()=>send());
+$('input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!(S&&stage().id==='think')){e.preventDefault();send()}});
+$('nextBtn').addEventListener('click',()=>{if(!S||S.busy)return;
+  if(stage().id==='think'&&$('input').value.trim()){S.si++;S.stageStart=Date.now();renderStages();addMsg('sys','Pitch stage');send({fullPitch:true});return}
+  advance(false)});
+{let armT=null;$('endBtn').addEventListener('click',()=>{const b=$('endBtn');
+  if(!b.classList.contains('arm')){b.classList.add('arm');b.textContent='Click again to end and grade now';clearTimeout(armT);
+    armT=setTimeout(()=>{b.classList.remove('arm');b.textContent='End early'},4000);return}
+  clearTimeout(armT);b.classList.remove('arm');b.textContent='End early';finish()})}
+$('againBtn').addEventListener('click',()=>{S=null;renderDomains();renderHistory();show('vSetup')});
+let progFrom='vSetup';
+function openProgress(from){progFrom=from;show('vProgress');renderProgress()}
+$('progBtn').addEventListener('click',()=>openProgress('vSetup'));
+$('repProg').addEventListener('click',()=>openProgress('vReport'));
+$('progBack').addEventListener('click',()=>{show(progFrom);if(progFrom==='vSetup'){renderHistory()}});
+renderDomains();renderDrillPick();renderStart();
+{const ua=navigator.userAgent,b=navigator.userAgentData&&navigator.userAgentData.brands||[];
+ const chromium=b.some(x=>/Chromium|Google Chrome|Microsoft Edge/.test(x.brand))||(/Chrome\//.test(ua)&&!/Firefox|FxiOS/.test(ua));
+ $('chromeNote').hidden=chromium;$('copyBtn').hidden=chromium;}
+$('testVoice').addEventListener('click',()=>{voiceErr='';const v=opt.voice;opt.voice='on';
+  $('voiceHint').textContent=tts?'Playing Claude voice…':'Playing browser voice…';
+  speak('Hi. I am your interviewer. Can you hear me?',false,heroFace);opt.voice=v});
+$('copyBtn').addEventListener('click',()=>{const u='https://claude.ai/artifact/B9iFzSdxxHZqoypJW85VV3';
+  navigator.clipboard.writeText(u).then(()=>{$('copyBtn').textContent='Link copied: paste it in Chrome'},()=>{$('copyBtn').textContent=u}).finally(()=>setTimeout(()=>{$('copyBtn').textContent='Copy link (and paste in Chrome)'},3000))});
+
+(async()=>{
+  [sample,tts,dict,db]=await Promise.all([use('sample'),use('tts'),use('dictation'),use('db')]);
+  const user=await use('user');try{if(user)userId=await user.id()}catch(e){}
+  if(!tts){const b=$('optVoice').querySelector('[data-v=on]');b.dataset.h='The interviewer reads every line aloud in your browser\'s voice.';help('optVoice')}
+  /* can() answers null when the platform does not say (outside visitors): say "this browser" until a save to the account works */
+  try{accountSave=!!(db&&userId&&user&&(await user.can('data.write'))===true)}catch(e){}
+  readyStatus();
+  document.body.dataset.caps=JSON.stringify({sample:!!sample,tts:!!tts,dictation:!!dict,db:!!db,user:!!userId,browserVoice:'speechSynthesis' in window});
+  if(tts){try{tts.onLine(({line,id})=>{if(!ttsRoute)return;ttsRoute.cur=lineIdx(id!=null?id:line,ttsRoute.cur);ttsRoute.rv&&ttsRoute.rv.to(ttsRoute.offs[ttsRoute.cur]||0)});
+    tts.onPosition(({ms,line})=>{if(!ttsRoute||!ttsRoute.rv)return;const i=lineIdx(line,ttsRoute.cur);ttsRoute.cur=i;ttsRoute.rv.to((ttsRoute.offs[i]||0)+ms*0.0147)})}catch(e){}}
+  renderStart();setupMic();$('micOpt').hidden=!dict;await loadHistory();renderDomains();renderHistory();
+})();
+
+}
+</script>
+</body>
+</html>
